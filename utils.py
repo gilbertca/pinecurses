@@ -3,13 +3,17 @@ import logging
 from datetime import datetime
 
 def parse_json(file_name):
-	"""Simple utility to read from a JSON file returns a dict object"""
+	"""
+	Simple utility to read from a JSON file returns a dict object
+	"""
 	with open(file_name) as json_file:
 		data = json.load(json_file)
 	return data
 
 def log(function):
-	"""Decorator to log info about internal functions and handle errors."""
+	"""
+	Decorator to log info about internal functions and handle errors.
+	"""
 	def log(*args, **kwargs):
 		# String extractions done here:
 		logging.debug(f"{datetime.now()} Function: * {function.__name__} * from: * {function.__globals__.get('__file__')} *")

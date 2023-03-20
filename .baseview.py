@@ -8,28 +8,43 @@ class AbstractBaseView:
 	An abstraction from which all views will inherit.
 	Contains methods which must be overloaded by its children
 	"""
-	def __init__(self, controller, **atr):
+	def __init__(self, controller, *args, **atr):
 		# Constant values:
 		self.controller = controller # References parent controller
 		self.atr_dict = atr # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
-		self.iterable = [n for n in self.atr_dict]
-		self.FUNCTIONS_DICT = {
-			ord('w') : self.write_character,
-		}
+		self.FUNCTIONS_DICT = {}
 		self.function = self.FUNCTIONS_DICT.get
 		self.BACKGROUND_FILL = self.atr('background_fill') if atr.get('background_fill') is not None else ' '
 
 	@log
-	def add_string(self, string, *args, **kwargs):
-		self.screen.addstr(string, *args, **kwargs)
+	def add_string(self, string, y=None, x=None, *args, **kwargs):
+		# NEEDS STATEMENT FOR NONEXISTENT X OR Y?
+		if y is None or x is None:
+			self.screen.addstr(string, *args, **kwargs)
+		elif y >= 0 and x >= 0:
+			self.screen.addstr(y, x, string, *args, **kwargs)
+
+	@log
+	def draw_item(self, ItemInstance):
+		"""
+		Takes an Item instance and runs it's get_addstr_values(..) method.
+		The method should return an iterable which will be unpacked:
+			self.screen.addstr(*iterable).
+		"""
+		values = ItemInstance.get_addstr_values()
+		self.screen.addstr(*values)
 
 	@log
 	def create_window(self):
-		"""Creates a pad or window object based on given parameters"""
+		"""
+		Creates a pad or window object based on given parameters
+		"""
 		self._calculate_size()
 		self._calculate_window_valign()
 		self._calculate_window_halign()
+		self._assign_items()
+		self._calculate_writable_space()
 		self.screen = curses.newpad(self.height, self.width)
 	
 	@log
@@ -40,6 +55,18 @@ class AbstractBaseView:
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
+	def draw_background(self):
+		"""
+		Does the absurd calls required to draw the background.
+		"""
+		background_attributes  = (
+			self.BACKGROUND_FILL, # Get the 'fill' character
+			# This next call returns the background color... unfortunately.
+			curses.color_pair(self.controller.colors.get(self).get("background_color"))
+		)
+		self.screen.bkgd(*background_attributes)
+
+	@log
 	def draw_window(self):
 		"""
 		To be overloaded by child.
@@ -47,7 +74,7 @@ class AbstractBaseView:
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
-	def interact(self):
+	def interact(self): 
 		"""
 		Method which will check for internal functions first,
 			and return the key_press if no function is found.
@@ -66,15 +93,18 @@ class AbstractBaseView:
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def write_character(self):
-		self.screen.addstr("Writing Mode: ")
-		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
-		self.screen.addstr(chr(self.screen.getch()))
-		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+	def _assign_items(self):
+		"""
+		Creates an empty list to represent VERTICAL SPACE;
+			i.e., each index in the list is representative
+			of the item occupying that space
+		"""
 
 	@log
 	def _calculate_size(self):
-		"""Method run by create_window to calculate height and width"""
+		"""
+		Method run by create_window to calculate height and width
+		"""
 		# Height calculations:
 		height = self.atr('height')
 		vborder = self.atr('vborder')
@@ -102,7 +132,9 @@ class AbstractBaseView:
 
 	@log
 	def _calculate_window_valign(self):
-		"""Method run by create_window() to calculate topy and boty for draw_window()"""
+		"""
+		Method run by create_window() to calculate topy and boty for draw_window()
+		"""
 		# Note: assignment of -1 is to prevent type errors when comparing int to nonetype
 		topy = self.atr('topy')
 		boty = self.atr('boty')
@@ -123,7 +155,9 @@ class AbstractBaseView:
 
 	@log
 	def _calculate_window_halign(self):
-		"""Method run by create_window() to calculate topx and botx for draw_window()"""
+		"""
+		Method run by create_window() to calculate topx and botx for draw_window()
+		"""
 		leftx = self.atr('leftx')
 		rightx = self.atr('rightx')
 		halign = self.atr('halign')
@@ -142,7 +176,18 @@ class AbstractBaseView:
 			self.rightx = curses.COLS - 1
 
 	@log
+	def _calculate_writable_space(self):
+		"""
+		Method run by create_window() to calculate available space:
+		"""
+
+		pass
+
+	@log
 	def _get_padding(self):
+		"""
+		Returns a list of two values: vpadding,hpadding 
+		"""
 		padding = self.atr('padding') if self.atr('padding') else 0
 		hpadding = self.atr('hpadding') if self.atr('hpadding') else 0
 		vpadding = self.atr('vpadding') if self.atr('vpadding') else 0

@@ -48,7 +48,7 @@ class Controller:
 		first_view_name = list(self.views_dict)[self.current_view_index]
 		for view_name in self.views_dict:
 			self.draw_view(view_name)
-		self.set_focus(view_name)
+		self.set_focus(first_view_name)
 		return self.interact(first_view_name)
 
 	@log
@@ -65,6 +65,10 @@ class Controller:
 			# Conditional to exit program:
 			if function == 0:
 				return 0
+			# Conditional if keypress results in an iterable of functions:
+			elif isinstance(function, list) or isinstance(function, tuple):
+				for func in function:
+					func()
 			# Conditional if keypress results in a function:
 			elif function is not None:
 				function()
@@ -75,6 +79,13 @@ class Controller:
 		Sets self.current_view_name to the passed view name.
 		"""
 		self.current_view_name = view_name
+		view_instance = self.views(self.current_view_name)
+		self._write_focus_character(view_instance)
+
+	@log
+	def _write_focus_character(self, view_instance):
+		view_instance.screen.addch(0,0,'X')
+		view_instance.refresh_screen()
 
 	@log
 	def next_view(self):
@@ -87,16 +98,20 @@ class Controller:
 			self.current_view_index += 1
 		# Get the next view name:
 		next_view_name = list(self.views_dict)[self.current_view_index]
+		# Remove old focus character:
+		current_view_instance = self.views(self.current_view_name)
+		current_view_instance.screen.addch(0,0,current_view_instance.BACKGROUND_FILL)
+		current_view_instance.refresh_screen()
 		# Set focus to the next view:
 		self.set_focus(next_view_name)
 
 	@log
-	def create_view(self, view_name, view_atr, ViewClass):
+	def create_view(self, view_name, view_atr, ViewClass, *view_args):
 		"""
 		Takes a string name, a dictionary of attributes, 
 			and a Class reference to initialize the view as.
 		"""
-		view = ViewClass(self, **view_atr)
+		view = ViewClass(self, *view_args, **view_atr)
 		self.views_dict.update({view_name : view})
 		self.map_colors(view)
 

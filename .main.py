@@ -1,10 +1,12 @@
 import curses
-from listview import ListView
+#from listview import ListView
+#from gameview import GameView, InventoryView
+from textview import TextView
 from controller import Controller
 from utils import parse_json
 
-JSON_FILE1 = "json/listview1.json"
-JSON_FILE2 = "json/listview2.json"
+JSON_FILE1 = "json/textview.json"
+JSON_TEXT = "json/texttext.json"
 def main(stdscr):
 	"""
 	A method for testing the view
@@ -12,13 +14,11 @@ def main(stdscr):
 	# Required:
 	controller = Controller(stdscr)
 	# Arbitrary data:
-	view_name = "listview"
-	view_name2 = "listview2"
+	view_name = "text_view"
 	view_atr = parse_json(JSON_FILE1)
-	view_atr2 = parse_json(JSON_FILE2)
+	view_text = parse_json(JSON_TEXT)
 	# To draw views:
-	controller.create_view(view_name, view_atr, ListView)
-	controller.create_view(view_name2, view_atr2, ListView)
+	controller.create_view(view_name, view_atr, TextView, view_text)
 	# Program ends upon returning 0:
 	return controller.begin()
 

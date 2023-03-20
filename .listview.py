@@ -13,6 +13,11 @@ class ListView(AbstractBaseView):
 	# More to be added as more requirements are needed
 	# Also need to be able to generate arbitrary color mappings
 	# Need to define/declare variables regarding color pairs
+	def __init__(self, controller, **atr):
+		super().__init__(controller, **atr)
+		self.iterable = []
+		self.FUNCTIONS_DICT.update({
+		})
 	@log
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
@@ -21,26 +26,14 @@ class ListView(AbstractBaseView):
 		lines_written = 0
 		for item in self.iterable:
 			color = curses.color_pair(self.determine_color(item))
-			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}:{self.atr(item)}\n", color)
+			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}\n", color)
 			lines_written += 1
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def draw_background(self):
-		"""
-		Does the absurd calls required to draw the background.
-		"""
-		background_attributes  = (
-			self.BACKGROUND_FILL, # Get the 'fill' character
-			# This next call returns the background color... unfortunately.
-			curses.color_pair(self.controller.colors.get(self).get("background_color"))
-		)
-		self.screen.bkgd(*background_attributes)
-
-	@log
 	def determine_color(self, item):
 		"""
-		Method to run checks on 'string' to return a color
-		THIS CURRENT CODE IS TEMPORARY
+		Requires a minimum of one color;
+		This method may be overloaded to provide custom logic for colors.
 		"""
 		return self.controller.get_color(self, "text_color")
