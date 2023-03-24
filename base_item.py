@@ -9,4 +9,4 @@ def BaseItem(AbstractBaseItem, FunctionsMixin):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		pass
+		self.name = kwargs.get('name')
