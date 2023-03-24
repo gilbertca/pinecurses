@@ -9,4 +9,7 @@ def BaseItem(AbstractBaseItem, FunctionsMixin):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.name = kwargs.get('name')
+		self.name = kwargs.get('name') # Item name for namespacing
+		self.text = kwargs.get('text') # Item text to be displayed
+		# Additional attributes the item displays:
+		self.curses_attributes = kwargs.('curses_attributes')
