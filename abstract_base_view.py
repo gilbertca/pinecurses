@@ -4,5 +4,5 @@ class AbstractBaseView:
 	Can not be instantiated by itself;
 		instead use BaseView.
 	"""
-	def __init__(self, *args, **kwargs):
+	def __init__(self, file=None, **kwargs):
 		pass

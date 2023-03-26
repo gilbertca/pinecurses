@@ -1,5 +1,6 @@
 from abstract_base_view import AbstractBaseView
 from mixins import FunctionsMixin
+from utils import log
 
 class BaseView(AbstractBaseView, FunctionsMixin):
 	"""
@@ -9,3 +10,15 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+
+	def _calculate_height(self):
+		"""
+		Method which calculates and returns the value for self.height
+		"""
+		pass
+
+	def _calculate_width(self):
+		"""
+		Method which calculates and returns the value for self.width
+		"""
+		pass

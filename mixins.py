@@ -1,9 +1,13 @@
 class FunctionsMixin:
-
+	"""
+	Mixin which provides self.functions, 
+		the standard for the pycurses function/key-mapping 
+		functionality.
+	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.FUNCTIONS = {}
-		self.functions = lambda key_press : FUNCTIONS.get(chr(key_press))
+		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
 
 	def add_function(self, key, callback):
 		"""
@@ -21,3 +25,14 @@ class FunctionsMixin:
 			as an argument.
 		"""
 		self.FUNCTIONS.update(function_dict)
+
+class AttributesAsAtrMixin:
+	"""
+	Mixin which provides self.atr,
+		the standard for arguments from JSON files
+		for Controllers, Views, and Items.
+	"""
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.ATR = kwargs
+		self.atr = lambda key : self.ATR.get(key)
