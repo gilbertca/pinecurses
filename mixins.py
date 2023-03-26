@@ -25,14 +25,3 @@ class FunctionsMixin:
 			as an argument.
 		"""
 		self.FUNCTIONS.update(function_dict)
-
-class AttributesAsAtrMixin:
-	"""
-	Mixin which provides self.atr,
-		the standard for arguments from JSON files
-		for Controllers, Views, and Items.
-	"""
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
-		self.ATR = kwargs
-		self.atr = lambda key : self.ATR.get(key)
