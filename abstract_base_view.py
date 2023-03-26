@@ -6,6 +6,8 @@ class AbstractBaseView:
 	Can not be instantiated by itself;
 		instead use BaseView.
 	Responsible for reading attributes from json files.
+	Requires a Controller instance, and
+		a file name or K/V pairs of attributes
 	"""
 	def __init__(self, controller, file_name=None, *args, **kwargs):
 		self.controller = controller
