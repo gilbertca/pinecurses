@@ -13,6 +13,12 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
+	def set_background(self):
+		"""
+		Sets the background attributes of the screen.
+		"""
+		pass
+
 	def _calculate_helper(self, atr_dict):
 		"""
 		Method which takes an *atr_dict*, iterates, runs the lambda function,
