@@ -42,7 +42,7 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 			'height' : lambda height_int : height_int, # Simple height
 			'vborder' : lambda vborder_int : self.window.getmaxyx()[0] - (2 * vborder), # Cells from vertical edge to content.
 			'vpercent' : lambda vpercent_int : math.floor(self.window.getmaxyx()[0] * vpercent_int / 100), # Percent of window height.
-			'default' : lambda : self.window.getmaxyx()[0],
+			'default' : lambda : self.window.getmaxyx()[0], # Default is full width
 		}
 		calculated_value = _calculate_helper(height_atr_namespace)
 		self.height = calculated_value
@@ -56,10 +56,8 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 			'height' : lambda width_int : width_int, # Simple width
 			'hborder' : lambda hborder_int : self.window.getmaxyx()[1] - (2 * hborder), # Cells from horizontal edge to content.
 			'hpercent' : lambda hpercent_int : math.floor(self.window.getmaxyx()[1] * hpercent_int / 100), # Percent of window width.
+			'default' : lambda : self.window.getmaxyx()[1], # Default is full width
 		}
-		try: # Error results in default width being whole window.
-			calculated_value = _calculate_helper(width_atr_namespace)
-		except AttributeError: # AttributeError thrown when no attribute from the namespace could be found.
-			calculated_value = self.window.getmaxyx()[1]
+		calculated_value = _calculate_helper(width_atr_namespace)
 		self.width = calculated_value
 
