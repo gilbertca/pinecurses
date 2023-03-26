@@ -21,12 +21,12 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 
 	def _calculate_helper(self, atr_dict):
 		"""
-		Method which takes an *atr_dict*, iterates, runs the lambda function,
+		Method which takes an *atr_dict*, iterates, runs the function,
 			and returns the final attribute.
 		"""
 		for atr_key in atr_dict: # Iterate
 			attribute = self.atr(atr_key) # Actual attribute value
-			if attribute: # Call the given height function with the attribute:
+			if attribute: # Call the given function with the attribute:
 				return atr_dict.get(atr_key)(attribute)
 		default_method = atr_dict.get('default')
 		if default_method:
@@ -35,7 +35,7 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 
 	def _calculate_height(self):
 		"""
-		Method which calculates and returns the value for self.height
+		Method which calculates and assigns the value for self.height
 		"""
 		# Namespace for attributes related to height:
 		height_atr_namespace = {
@@ -49,7 +49,7 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 
 	def _calculate_width(self):
 		"""
-		Method which calculates and returns the value for self.width
+		Method which calculates and assigns the value for self.width
 		"""
 		# Namespace for attributes related to width:
 		width_atr_namespace = {
@@ -60,4 +60,103 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 		}
 		calculated_value = _calculate_helper(width_atr_namespace)
 		self.width = calculated_value
+
+	def _calculate_window_y_coords(self):
+		"""
+		Method which calculates self.topy and self.boty
+		"""
+		# Callback for valign:
+		def valign(attribute):
+			"""
+			Runs calulations for vertical keyword alignment
+			"""
+			# Callback for top:
+			def top(*args):
+				topy = 0
+				boty = 0 + self.height -1
+				return topy, boty
+			# Callback for center:
+			def center(*args):
+				maxy = self.window.getmaxyx()[0]
+				center = math.floor(maxy/2) # Always move up 1 from center if odd!
+				topy = center - math.floor(self.height/2) # Always move up 1!
+				boty = center + math.ceil(self.height/2) # Always move up 1!
+				return topy, boty
+			# Callback for bottom:
+			def bottom(*args):
+				maxy = self.window.getmaxyx()[0]
+				topy = maxy - self.height
+				boty = maxy - 1
+				return topy, boty
+			# Vertical alignment namespace:
+			valign_namespace = {
+				'top' : top, # Window to top
+				'center' center, # Window to center
+				'bottom' : bottom, # Window to bottom
+				'default' : center, # Window to center
+			}
+			return _calculate_helper(valign_namespace)
+		 
+		def topy_given(self, topy):
+			"""
+			Runs calculations for a given topy.
+			Will create boty from height if only topy is given.
+			"""
+			boty = self.atr('boty')
+			if not boty: # No boty mean calculate it:
+				boty = topy + self.height
+			return topy, boty
+
+		# Namespace for attributes related to vertical alignment:
+		y_align_namespace = {
+			'valign' : valign, # Returns (topy, boty) for screen alignment
+			'topy' : topy_given, # Returns (topy, boty) for given topy value
+		}
+		self.topy, self.boty = _calculate_helper(y_align_namespace)
+		
+	def _calculate_window_x_coords(self):
+		"""
+		Method which calculates self.leftx and self.rightx
+		"""
+		# Callback for halign
+		def halign(attribute):
+			"""
+			Runs calulations for horizontal keyword alignment
+			"""
+			# Callback for left:
+			def left(*args):
+				leftx = 0
+				rightx = 0 + self.width -1
+				return leftx, rightx
+			# Callback for center:
+			def center(*args):
+				maxy = self.window.getmaxyx()[0]
+				center = math.floor(maxy/2) # Always move up 1 from center if odd!
+				topy = center - math.floor(self.height/2) # Always move up 1!
+				boty = center + math.ceil(self.height/2) # Always move up 1!
+				return topy, boty
+			# Callback for bottom:
+			def bottom(*args):
+				maxy = self.window.getmaxyx()[0]
+				topy = maxy - self.height
+				boty = maxy - 1
+				return topy, boty
+			# Vertical alignment namespace:
+			valign_namespace = {
+				'top' : top, # Window to top
+				'center' center, # Window to center
+				'bottom' : bottom, # Window to bottom
+				'default' : center, # Window to center
+			}
+			return _calculate_helper(valign_namespace)
+
+
+
+
+
+
+
+
+
+
 
