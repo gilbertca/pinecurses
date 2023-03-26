@@ -4,7 +4,8 @@ class AbstractBaseItem:
 	Cannot be instantiated;
 		use BaseItem instead.
 	"""
-	def __init__(self, file_name=None, *args, **kwargs):
+	def __init__(self, view, file_name=None, *args, **kwargs):
+		self.view = view
 		if file_name: # If file name is given:
 			self.ATR = parse_json(file_name)
 		elif kwargs: # If dictionary is given as K/V pairs:

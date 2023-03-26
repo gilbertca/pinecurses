@@ -7,7 +7,8 @@ class AbstractBaseView:
 		instead use BaseView.
 	Responsible for reading attributes from json files.
 	"""
-	def __init__(self, file_name=None, *args, **kwargs):
+	def __init__(self, controller, file_name=None, *args, **kwargs):
+		self.controller = controller
 		if file_name: # If file name is given:
 			self.ATR = parse_json(file_name)
 		elif kwargs: # If dictionary is given as K/V pairs:
