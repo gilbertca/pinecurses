@@ -23,6 +23,10 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 		"""
 		Method which takes an *atr_dict*, iterates, runs the function,
 			and returns the final attribute.
+		EX: {'key' : callback}
+		If a keyword is found this method will run the associated function
+			with an attribute from self.ATR,
+			otherwise it will call the 'default' function with no arguments.
 		"""
 		for atr_key in atr_dict: # Iterate
 			attribute = self.atr(atr_key) # Actual attribute value
@@ -97,17 +101,19 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 			}
 			return _calculate_helper(valign_namespace)
 		 
+		# Callback for given topy value
 		def topy_given(self, topy):
 			"""
 			Runs calculations for a given topy.
 			Will create boty from height if only topy is given.
 			"""
 			boty = self.atr('boty')
-			if not boty: # No boty mean calculate it:
+			if not boty: # No boty means calculate it:
 				boty = topy + self.height
 			return topy, boty
 
 		# Namespace for attributes related to vertical alignment:
+		# NOTE: CAN GIVE ONLY TOPY, BUT NOT ONLY BOTY
 		y_align_namespace = {
 			'valign' : valign, # Returns (topy, boty) for screen alignment
 			'topy' : topy_given, # Returns (topy, boty) for given topy value
@@ -130,33 +136,37 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 				return leftx, rightx
 			# Callback for center:
 			def center(*args):
-				maxy = self.window.getmaxyx()[0]
-				center = math.floor(maxy/2) # Always move up 1 from center if odd!
-				topy = center - math.floor(self.height/2) # Always move up 1!
-				boty = center + math.ceil(self.height/2) # Always move up 1!
-				return topy, boty
+				maxx = self.window.getmaxyx()[1]
+				center = math.floor(maxx/2) # Always move up 1 from center if odd!
+				leftx = center - math.floor(self.width/2) # Always move right 1!
+				rightx = center + math.ceil(self.width/2) # Always move right 1!
+				return leftx, rightx
 			# Callback for bottom:
-			def bottom(*args):
-				maxy = self.window.getmaxyx()[0]
-				topy = maxy - self.height
-				boty = maxy - 1
-				return topy, boty
-			# Vertical alignment namespace:
-			valign_namespace = {
-				'top' : top, # Window to top
-				'center' center, # Window to center
-				'bottom' : bottom, # Window to bottom
-				'default' : center, # Window to center
-			}
-			return _calculate_helper(valign_namespace)
+			def right(*args):
+				maxx = self.window.getmaxyx()[1]
+				leftx = maxx - self.width
+				boty = maxx - 1
+				return leftx, rightx
 
+		# Horizontal alignment namespace:
+		halign_namespace = {
+			'left' : left, # Window to left
+			'center' center, # Window to center
+			'right' : right, # Window to right
+			'default' : center, # Window to center
+		}
+		return _calculate_helper(halign_namespace)
 
+		# Callback for a given leftx value
+		def leftx_given(self, leftx):
+			rightx = self.atr('rightx')
+			if not rightx:
+				rightx = leftx + self.width
+			return leftx, rightx
 
-
-
-
-
-
-
-
-
+		# Namespace for attributes related to vertical alignment
+		x_align_namespace = {
+			'halign' : halign,
+			'leftx' : leftx_given,
+		}
+		self.leftx, self.rightx = _calculate_helper(x_align_namespace)
