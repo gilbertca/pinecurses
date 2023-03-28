@@ -113,7 +113,7 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 			return topy, boty
 
 		# Namespace for attributes related to vertical alignment:
-		# NOTE: CAN GIVE ONLY TOPY, BUT NOT ONLY BOTY
+		# NOTE: CAN TAKE A GIVEN TOPY ONLY, BUT NOT ONLY BOTY
 		y_align_namespace = {
 			'valign' : valign, # Returns (topy, boty) for screen alignment
 			'topy' : topy_given, # Returns (topy, boty) for given topy value
@@ -170,3 +170,34 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 			'leftx' : leftx_given,
 		}
 		self.leftx, self.rightx = _calculate_helper(x_align_namespace)
+
+    def _calculate_padding(self):
+        """
+        Figures and assigns hpadding and ypaddinng values
+        """
+        def asym_padding(*args):
+            """
+            Calculates and returns padding if xpadding or ypadding is used.
+            """
+            ypadding = self.atr('ypadding')
+            xpadding = self.atr('xpadding')
+            if not ypadding:
+                ypadding = 0
+            if not xpadding:
+                xpadding = 0
+            return ypadding, xpadding
+            
+        padding_namespace = {
+            'padding' : lambda padding : (padding, padding),
+            'xpadding' : asym_padding,
+            'ypadding' : asym_padding,
+            'default' : lambda : (0, 0),
+        }
+        self.ypadding, self.xpadding = _calculate_helper(padding_namespace)
+
+    def create_curses_pad(self):
+        """
+        After all 'calculate' methods are called, this method
+            can create a curses pad instance.
+        """
+        self.window = curses.newpad(self.height, self.width)
