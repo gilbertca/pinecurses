@@ -118,6 +118,7 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 			'valign' : valign, # Returns (topy, boty) for screen alignment
 			'topy' : topy_given, # Returns (topy, boty) for given topy value
 		}
+		# Calculate and assign variables:
 		self.topy, self.boty = _calculate_helper(y_align_namespace)
 		
 	def _calculate_window_x_coords(self):
@@ -148,14 +149,14 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 				boty = maxx - 1
 				return leftx, rightx
 
-		# Horizontal alignment namespace:
-		halign_namespace = {
-			'left' : left, # Window to left
-			'center' center, # Window to center
-			'right' : right, # Window to right
-			'default' : center, # Window to center
-		}
-		return _calculate_helper(halign_namespace)
+			# Horizontal alignment namespace:
+			halign_namespace = {
+				'left' : left, # Window to left
+				'center' center, # Window to center
+				'right' : right, # Window to right
+				'default' : center, # Window to center
+			}
+			return _calculate_helper(halign_namespace)
 
 		# Callback for a given leftx value
 		def leftx_given(self, leftx):
@@ -164,11 +165,12 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 				rightx = leftx + self.width
 			return leftx, rightx
 
-		# Namespace for attributes related to vertical alignment
+		# Namespace for attributes related to horizontal alignment
 		x_align_namespace = {
 			'halign' : halign,
 			'leftx' : leftx_given,
 		}
+		# Calculate and assign variables:
 		self.leftx, self.rightx = _calculate_helper(x_align_namespace)
 
     def _calculate_padding(self):
