@@ -12,6 +12,27 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.initialize_view()
+
+	def initialize_view(self):
+		"""
+		Runs all calculations and sets all attributes for a View instance.
+		Perhaps this should be run with each resize after the parent Controller
+			modifies the View-Instance's attributes.
+		"""
+		self._calculate_height()
+		self._calculate_width()
+		self._calculate_window_y_coords()
+		self._calculate_window_x_coords()
+		self._calculate_padding()
+		self.create_curses_pad()
+
+	def create_curses_pad(self):
+        """
+        After all 'calculate' methods are called, this method
+            can create a curses pad instance.
+        """
+        self.window = curses.newpad(self.height, self.width)
 
 	def set_background(self):
 		"""
@@ -197,9 +218,4 @@ class BaseView(AbstractBaseView, FunctionsMixin):
         }
         self.ypadding, self.xpadding = _calculate_helper(padding_namespace)
 
-    def create_curses_pad(self):
-        """
-        After all 'calculate' methods are called, this method
-            can create a curses pad instance.
-        """
-        self.window = curses.newpad(self.height, self.width)
+
