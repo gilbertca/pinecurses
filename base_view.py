@@ -13,6 +13,7 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.initialize_view()
+		self.name = self.atr('name')
 
 	def initialize_view(self):
 		"""
