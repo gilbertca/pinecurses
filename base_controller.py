@@ -6,7 +6,6 @@ class BaseController(AbstractBaseController, FunctionsMixin):
 	The simplest controller which can be instantiated.
 	It inherits it's attributes from AbstractBaseController.
 	"""
-
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		pass
