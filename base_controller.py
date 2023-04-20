@@ -20,6 +20,22 @@ class BaseController(AbstractBaseController, FunctionsMixin):
 
 	def remove_view(self, view_instance):
 		"""
-		Takes a View instance and appends it to self.views.
+		Takes a View instance and removes it from self.VIEWS.
 		"""
 		self.VIEWS.pop(view_instance.name)
+
+	def draw_all_views(self):
+		"""
+		Draws all views in self.VIEWS by calling self.draw_view iteratively.
+		"""
+		# Iterate through dictionary:
+		for view in self.VIEWS:
+			self.draw_view(self.views(view))
+
+	def draw_view(self, view_instance):
+		"""
+		Draws a view by:
+			1. Setting background characteristics
+			2. Drawing items iteratively
+		"""
+		pass
