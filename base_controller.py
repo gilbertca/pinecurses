@@ -41,9 +41,9 @@ class BaseController(AbstractBaseController, FunctionsMixin):
 		"""
 		# Y, X values are relative to the window,
 		# 	so we are able to start calculations at 0 + C.
-		view_instance.window.addstr(
+		TODO : NEED CONTAINERS
 
-	def draw_item(self, item_instance):
+	def draw_item(self, parent_view, item_instance):
 		"""
 		Draws an item by:
 			1. Getting the current View's line (Y position) the Item will be added to
@@ -60,4 +60,5 @@ class BaseController(AbstractBaseController, FunctionsMixin):
 			7. Draw to the screen with ViewInstance.window.addstr(..)
 			TODO: RESEARCH OTHER ADDSTR METHODS CONTAINED WITHIN CURSES
 		"""
-		pass
+		writeable_width = parent_view.get_writable_width()
+

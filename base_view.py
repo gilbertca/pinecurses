@@ -41,6 +41,13 @@ class BaseView(AbstractBaseView, FunctionsMixin):
 		"""
 		pass
 
+	def get_writable_width(self):
+		"""
+		Returns an integer equal to the number of writable spaces in the current window.
+		"""
+		writable_width = self.width - (self.xpadding * 2)
+		return writable_width
+
 	def _calculate_helper(self, atr_dict):
 		"""
 		Method which takes an *atr_dict*, iterates, runs the function,
