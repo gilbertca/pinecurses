@@ -46,13 +46,18 @@ class BaseController(AbstractBaseController, FunctionsMixin):
 	def draw_item(self, item_instance):
 		"""
 		Draws an item by:
-			1. Getting the current View's line the Item will be added to
+			1. Getting the current View's line (Y position) the Item will be added to
 			2. Getting the height of the Item (i.e. number of vertical lines)
 			3. Getting the width of the Item (i.e. number of characters in a line)
 			4. Determine if the View can fit the Item vertically:
 				No: Determine vertical truncation, if any, if applicable
 			5. Determine if View can fit the Item horizontally:
 				No: Determine horizontal truncation, if any, if applicable
-
+			6. Check for special attributes from:
+				a. Item specific attributes
+				b. ItemContainer specific attributes
+				c. View specific attributes
+			7. Draw to the screen with ViewInstance.window.addstr(..)
+			TODO: RESEARCH OTHER ADDSTR METHODS CONTAINED WITHIN CURSES
 		"""
-
+		pass
