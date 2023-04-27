@@ -27,4 +27,4 @@ class PycursesObject(dict):
 		Same as self.add_function, but takes a dict object
 			as an argument.
 		"""
-		self.FUNCTIONS.update(function_dict)""
+		self.FUNCTIONS.update(function_dict)
