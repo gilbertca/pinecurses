@@ -15,6 +15,17 @@ class BaseController(PycursesObject):
 		self.stdscr = stdscr
 
 	@log
+	def begin(self):
+		"""
+		The main loop of any pycurses program. Once this function returns anything,
+			then the program will end.
+		"""
+		self.initialize_views()
+
+		# End program:
+		return 0
+
+	@log
 	def create_view(self, **attributes):
 		"""
 		Since Views are to be ignorant of curses,
@@ -25,3 +36,12 @@ class BaseController(PycursesObject):
 		view_instance = BaseView(self, **attributes)
 		# Update self's dictionary as {name : instance}:
 		self.update({view_instance.attributes('name') : view_instance})
+	
+	@log
+	def initialize_views(self):
+		"""
+		Iterates through self's dictionary and calls 'initialize' on all views.
+		"""
+		for view_name in self:
+			self.get(view_name).initialize()
+

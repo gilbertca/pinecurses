@@ -23,3 +23,11 @@ class BaseView(PycursesObject):
 		item_instance = BaseItem(self, **attributes)
 		# Update self's dictionary as {name : instance}:
 		self.update({item_instance.attributes('name') : item_instance})
+
+	@log
+	def initialize(self):
+		"""
+		Runs all calculations and assigns all variables to self
+			which are required for a Controller to draw a view.
+		"""
+		pass
