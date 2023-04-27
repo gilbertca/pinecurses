@@ -12,3 +12,13 @@ class BaseView(PycursesObject):
 		super().__init__(self, *args, **kwargs)
 		# Assign parent:
 		self.controller = parent_controller_instance
+
+	def create_item(self, **attributes):
+		"""
+		Causes a View to create an Item instance,
+			and assign it to self's dictionary.
+		"""
+		# Instantiate instance of an Item:
+		item_instance = BaseItem(self, **attributes)
+		# Update self's dictionary as {name : instance}:
+		self.update({item_instance.attributes('name') : item_instance})
