@@ -10,5 +10,5 @@ class BaseController(PycursesObject):
 	"""
 	def __init__(self, stdscr, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
-		self.stdscr = stdscr
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
+		self.stdscr = stdscr

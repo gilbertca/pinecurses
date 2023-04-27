@@ -2,15 +2,15 @@ class PycursesObject(dict):
 	"""
 	The base functionality which all Pycurses objects inherit.
 	"""
-	def __init__(self, *args, **kwargs):
-		TODO: UNPACK A DICT INTO super().__init... for creation at beginning
+	def __init__(self, *args, **attributes):
+		# TODO: UNPACK A DICT INTO super().__init... for creation at beginning
 		super().__init__()
 		self.FUNCTIONS = {}
 		# Shortcut for FUNCTIONS:
 		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
-		self.ATTRIBUTES = {}
+		self.ATTRIBUTES = attributes
 		# Shortcut for ATTRIBUTES:
-		self.attributes = lambda name : self.ATTRIBUTES.
+		self.attributes = lambda name : self.ATTRIBUTES.get(name)
 
 	def add_function(self, key, callback):
 		"""
