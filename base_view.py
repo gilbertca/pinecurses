@@ -13,6 +13,7 @@ class BaseView(PycursesObject):
 		# Assign parent:
 		self.controller = parent_controller_instance
 
+	@log
 	def create_item(self, **attributes):
 		"""
 		Causes a View to create an Item instance,

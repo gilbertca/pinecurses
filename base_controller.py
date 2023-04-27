@@ -14,6 +14,7 @@ class BaseController(PycursesObject):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.stdscr = stdscr
 
+	@log
 	def create_view(self, **attributes):
 		"""
 		Since Views are to be ignorant of curses,
