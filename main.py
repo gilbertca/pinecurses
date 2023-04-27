@@ -20,8 +20,8 @@ def main(stdscr):
 	# Load Items into the View:
 	item_attributes = parse_json(ITEM_FILE)
 	controller.get('base_view').create_item(**item_attributes)
-	# We should arrive at a blank screen which clears upon keypress if we reach this point:
-	controller.stdscr.getch()
+	# Begin the main loop. Any pycurses program should be relatively this simple.
+	controller.begin()
 
 
 if __name__ == "__main__":
