@@ -1,5 +1,7 @@
 import curses
 from base_controller import BaseController
+from base_view import BaseView
+from base_item import BaseItem
 from utils import parse_json
 
 CONTROLLER_FILE = "json/controllers/controller.json"
@@ -9,10 +11,27 @@ def main(stdscr):
 	"""
 	The main method to run and test this suite.
 	"""
-	# Create the controller:
-	# Controller json files should be relatively sparse.
-	controller_kwargs = parse_json(CONTROLLER_FILE)
+	# Create the Controller:
+	controller_kwargs = parse_json(CONTROLLER_FILE) # Controller attributes are usually sparse.
 	controller = BaseController(stdscr, **controller_kwargs)
+	# Load Views into the Controller:
+	view_attributes = parse_json(VIEW_FILE) # View attributes determine a window's characteristics.
+	view = BaseView(controller, **view_attributes)
+	view_name = view.attributes('name') 
+	# Update the Controller to match the relationship:
+	controller.update({view_name : view})
+	# Load Items into the View:
+	item_attributes = parse_json(Item_file) # Item attributes determine how a block of text is displayed.
+	item = BaseItem(view, **item_attributes)
+	item_name = item.attributes('name')
+	# Update the View to match the relationship:
+	controller.get(view_name).update({item_name : item})
+
+	# Now the entire logical structure has been populated.
+	# It may be wise to automate this process above for production.
+	# We should arrive at a blank screen which clears upon keypress if we reach this point:
+	controller.stdscr.getch()
+
 
 if __name__ == "__main__":
 	curses.wrapper(main)
