@@ -26,9 +26,9 @@ def main(stdscr):
 	item_name = item.attributes('name')
 	# Update the View to match the relationship:
 	controller.get(view_name).update({item_name : item})
-
-	# Now the entire logical structure has been populated.
-	# It may be wise to automate this process above for production.
+	"""Now the entire logical structure has been populated.
+	It may be wise to automate this process above for production.
+	"""
 	# We should arrive at a blank screen which clears upon keypress if we reach this point:
 	controller.stdscr.getch()
 
