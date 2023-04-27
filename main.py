@@ -21,7 +21,7 @@ def main(stdscr):
 	# Update the Controller to match the relationship:
 	controller.update({view_name : view})
 	# Load Items into the View:
-	item_attributes = parse_json(Item_file) # Item attributes determine how a block of text is displayed.
+	item_attributes = parse_json(ITEM_FILE) # Item attributes determine how a block of text is displayed.
 	item = BaseItem(view, **item_attributes)
 	item_name = item.attributes('name')
 	# Update the View to match the relationship:
