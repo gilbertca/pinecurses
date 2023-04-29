@@ -61,6 +61,13 @@ class BaseView(PycursesObject):
 		"""
 		writable_width = self.width - (self.xpadding * 2)
 		return writable_width
+
+	@log
+	def refresh(self):
+		"""
+		Refreshes self.window.
+		"""
+		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty, self.rightx))
 	
 	@log
 	def _calculate_helper(self, attribute_dict):

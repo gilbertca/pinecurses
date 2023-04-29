@@ -21,7 +21,8 @@ class BaseController(PycursesObject):
 			then the program will end.
 		"""
 		self.initialize_views()
-
+		self.draw_all_views()
+		self['base_view'].window.getch()
 		# End program:
 		return 0
 
@@ -50,11 +51,22 @@ class BaseController(PycursesObject):
 		"""
 		Draws all views within self's dictionary.
 		"""
-		pass
+		for view_key in self:
+			view_instance = self.get(view_key)
+			self.draw_view(view_instance)
 
 	@log
 	def draw_view(self, view_instance):
 		"""
 		Draws a particular view from a View instance.
 		"""
-		pass
+		# Get the iterable for the display string:
+		for item_key in view_instance:
+			item_instance = view_instance.get(item_key)
+			display_string_iterable = item_instance.get_display_string_iterable()
+			# Final step:
+			# NOTE: The following must be replaced with more generic terms,
+			#	and must allow for attributes, positions, etc.
+			for display_string in display_string_iterable:
+				view_instance.window.addstr(display_string)
+			view_instance.refresh()
