@@ -45,3 +45,16 @@ class BaseController(PycursesObject):
 		for view_name in self:
 			self.get(view_name).initialize()
 
+	@log
+	def draw_all_views(self):
+		"""
+		Draws all views within self's dictionary.
+		"""
+		pass
+
+	@log
+	def draw_view(self, view_instance):
+		"""
+		Draws a particular view from a View instance.
+		"""
+		pass
