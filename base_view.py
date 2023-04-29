@@ -171,6 +171,7 @@ class BaseView(PycursesObject):
 		# Calculate and assign variables:
 		self.topy, self.boty = self._calculate_helper(y_align_namespace)
 		
+	@log
 	def _calculate_window_x_coords(self):
 		"""
 		Method which calculates self.leftx and self.rightx
