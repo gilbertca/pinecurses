@@ -111,7 +111,7 @@ class BaseView(PycursesObject):
 		"""
 		# Namespace for attributes related to width:
 		width_atr_namespace = {
-			'height' : lambda width_int : width_int, # Simple width
+			'width' : lambda width_int : width_int, # Simple width
 			'hborder' : lambda hborder_int : curses.COLS - (2 * hborder), # Cells from horizontal edge to content.
 			'hpercent' : lambda hpercent_int : math.floor(curses.COLS * hpercent_int / 100), # Percent of window width.
 			'default' : lambda *default : curses.COLS, # Default is full width

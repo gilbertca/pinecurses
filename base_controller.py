@@ -67,6 +67,8 @@ class BaseController(PycursesObject):
 			# Final step:
 			# NOTE: The following must be replaced with more generic terms,
 			#	and must allow for attributes, positions, etc.
+			lines_written = 0
 			for display_string in display_string_iterable:
-				view_instance.window.addstr(display_string)
+				view_instance.window.addstr(lines_written, 0, display_string)
+				lines_written += 1
 			view_instance.refresh()
