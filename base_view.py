@@ -70,7 +70,8 @@ class BaseView(PycursesObject):
 		EX: {'key' : callback}
 		If a keyword is found this method will run the associated function
 			with an attribute from self.ATR,
-			otherwise it will call the 'default' function with no arguments.
+			otherwise it will call the 'default'.
+		Default functions can take *args to prevent errors, while returning a static value.
 		"""
 		for attribute_key in attribute_dict: # Iterate
 			attribute = self.attributes(attribute_key) # Actual attribute value
@@ -78,7 +79,7 @@ class BaseView(PycursesObject):
 				return attribute_dict.get(attribute_key)(attribute)
 		default_method = attribute_dict.get('default')
 		if default_method:
-			return default_method()
+			return default_method(attribute)
 		raise AttributeError(f"_calculate_helper was unable to find a required attribute or default value. Attribute dict: - {attribute_dict} -")
 
 	@log
@@ -91,7 +92,7 @@ class BaseView(PycursesObject):
 			'height' : lambda height_int : height_int, # Simple height
 			'vborder' : lambda vborder_int : curses.LINES - (2 * vborder), # Cells from vertical edge to content.
 			'vpercent' : lambda vpercent_int : math.floor(curses.LINES * vpercent_int / 100), # Percent of window height.
-			'default' : lambda : curses.LINES, # Default is full width
+			'default' : lambda *default : curses.LINES, # Default is full width
 		}
 		calculated_value = self._calculate_helper(height_atr_namespace)
 		self.height = calculated_value
@@ -106,7 +107,7 @@ class BaseView(PycursesObject):
 			'height' : lambda width_int : width_int, # Simple width
 			'hborder' : lambda hborder_int : curses.COLS - (2 * hborder), # Cells from horizontal edge to content.
 			'hpercent' : lambda hpercent_int : math.floor(curses.COLS * hpercent_int / 100), # Percent of window width.
-			'default' : lambda : curses.COLS, # Default is full width
+			'default' : lambda *default : curses.COLS, # Default is full width
 		}
 		calculated_value = self._calculate_helper(width_atr_namespace)
 		self.width = calculated_value
@@ -128,17 +129,18 @@ class BaseView(PycursesObject):
 				return topy, boty
 			# Callback for center:
 			def center(*args):
-				maxy = self.window.getmaxyx()[0]
+				maxy = curses.LINES
 				center = math.floor(maxy/2) # Always move up 1 from center if odd!
 				topy = center - math.floor(self.height/2) # Always move up 1!
 				boty = center + math.ceil(self.height/2) # Always move up 1!
 				return topy, boty
 			# Callback for bottom:
 			def bottom(*args):
-				maxy = self.window.getmaxyx()[0]
+				maxy = curses.LINES
 				topy = maxy - self.height
 				boty = maxy - 1
 				return topy, boty
+			
 			# Vertical alignment namespace:
 			valign_namespace = {
 				'top' : top, # Window to top
@@ -146,7 +148,7 @@ class BaseView(PycursesObject):
 				'bottom' : bottom, # Window to bottom
 				'default' : center, # Window to center
 			}
-			return _calculate_helper(valign_namespace)
+			return self._calculate_helper(valign_namespace)
 		 
 		# Callback for given topy value
 		def topy_given(self, topy):
@@ -164,6 +166,7 @@ class BaseView(PycursesObject):
 		y_align_namespace = {
 			'valign' : valign, # Returns (topy, boty) for screen alignment
 			'topy' : topy_given, # Returns (topy, boty) for given topy value
+			'default' : valign,
 		}
 		# Calculate and assign variables:
 		self.topy, self.boty = self._calculate_helper(y_align_namespace)
@@ -184,14 +187,14 @@ class BaseView(PycursesObject):
 				return leftx, rightx
 			# Callback for center:
 			def center(*args):
-				maxx = self.window.getmaxyx()[1]
+				maxx = curses.COLS
 				center = math.floor(maxx/2) # Always move up 1 from center if odd!
 				leftx = center - math.floor(self.width/2) # Always move right 1!
 				rightx = center + math.ceil(self.width/2) # Always move right 1!
 				return leftx, rightx
 			# Callback for bottom:
 			def right(*args):
-				maxx = self.window.getmaxyx()[1]
+				maxx = curses.COLS
 				leftx = maxx - self.width
 				boty = maxx - 1
 				return leftx, rightx
@@ -203,7 +206,7 @@ class BaseView(PycursesObject):
 				'right' : right, # Window to right
 				'default' : center, # Window to center
 			}
-			return _calculate_helper(halign_namespace)
+			return self._calculate_helper(halign_namespace)
 
 		# Callback for a given leftx value
 		def leftx_given(self, leftx):
@@ -216,9 +219,10 @@ class BaseView(PycursesObject):
 		x_align_namespace = {
 			'halign' : halign,
 			'leftx' : leftx_given,
+			'default' : halign,
 		}
 		# Calculate and assign variables:
-		self.leftx, self.rightx = _calculate_helper(x_align_namespace)
+		self.leftx, self.rightx = self._calculate_helper(x_align_namespace)
 	
 	@log
 	def _calculate_padding(self):
@@ -241,6 +245,6 @@ class BaseView(PycursesObject):
 			'padding' : lambda padding : (padding, padding),
 			'xpadding' : asym_padding,
 			'ypadding' : asym_padding,
-			'default' : lambda : (0, 0),
+			'default' : lambda *default : (0, 0),
 		}
-		self.ypadding, self.xpadding = _calculate_helper(padding_namespace)
+		self.ypadding, self.xpadding = self._calculate_helper(padding_namespace)
