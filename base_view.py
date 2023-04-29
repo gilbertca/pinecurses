@@ -67,9 +67,12 @@ class BaseView(PycursesObject):
 		"""
 		# Iterate through self's dict and draw all items:
 		for item_key in self:
-			item_instance = self.get('item_key')
+			item_instance = self.get(item_key)
 			display_string_iterable = item_instance.get_display_string_iterable()
-			if self.get_writable_height() != 0:
+			writable_height = self.get_writable_height()
+			if writable_height != 0:
+				for display_string in display_string_iterable:
+					self.window.addstr(display_string)
 
 	@log
 	def get_writable_width(self):
@@ -80,7 +83,7 @@ class BaseView(PycursesObject):
 		return writable_width
 			
 	@log
-	def get_writable_height():
+	def get_writable_height(self):
 		"""
 		Returns an integer equal to the number of writable lines in the current window.
 		"""
