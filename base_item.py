@@ -9,6 +9,7 @@ class BaseItem(PycursesObject):
 	def __init__(self, parent_view_instance, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
 		self.view = parent_view_instance
+		self.is_drawn = False
 
 	def get_display_string_iterable(self):
 		"""

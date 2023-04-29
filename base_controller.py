@@ -13,6 +13,16 @@ class BaseController(PycursesObject):
 		super().__init__(self, *args, **kwargs)
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.stdscr = stdscr
+		self.CURSES_COLOR_MAP = {
+			'black' : curses.COLOR_BLACK,
+			'red' : curses.COLOR_RED,
+			'green' : curses.COLOR_GREEN,
+			'yellow' : curses.COLOR_YELLOW,
+			'blue' : curses.COLOR_BLUE,
+			'magenta' : curses.COLOR_MAGENTA,
+			'cyan' : curses.COLOR_CYAN,
+			'white' : curses.COLOR_WHITE,
+		}
 
 	@log
 	def begin(self):
@@ -20,7 +30,7 @@ class BaseController(PycursesObject):
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
 		"""
-		self.initialize_views()
+		self.initialize_all_views()
 		self.draw_all_views()
 		self['base_view'].window.getch()
 		# End program:
@@ -39,7 +49,7 @@ class BaseController(PycursesObject):
 		self.update({view_instance.attributes('name') : view_instance})
 	
 	@log
-	def initialize_views(self):
+	def initialize_all_views(self):
 		"""
 		Iterates through self's dictionary and calls 'initialize' on all views.
 		"""
@@ -60,15 +70,4 @@ class BaseController(PycursesObject):
 		"""
 		Draws a particular view from a View instance.
 		"""
-		# Get the iterable for the display string:
-		for item_key in view_instance:
-			item_instance = view_instance.get(item_key)
-			display_string_iterable = item_instance.get_display_string_iterable()
-			# Final step:
-			# NOTE: The following must be replaced with more generic terms,
-			#	and must allow for attributes, positions, etc.
-			lines_written = 0
-			for display_string in display_string_iterable:
-				view_instance.window.addstr(lines_written, 0, display_string)
-				lines_written += 1
-			view_instance.refresh()
+		view_instance.draw_self()

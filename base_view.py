@@ -55,12 +55,43 @@ class BaseView(PycursesObject):
 		pass
 
 	@log
+	def draw_self(self):
+		"""
+		Adds all of it's writable items to the screen
+			but does not refresh the screen.
+		This gives the Controller control of refreshes,
+			and can allow for faster screen rendering;
+			i.e. calling win.doupdate and win.noutrefresh vs.
+			multiples calls to standard win.refresh,
+			as mentioned in the Python curses documentation.
+		"""
+		# Iterate through self's dict and draw all items:
+		for item_key in self:
+			item_instance = self.get('item_key')
+			display_string_iterable = item_instance.get_display_string_iterable()
+			if self.get_writable_height() != 0:
+
+	@log
 	def get_writable_width(self):
 		"""
-		Returns an integer equal to the number of writable spaces in the current window.
+		Returns an integer equal to the number of writable columns in the current window.
 		"""
 		writable_width = self.width - (self.xpadding * 2)
 		return writable_width
+			
+	@log
+	def get_writable_height():
+		"""
+		Returns an integer equal to the number of writable lines in the current window.
+		"""
+		# Begin by calculating height of all drawn items:
+		used_height = 0
+		for item_key in self:
+			item_instance = self.get(item_key)
+			if item_instance.is_drawn:
+				used_height += item_instance.height
+		# Formula: total height - top and bottom padding - used height
+		return (self.height - (2 * self.ypadding) - used_height)
 
 	@log
 	def refresh(self):
