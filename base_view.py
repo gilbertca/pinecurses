@@ -70,38 +70,29 @@ class BaseView(PycursesObject):
 			item_instance.is_drawn = True
 
 	@log
-	def draw_all_lines(item_instance, writable_height, writable_width):
+	def draw_all_lines(self, item_instance, writable_height, writable_width):
 		"""
 		Takes an Item instance and adds all lines to the screen.
 		"""
 		display_string_iterable = item_instance.get_display_string_iterable()
 		lines_written = 0
-		x_value = 0
-		y_value = self.height - (writable_height -
+		# x and y values can be assigned to the length of the 'unwritable' length,
+		# 	because the *next writable index* is equal to that length.
+		x_value = self.xpadding
+		y_value = self.ypadding + self.get_height_of_items()
 		attributes = []
-		# Calculate the start Y-coordinate: think about the inverse of the rectangles
+		# Remember: Items format themselves!
 		for display_string in display_string_iterable:
-			self.window.addstr(y, x, display_string[:writable_width], attributes)
+			self.window.addstr(y, x, display_string, attributes)
+			lines_written += 1
 
 	@log
 	def draw_self(self):
 		"""
-		Adds all of it's writable items to the screen
-			but does not refresh the screen.
-		This gives the Controller control of refreshes,
-			and can allow for faster screen rendering;
-			i.e. calling win.doupdate and win.noutrefresh vs.
-			multiples calls to standard win.refresh,
-			as mentioned in the Python curses documentation.
+		Draws self by running self.draw_all_items() and self.refresh()
 		"""
-		# Iterate through self's dict and draw all items:
-		for item_key in self:
-			item_instance = self.get(item_key)
-			display_string_iterable = item_instance.get_display_string_iterable()
-			writable_height = self.get_writable_height()
-			if writable_height != 0:
-				for display_string in display_string_iterable:
-					self.window.addstr(display_string)
+		self.draw_all_items()
+		self.refresh()
 
 	@log
 	def get_writable_width(self):
@@ -116,14 +107,22 @@ class BaseView(PycursesObject):
 		"""
 		Returns an integer equal to the number of writable lines in the current window.
 		"""
-		# Begin by calculating height of all drawn items:
-		used_height = 0
+		height_of_items = self.get_height_of_items()
+		# Formula: total height - top and bottom padding - used height
+		return (self.height - (2 * self.ypadding) - height_of_items)
+		
+	@log
+	def get_height_of_items()
+		"""
+		Returns an integer as the height of all items where
+			Item.is_drawn is True.
+		"""
+		height = 0
 		for item_key in self:
 			item_instance = self.get(item_key)
 			if item_instance.is_drawn:
-				used_height += item_instance.height
-		# Formula: total height - top and bottom padding - used height
-		return (self.height - (2 * self.ypadding) - used_height)
+				height += item_instance.height
+		return height
 
 	@log
 	def refresh(self):
