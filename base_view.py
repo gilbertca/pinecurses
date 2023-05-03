@@ -55,6 +55,35 @@ class BaseView(PycursesObject):
 		pass
 
 	@log
+	def draw_all_items(self):
+		"""
+		Iterates through all items and calls self.draw_item(..) on each.
+		"""
+		for item_key in self: # Iterate through self's dict:
+			item_instance = self.get(item_key)
+			writable_height = self.get_writable_height()
+			writable_width = self.get_writable_width()
+			# Determine if item CAN be written to the screen:
+			if writable_height != 0 and writeable_width != 0:
+				self.draw_all_lines(item_instance, writable_height, writable_width)
+			# Finish by assigning True to item_instance.is_drawn:
+			item_instance.is_drawn = True
+
+	@log
+	def draw_all_lines(item_instance, writable_height, writable_width):
+		"""
+		Takes an Item instance and adds all lines to the screen.
+		"""
+		display_string_iterable = item_instance.get_display_string_iterable()
+		lines_written = 0
+		x_value = 0
+		y_value = self.height - (writable_height -
+		attributes = []
+		# Calculate the start Y-coordinate: think about the inverse of the rectangles
+		for display_string in display_string_iterable:
+			self.window.addstr(y, x, display_string[:writable_width], attributes)
+
+	@log
 	def draw_self(self):
 		"""
 		Adds all of it's writable items to the screen
