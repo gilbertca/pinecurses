@@ -64,7 +64,7 @@ class BaseView(PycursesObject):
 			writable_height = self.get_writable_height()
 			writable_width = self.get_writable_width()
 			# Determine if item CAN be written to the screen:
-			if writable_height != 0 and writeable_width != 0:
+			if writable_height != 0 and writable_width != 0:
 				self.draw_all_lines(item_instance, writable_height, writable_width)
 			# Finish by assigning True to item_instance.is_drawn:
 			item_instance.is_drawn = True
@@ -78,13 +78,16 @@ class BaseView(PycursesObject):
 		lines_written = 0
 		# x and y values can be assigned to the length of the 'unwritable' length,
 		# 	because the *next writable index* is equal to that length.
-		x_value = self.xpadding
-		y_value = self.ypadding + self.get_height_of_items()
+		x = self.xpadding
+		y = self.ypadding + self.get_height_of_items()
 		attributes = []
 		# Remember: Items format themselves!
 		for display_string in display_string_iterable:
-			self.window.addstr(y, x, display_string, attributes)
-			lines_written += 1
+			if (writable_height - lines_written) > 0:
+				self.window.addstr(y+lines_written, x, display_string, *attributes)
+				lines_written += 1
+		item_instance.height = lines_written
+		item_instance.width = writable_width
 
 	@log
 	def draw_self(self):
@@ -112,7 +115,7 @@ class BaseView(PycursesObject):
 		return (self.height - (2 * self.ypadding) - height_of_items)
 		
 	@log
-	def get_height_of_items()
+	def get_height_of_items(self):
 		"""
 		Returns an integer as the height of all items where
 			Item.is_drawn is True.

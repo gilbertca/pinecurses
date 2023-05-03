@@ -33,7 +33,6 @@ class BaseController(PycursesObject):
 		self.initialize_all_views()
 		self.draw_all_views()
 		view_instance = self['base_view']
-		view_instance.refresh()
 		view_instance.window.getch()
 		# End program:
 		return 0
