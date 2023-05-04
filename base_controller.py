@@ -32,6 +32,7 @@ class BaseController(PycursesObject):
 		"""
 		self.initialize_all_views()
 		self.draw_all_views()
+		self.map_colors()
 		view_instance = self['base_view']
 		view_instance.window.getch()
 		# End program:
@@ -72,3 +73,32 @@ class BaseController(PycursesObject):
 		Draws a particular view from a View instance.
 		"""
 		view_instance.draw_self()
+
+	@log
+	def map_colors(self, view_instance):
+		"""
+		Maps all colors within the Controller.
+		"""
+		self.colors.update({view : {}})
+		color_attributes = view_instance.get_color_attributes()
+		# Iterate through color defining attributes:
+		for color_key in color_attributes:
+			next_pair_number = self._next_color_pair()
+
+	@log
+	def _next_color_pair(self):
+		"""
+		Returns an integer equal to the next init-able curses color pair.
+		"""
+		count = 0
+		# Iterate and count through all views:
+		for view_key in self:
+			view_instance = self.get(view_key)
+			color_dict = self.colors.get(view_instance)
+			# Iterate through the View's color dictionary:
+			for color_key in color_dict:
+				# Remember: color_integer is a curses color pair.
+				color_integer = color_dict.get(color_key)
+				if color_integer > 0:
+					count += 1
+		return count

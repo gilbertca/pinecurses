@@ -98,6 +98,28 @@ class BaseView(PycursesObject):
 		self.refresh()
 
 	@log
+	def get_color_attributes(self):
+		"""
+		Returns all attributes which contain "color" within their key.
+		Returns "text_color" : 0 and "background_color" : 0 if they
+			are not contained within self.ATTRIBUTES.
+		"""
+		# TODO: REPLACE HARD-CODING FOR DEFAULTS
+		_defaults = {'text_color' : 0, 'background_color': 0}
+		color_dict = {}
+		# Find all attributes which contain "color":
+		for attribute_key in self.ATTRIBUTES:
+			if "color" in attribute_key:
+				color_dict.update({attribute_key : self.attributes(attribute_key)})
+		# Ensure default attributes are contained within color_dict:
+		for default_key in _defaults:
+			# If color_dict does not contain one of the default values:
+			if not color_dict.get(default_key):
+				color_dict.update({default_key : _defaults.get(default_key)})
+		# Finally, return the color dictionary for self.
+		return color_dict
+
+	@log
 	def get_writable_width(self):
 		"""
 		Returns an integer equal to the number of writable columns in the current window.
