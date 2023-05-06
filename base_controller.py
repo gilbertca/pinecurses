@@ -34,6 +34,7 @@ class BaseController(PycursesObject):
 		self.initialize_all_views()
 		self.draw_all_views()
 		self.map_all_colors()
+		print(self.colors)
 		view_instance = self['base_view']
 		view_instance.window.getch()
 		# End program:
@@ -100,7 +101,7 @@ class BaseController(PycursesObject):
 			if color_value == 0:
 				self.colors.get(view_name).update({color_key : 0})
 			else: # i.e. color_value is a string!
-				curses_color_integer = self.CURSES_COLOR_MAP.get(color_key)
+				curses_color_integer = self.CURSES_COLOR_MAP.get(color_value)
 				self.colors.get(view_name).update({color_key : curses_color_integer})
 
 	@log
