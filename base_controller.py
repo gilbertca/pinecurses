@@ -96,8 +96,12 @@ class BaseController(PycursesObject):
 		# Iterate through color defining attributes:
 		for color_key in color_attributes:
 			color_value = color_attributes.get(color_key)
+			# color_attributes will contain default values automatically!
 			if color_value == 0:
 				self.colors.get(view_name).update({color_key : 0})
+			else: # i.e. color_value is a string!
+				curses_color_integer = self.CURSES_COLOR_MAP.get(color_key)
+				self.colors.get(view_name).update({color_key : curses_color_integer})
 
 	@log
 	def _next_color_pair(self):
