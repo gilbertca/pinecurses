@@ -23,6 +23,7 @@ class BaseController(PycursesObject):
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
+		self.colors = {}
 
 	@log
 	def begin(self):
@@ -32,7 +33,7 @@ class BaseController(PycursesObject):
 		"""
 		self.initialize_all_views()
 		self.draw_all_views()
-		self.map_colors()
+		self.map_all_colors()
 		view_instance = self['base_view']
 		view_instance.window.getch()
 		# End program:
@@ -75,15 +76,28 @@ class BaseController(PycursesObject):
 		view_instance.draw_self()
 
 	@log
+	def map_all_colors(self):
+		"""
+		Iterates through all Views contained within self's dict
+		and maps their colors in self.colors..
+		"""
+		for view_key in self:
+			view_instance = self.get(view_key)
+			self.map_colors(view_instance)
+
+	@log
 	def map_colors(self, view_instance):
 		"""
 		Maps all colors within the Controller.
 		"""
-		self.colors.update({view : {}})
+		view_name = view_instance.attributes('name')
+		self.colors.update({view_name : {}})
 		color_attributes = view_instance.get_color_attributes()
 		# Iterate through color defining attributes:
 		for color_key in color_attributes:
-			next_pair_number = self._next_color_pair()
+			color_value = color_attributes.get(color_key)
+			if color_value == 0:
+				self.colors.get(view_name).update({color_key : 0})
 
 	@log
 	def _next_color_pair(self):
@@ -93,8 +107,8 @@ class BaseController(PycursesObject):
 		count = 0
 		# Iterate and count through all views:
 		for view_key in self:
-			view_instance = self.get(view_key)
-			color_dict = self.colors.get(view_instance)
+			view_name = self.get(view_key).attributes('name')
+			color_dict = self.colors.get(view_name)
 			# Iterate through the View's color dictionary:
 			for color_key in color_dict:
 				# Remember: color_integer is a curses color pair.
