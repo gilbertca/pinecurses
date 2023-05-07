@@ -24,7 +24,7 @@ class BaseController(PycursesObject):
 			'white' : curses.COLOR_WHITE,
 		}
 		self.colors = {}
-        self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
+		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 
 	@log
 	def begin(self):
@@ -33,12 +33,23 @@ class BaseController(PycursesObject):
 			then the program will end.
 		"""
 		self.initialize_all_views()
-		self.draw_all_views()
 		self.map_all_colors()
+		print(self.colors)
+		self.draw_all_views()
 		view_instance = self['base_view']
 		view_instance.window.getch()
 		# End program:
 		return 0
+
+	@log
+	def color(self, view_name, color_name):
+		"""
+		A shortcut for accessing the nested structure of self.colors.
+			colors = {
+				{"view_name" : {"text_color" : 1 <-- returns this}},
+			}
+		"""
+		return self.colors.get(view_name).get(color_name)
 
 	@log
 	def create_view(self, **attributes):
@@ -125,7 +136,7 @@ class BaseController(PycursesObject):
 		"""
 		Returns an integer equal to the next init-able curses color pair.
 		"""
-		count = 0
+		count = 1
 		# Iterate and count through all views:
 		for view_key in self:
 			view_name = self.get(view_key).attributes('name')

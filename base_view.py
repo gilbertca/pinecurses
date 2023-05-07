@@ -32,6 +32,7 @@ class BaseView(PycursesObject):
 		Perhaps this should be run with each resize after the parent Controller
 			modifies the View-Instance's attributes.
 		"""
+		self.name = self.attributes('name')
 		self._calculate_height()
 		self._calculate_width()
 		self._calculate_window_y_coords()
@@ -80,11 +81,11 @@ class BaseView(PycursesObject):
 		# 	because the *next writable index* is equal to that length.
 		x = self.xpadding
 		y = self.ypadding + self.get_height_of_items()
-		attributes = []
+		color_integer = self.controller.color(self.name, 'text_color')
 		# Remember: Items format themselves!
 		for display_string in display_string_iterable:
 			if (writable_height - lines_written) > 0:
-				self.window.addstr(y+lines_written, x, display_string, *attributes)
+				self.window.addstr(y+lines_written, x, display_string, curses.color_pair(color_integer))
 				lines_written += 1
 		item_instance.height = lines_written
 		item_instance.width = writable_width
