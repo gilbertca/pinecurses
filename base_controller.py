@@ -24,6 +24,7 @@ class BaseController(PycursesObject):
 			'white' : curses.COLOR_WHITE,
 		}
 		self.colors = {}
+        self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 
 	@log
 	def begin(self):
@@ -34,7 +35,6 @@ class BaseController(PycursesObject):
 		self.initialize_all_views()
 		self.draw_all_views()
 		self.map_all_colors()
-		print(self.colors)
 		view_instance = self['base_view']
 		view_instance.window.getch()
 		# End program:
@@ -97,12 +97,28 @@ class BaseController(PycursesObject):
 		# Iterate through color defining attributes:
 		for color_key in color_attributes:
 			color_value = color_attributes.get(color_key)
+			pair_number = self._next_color_pair()
 			# color_attributes will contain default values automatically!
-			if color_value == 0:
+			# TODO: NEED 3 CASES: 0 VALUE, STRING VALUE, LIST VALUE
+			if color_value == 0: # Map default black on white case:
+				# Remember: No need to initialize pair number 0
+				#	due to curses' hardcoded values.
 				self.colors.get(view_name).update({color_key : 0})
-			else: # i.e. color_value is a string!
-				curses_color_integer = self.CURSES_COLOR_MAP.get(color_value)
-				self.colors.get(view_name).update({color_key : curses_color_integer})
+			elif isinstance(color_value, str): # Map text on default background:
+				# Request the Controller's default background:
+				colors = [self.CURSES_COLOR_MAP.get(color_value), self.DEFAULT_BACKGROUND_COLOR]
+				# Update self's reference from 'text_color' to a curses pair number:
+				self.colors.get(view_name).update({color_key : pair_number})
+				# Finally initialize the pair within curses:
+				curses.init_pair(pair_number, *colors)
+			elif isinstance(color_value, list): # Map text and background:
+				# Begin by taking the names of the colors, and getting
+				#	their curses counterpart integers, and pack into a lis:
+				colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
+				# Update the reference in self.colors:
+				self.colors.get(view_name).update({color_key : pair_number})
+				# Initialize the pair within cursees:
+				curses.init_pair(pair_number, *colors)
 
 	@log
 	def _next_color_pair(self):
