@@ -34,7 +34,6 @@ class BaseController(PycursesObject):
 		"""
 		self.initialize_all_views()
 		self.map_all_colors()
-		print(self.colors)
 		self.draw_all_views()
 		view_instance = self['base_view']
 		view_instance.window.getch()

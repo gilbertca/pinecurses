@@ -79,7 +79,11 @@ class BaseView(PycursesObject):
 		# Remember: Items format themselves!
 		for display_string in display_string_iterable:
 			if (writable_height - lines_written) > 0:
+				# Add the string to the window (does not refresh).
 				self.window.addstr(y+lines_written, x, display_string, curses.color_pair(color_integer))
+				# Populate the Item's dictionary with the display strings:
+				item_instance.update({lines_written : display_string})
+				# Increment line counter:
 				lines_written += 1
 		item_instance.height = lines_written
 		item_instance.width = writable_width
