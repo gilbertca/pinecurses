@@ -33,6 +33,7 @@ class BaseView(PycursesObject):
 			modifies the View-Instance's attributes.
 		"""
 		self.name = self.attributes('name')
+		self.background_character = self.attributes('background_character') if self.attributes('background_character') else ' '
 		self._calculate_height()
 		self._calculate_width()
 		self._calculate_window_y_coords()
@@ -47,13 +48,6 @@ class BaseView(PycursesObject):
 			can create a curses pad instance.
 		"""
 		self.window = curses.newpad(self.height, self.width)
-
-	@log
-	def set_background(self):
-		"""
-		Sets the background attributes of the screen.
-		"""
-		pass
 
 	@log
 	def draw_all_items(self):
@@ -91,11 +85,20 @@ class BaseView(PycursesObject):
 		item_instance.width = writable_width
 
 	@log
+	def draw_background(self):
+		"""
+		Sets the background character and color.
+		"""
+		color_integer = self.controller.color(self.name, 'background_color')
+		self.window.bkgd(self.background_character, curses.color_pair(color_integer))
+
+	@log
 	def draw_self(self):
 		"""
 		Draws self by running self.draw_all_items() and self.refresh()
 		"""
 		self.draw_all_items()
+		self.draw_background()
 		self.refresh()
 
 	@log
