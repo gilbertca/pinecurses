@@ -46,7 +46,7 @@ class BaseController(PycursesObject):
 		"""
 		A shortcut for accessing the nested structure of self.colors.
 			colors = {
-				{"view_name" : {"text_color" : 1 <-- returns this}},
+				{"view_name" : {"color_name" : 1 <-- returns this}},
 			}
 		"""
 		return self.colors.get(view_name).get(color_name)
