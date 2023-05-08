@@ -2,5 +2,5 @@
 	"name":"base_view",
 	"text_color":["red","cyan"],
 	"background_color":["red","white"],
-	"background_character":"8"
+	"background_character":" "
 }
