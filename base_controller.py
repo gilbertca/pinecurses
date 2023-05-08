@@ -41,6 +41,17 @@ class BaseController(PycursesObject):
 		return 0
 
 	@log
+	def interact(self):
+		"""
+		TODO: The addition of cursor objects. Otherwise, pycurses will have to check ALL Items,
+			Views, and Controllers for functions in self.functions.
+			It must be determined how sensitive to commands we want the program to be.
+		"""
+		while True:
+			function = None # Required for references to function
+			response = self.get
+
+	@log
 	def color(self, view_name, color_name):
 		"""
 		A shortcut for accessing the nested structure of self.colors.
