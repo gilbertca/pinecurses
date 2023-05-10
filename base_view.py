@@ -9,10 +9,8 @@ class BaseView(PycursesObject):
 	"""
 	The base View class which controls all items of a Pycurses program.
 	"""
-	def __init__(self, parent_controller_instance, *args, **kwargs):
+	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
-		# Assign parent:
-		self.controller = parent_controller_instance
 
 	@log
 	def create_item(self, **attributes):
@@ -26,13 +24,14 @@ class BaseView(PycursesObject):
 		self.update({item_instance.attributes('name') : item_instance})
 
 	@log
-	def initialize(self):
+	def initialize(self, parent_controller_instance):
 		"""
 		Runs all calculations and sets all attributes for a View instance.
 		Perhaps this should be run with each resize after the parent Controller
 			modifies the View-Instance's attributes.
 		"""
 		self.name = self.attributes('name')
+		self.controller = parent_controller_instance
 		self.background_character = self.attributes('background_character') if self.attributes('background_character') else ' '
 		self._calculate_height()
 		self._calculate_width()

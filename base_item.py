@@ -6,9 +6,8 @@ class BaseItem(PycursesObject):
 	"""
 	The base Item which determines how strings / buttons / etc. should be displayed.
 	"""
-	def __init__(self, parent_view_instance, *args, **kwargs):
+	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
-		self.view = parent_view_instance
 		self.is_drawn = False
 		self.height = 0
 		self.width = 0
@@ -40,3 +39,10 @@ class BaseItem(PycursesObject):
 				return_iterable.append(iter_string[:writable_width])
 		# And return the list of strings:
 		return return_iterable
+
+    def initialize(self, parent_view_instance):
+        """
+        Sets attributes for the ItemInstance once all
+            objects have been created.
+        """
+        self.view = parent_view_instance
