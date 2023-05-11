@@ -1,7 +1,5 @@
 import json
-import logging
 import os
-from datetime import datetime
 from base_controller import BaseController
 from base_view import BaseView
 from base_item import BaseItem
@@ -35,7 +33,7 @@ def parse_json_folder(base_directory):
 	def create_objects(json_file_list, ClassReference):
 		"""
 		Takes a list of files, and a reference to a class definition.
-		Returns a list containing instantiared instances of the
+		Returns a list containing instantiated instances of the
 			ClassReference for each json file.
 		"""
 		return_object_list = []
@@ -66,19 +64,3 @@ def parse_json_folder(base_directory):
 				return_objects_dict.update({key : object_instance_list})
 	# Return dict structure: {classname : [ClassInstance1, ClassInstance2, ...],}
 	return return_objects_dict
-
-def log(function):
-	"""
-	Decorator to log info about internal functions and handle errors.
-	"""
-	def log(*args, **kwargs):
-		# String extractions done here:
-		logging.debug(f"{datetime.now()} Function: * {function.__name__} * from: * {function.__globals__.get('__file__')} *")
-		#logging.info(f"{datetime.now()} Attempting {function.__name__}.")
-		try: # For unhandleable exceptions
-			return function(*args, **kwargs)
-		except Exception as e: # For unhandleable exceptions
-			logging.critical(f"*Critical error* * {datetime.now()} * with * {function.__name__} * due to {e}")
-			raise
-	
-	return log
