@@ -1,7 +1,7 @@
 import curses
 import logging
 from pycurses_object import PycursesObject
-from utils import log
+from logging import log
 
 
 class BaseController(PycursesObject):
