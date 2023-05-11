@@ -30,7 +30,7 @@ def parse_json_folder(base_directory):
 		each json file.
     Uses os.walk to traverse the file tree.
 	"""
-	def create_objects(json_file_list, ClassReference):
+	def create_objects(base_directory, json_file_list, ClassReference):
 		"""
 		Takes a list of files, and a reference to a class definition.
 		Returns a list containing instantiated instances of the
@@ -38,7 +38,7 @@ def parse_json_folder(base_directory):
 		"""
 		return_object_list = []
 		for json_file in json_file_list:
-			kwargs = parse_json(json_file)
+			kwargs = parse_json(base_directory + json_file)
 			new_object = ClassReference(**kwargs)
 			return_object_list.append(new_object)
 		return return_object_list
@@ -60,7 +60,7 @@ def parse_json_folder(base_directory):
 		for key in class_namespace:
 			if key in current_dir_name:
 				ClassReference = class_namespace.get(key)
-				object_instance_list = create_objects(files_list, ClassRefoerence)
+				object_instance_list = create_objects(base_directory, files_list, ClassReference)
 				return_objects_dict.update({key : object_instance_list})
 	# Return dict structure: {classname : [ClassInstance1, ClassInstance2, ...],}
 	return return_objects_dict
