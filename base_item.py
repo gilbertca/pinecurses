@@ -1,5 +1,5 @@
 from pycurses_object import PycursesObject
-from utils import log
+from logger import log
 
 
 class BaseItem(PycursesObject):
