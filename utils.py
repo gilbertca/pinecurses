@@ -38,7 +38,7 @@ def parse_json_folder(base_directory):
 		"""
 		return_object_list = []
 		for json_file in json_file_list:
-			kwargs = parse_json(base_directory + json_file)
+			kwargs = parse_json(f"{base_directory}/{json_file}")
 			new_object = ClassReference(**kwargs)
 			return_object_list.append(new_object)
 		return return_object_list
