@@ -8,10 +8,9 @@ class BaseController(PycursesObject):
 	"""
 	The base controller class which  controls all other aspects of a Pycurses program.
 	"""
-	def __init__(self, stdscr, *args, **kwargs):
+	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
-		self.stdscr = stdscr
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
@@ -25,17 +24,20 @@ class BaseController(PycursesObject):
 		self.colors = {}
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 
-	@log
-	def begin(self):
+	def begin(self, stdscr):
 		"""
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
 		"""
+		# TODO: NEED TO TAKE THAT OBJECT_DICT
+		self.stdscr = stdscr
 		self.initialize_all_views()
 		self.map_all_colors()
 		self.draw_all_views()
-		view_instance = self['base_view']
-		view_instance.window.getch()
+
+		self.stdscr.addstr(f"{self}")
+		self.stdscr.refresh()
+		self.stdscr.getch()
 		# End program:
 		return 0
 
