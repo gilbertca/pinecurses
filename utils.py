@@ -60,7 +60,7 @@ def parse_json_folder(base_directory):
 		for key in class_namespace:
 			if key in current_dir_name:
 				ClassReference = class_namespace.get(key)
-				object_instance_list = create_objects(base_directory, files_list, ClassReference)
+				object_instance_list = create_objects(current_dir_name, files_list, ClassReference)
 				return_objects_dict.update({key : object_instance_list})
 	# Return dict structure: {classname : [ClassInstance1, ClassInstance2, ...],}
 	return return_objects_dict
