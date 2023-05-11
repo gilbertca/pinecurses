@@ -1,7 +1,6 @@
 import math
 import curses
 from pycurses_object import PycursesObject
-from base_item import BaseItem
 from utils import log
 
 

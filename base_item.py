@@ -40,9 +40,9 @@ class BaseItem(PycursesObject):
 		# And return the list of strings:
 		return return_iterable
 
-    def initialize(self, parent_view_instance):
-        """
-        Sets attributes for the ItemInstance once all
-            objects have been created.
-        """
-        self.view = parent_view_instance
+	def initialize(self, parent_view_instance):
+		"""
+		Sets attributes for the ItemInstance once all
+			objects have been created.
+		"""
+		self.view = parent_view_instance

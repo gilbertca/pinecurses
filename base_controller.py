@@ -1,7 +1,6 @@
 import curses
 import logging
 from pycurses_object import PycursesObject
-from base_view import BaseView
 from utils import log
 
 
