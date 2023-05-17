@@ -29,15 +29,12 @@ class BaseController(PycursesObject):
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
 		"""
-		# TODO: NEED TO TAKE THAT OBJECT_DICT
 		self.stdscr = stdscr
 		self.initialize(**object_dict)
 		self.map_all_colors()
 		self.draw_all_views()
-
-		self.stdscr.addstr(f"{self}")
-		self.stdscr.refresh()
-		self.stdscr.getch()
+		self.get('base_view').refresh()
+		self.get('base_view').window.getch()
 		# End program:
 		return 0
 

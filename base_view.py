@@ -72,8 +72,8 @@ class BaseView(PycursesObject):
 			# Determine if item CAN be written to the screen:
 			if writable_height != 0 and writable_width != 0:
 				self.draw_all_lines(item_instance, writable_height, writable_width)
-			# Finish by assigning True to item_instance.is_drawn:
-			item_instance.is_drawn = True
+				# Finish by assigning True to item_instance.is_drawn:
+				item_instance.is_drawn = True
 
 	@log
 	def draw_all_lines(self, item_instance, writable_height, writable_width):
