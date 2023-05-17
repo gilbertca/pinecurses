@@ -1,6 +1,6 @@
 {
 	"name":"base_view",
-	"text_color":["yellow","cyan"],
+	"text_color":["black","cyan"],
 	"background_color":["red","blue"],
 	"hpercent":50,
 	"vpercent":50,
