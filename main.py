@@ -7,7 +7,7 @@ def main(stdscr):
 	"""
 	object_dict = parse_json_folder('./json')
 	controller = object_dict.get('controllers')[0]
-	controller.begin(stdscr)
+	controller.begin(stdscr, **object_dict)
 
 
 if __name__ == "__main__":

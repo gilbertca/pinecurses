@@ -23,7 +23,7 @@ class BaseView(PycursesObject):
 		self.update({item_instance.attributes('name') : item_instance})
 
 	@log
-	def initialize(self, parent_controller_instance):
+	def initialize(self, parent_controller_instance, **object_dict):
 		"""
 		Runs all calculations and sets all attributes for a View instance.
 		Perhaps this should be run with each resize after the parent Controller
@@ -38,6 +38,19 @@ class BaseView(PycursesObject):
 		self._calculate_window_x_coords()
 		self._calculate_padding()
 		self.create_curses_pad()
+		self.initialize_all_items(**object_dict)
+
+	@log
+	def initialize_all_items(self, **object_dict):
+		"""
+		Runs Item.initialize(..) on all ItemInstances from
+			the object_dict.
+		Also adds references to the items in self's dict.
+		"""
+		item_list = object_dict.get('items')
+		for item_instance in item_list:
+			self.update({item_instance.attributes('name') : item_instance})
+			item_instance.initialize(self)
 
 	@log
 	def create_curses_pad(self):

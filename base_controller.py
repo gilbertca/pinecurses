@@ -24,14 +24,14 @@ class BaseController(PycursesObject):
 		self.colors = {}
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 
-	def begin(self, stdscr):
+	def begin(self, stdscr, **object_dict):
 		"""
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
 		"""
 		# TODO: NEED TO TAKE THAT OBJECT_DICT
 		self.stdscr = stdscr
-		self.initialize_all_views()
+		self.initialize(**object_dict)
 		self.map_all_colors()
 		self.draw_all_views()
 
@@ -63,24 +63,14 @@ class BaseController(PycursesObject):
 		return self.colors.get(view_name).get(color_name)
 
 	@log
-	def create_view(self, **attributes):
+	def initialize(self, **object_dict):
 		"""
-		Since Views are to be ignorant of curses,
-			their window object must be created by
-			their parent Controller instance.
+		Adds references to all View instances within self's dict object.
 		"""
-		# Instantiate instance of a view:
-		view_instance = BaseView(self, **attributes)
-		# Update self's dictionary as {name : instance}:
-		self.update({view_instance.attributes('name') : view_instance})
-	
-	@log
-	def initialize_all_views(self):
-		"""
-		Iterates through self's dictionary and calls 'initialize' on all views.
-		"""
-		for view_name in self:
-			self.get(view_name).initialize()
+		view_list = object_dict.get('views')
+		for view_instance in view_list:
+			self.update({view_instance.attributes('name') : view_instance})
+			view_instance.initialize(self, **object_dict)
 
 	@log
 	def draw_all_views(self):
