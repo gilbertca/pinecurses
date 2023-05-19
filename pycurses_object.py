@@ -11,6 +11,8 @@ class PycursesObject(dict):
 		self.ATTRIBUTES = attributes
 		# Shortcut for ATTRIBUTES:
 		self.attributes = lambda name : self.ATTRIBUTES.get(name)
+		# Child/Parent objects:
+		self.parent = None
 
 	def add_function(self, key, callback):
 		"""

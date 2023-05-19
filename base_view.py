@@ -30,7 +30,7 @@ class BaseView(PycursesObject):
 			modifies the View-Instance's attributes.
 		"""
 		self.name = self.attributes('name')
-		self.controller = parent_controller_instance
+		self.parent = parent_controller_instance
 		self.background_character = self.attributes('background_character') if self.attributes('background_character') else ' '
 		self._calculate_height()
 		self._calculate_width()

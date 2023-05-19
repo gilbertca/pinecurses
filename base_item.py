@@ -45,4 +45,4 @@ class BaseItem(PycursesObject):
 		Sets attributes for the ItemInstance once all
 			objects have been created.
 		"""
-		self.view = parent_view_instance
+		self.parent = parent_view_instance
