@@ -21,7 +21,7 @@ class BaseItem(PycursesObject):
 			2. Controller specific tests
 		This code currently just returns a string within the width of the View's window.
 		"""
-		writable_width = self.view.get_writable_width()
+		writable_width = self.parent.get_writable_width()
 		display_string = self.attributes('display_string')
 		display_string_iter = display_string.split('\n')
 		truncation_character = self.attributes('truncation_character')

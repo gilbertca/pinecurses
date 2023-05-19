@@ -86,7 +86,7 @@ class BaseView(PycursesObject):
 		# 	because the *next writable index* is equal to that length.
 		x = self.xpadding
 		y = self.ypadding + self.get_height_of_items()
-		color_integer = self.controller.color(self.name, 'text_color')
+		color_integer = self.parent.color(self.name, 'text_color')
 		# Remember: Items format themselves!
 		for display_string in display_string_iterable:
 			if (writable_height - lines_written) > 0:
@@ -104,7 +104,7 @@ class BaseView(PycursesObject):
 		"""
 		Sets the background character and color.
 		"""
-		color_integer = self.controller.color(self.name, 'background_color')
+		color_integer = self.parent.color(self.name, 'background_color')
 		self.window.bkgd(self.background_character, curses.color_pair(color_integer))
 
 	@log

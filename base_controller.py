@@ -46,21 +46,36 @@ class BaseController(PycursesObject):
 		This is the "main loop" of the program.
 		"""
 		while True:
-			function = None # Required for references to function
+			response = None
 			# These following lines should be replaced with
 			# 	the actual cursor functionality, should a Cursor object be implemented.			
 			cursor = self.get('base_view').window.getch
 			key_press = cursor()
+			# Once we have a key, then retrieve a function
 			key_function = self.functions(key_press)
 			# If key_function exists (i.e. is not None)
-			if key_function
+			if key_function:
+				# Then pass it to self._handle_functtion(..)
+				response = self._handle_function(key_function)
+			# Otherwise, since there is no function,
+			#	attempt to pass the function to one of this PycursesObject's
+			#	child elements. Again, the implementation of the Cursor object
+			#	would be prudent at this time.
 			
 	@log
 	def _handle_function(self, key_function):
 		"""
-		Takes 
+		Takes either a reference to a function and calls it,
+			or a list/tuple of functions and calls them in order.
 		"""
-
+		# If function is iterable:
+		if hasattr(key_function, '__iter__'):
+			for func in key_function:
+				func() # Run each function
+		# Otherwise, just run the function:
+		else:
+			key_function()
+		
 
 	@log
 	def color(self, view_name, color_name):
