@@ -24,6 +24,7 @@ class BaseController(PycursesObject):
 		self.colors = {}
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 
+	@log
 	def begin(self, stdscr, **object_dict):
 		"""
 		The main loop of any pycurses program. Once this function returns anything,
@@ -76,20 +77,13 @@ class BaseController(PycursesObject):
 		"""
 		for view_key in self:
 			view_instance = self.get(view_key)
-			self.draw_view(view_instance)
-
-	@log
-	def draw_view(self, view_instance):
-		"""
-		Draws a particular view from a View instance.
-		"""
-		view_instance.draw_self()
+			view_instance.draw_self()
 
 	@log
 	def map_all_colors(self):
 		"""
 		Iterates through all Views contained within self's dict
-		and maps their colors in self.colors..
+			and maps their colors in self.colors.
 		"""
 		for view_key in self:
 			view_instance = self.get(view_key)
