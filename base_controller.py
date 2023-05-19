@@ -47,8 +47,20 @@ class BaseController(PycursesObject):
 		"""
 		while True:
 			function = None # Required for references to function
+			# These following lines should be replaced with
+			# 	the actual cursor functionality, should a Cursor object be implemented.			
 			cursor = self.get('base_view').window.getch
 			key_press = cursor()
+			key_function = self.functions(key_press)
+			# If key_function exists (i.e. is not None)
+			if key_function
+			
+	@log
+	def _handle_function(self, key_function):
+		"""
+		Takes 
+		"""
+
 
 	@log
 	def color(self, view_name, color_name):
