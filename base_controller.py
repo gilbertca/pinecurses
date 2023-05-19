@@ -34,10 +34,8 @@ class BaseController(PycursesObject):
 		self.initialize(**object_dict)
 		self.map_all_colors()
 		self.draw_all_views()
-		self.get('base_view').refresh()
-		self.get('base_view').window.getch()
-		# End program:
-		return 0
+		# Once self.interact(..) returns a value, program will end.
+		return self.interact()
 
 	@log
 	def interact(self):
@@ -45,16 +43,18 @@ class BaseController(PycursesObject):
 		TODO: The addition of cursor objects. Otherwise, pycurses will have to check ALL Items,
 			Views, and Controllers for functions in self.functions.
 			It must be determined how sensitive to commands we want the program to be.
+		This is the "main loop" of the program.
 		"""
 		while True:
 			function = None # Required for references to function
-			response = self.get
+			cursor = self.get('base_view').window.getch
+			key_press = cursor()
 
 	@log
 	def color(self, view_name, color_name):
 		"""
 		A shortcut for accessing the nested structure of self.colors.
-			colors = {
+			self.colors = {
 				{"view_name" : {"color_name" : 1 <-- returns this}},
 			}
 		"""
