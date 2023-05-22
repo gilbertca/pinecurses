@@ -23,6 +23,7 @@ class BaseController(PycursesObject):
 		}
 		self.colors = {}
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
+		self.FUNCTIONS.update({'x' : lambda:0})
 
 	@log
 	def begin(self, stdscr, **object_dict):
@@ -35,6 +36,7 @@ class BaseController(PycursesObject):
 		self.map_all_colors()
 		self.draw_all_views()
 		# Once self.interact(..) returns a value, program will end.
+		# This is also the *start* of any pycurses project.
 		return self.interact()
 
 	@log
@@ -46,6 +48,7 @@ class BaseController(PycursesObject):
 		This is the "main loop" of the program.
 		"""
 		while True:
+			# Response must be assigned to None for each 'interact'
 			response = None
 			# These following lines should be replaced with
 			# 	the actual cursor functionality, should a Cursor object be implemented.			
@@ -57,11 +60,11 @@ class BaseController(PycursesObject):
 			if key_function:
 				# Then pass it to self._handle_functtion(..)
 				response = self._handle_function(key_function)
-			# Otherwise, since there is no function,
-			#	attempt to pass the function to one of this PycursesObject's
-			#	child elements. Again, the implementation of the Cursor object
-			#	would be prudent at this time.
-			
+			if response:
+				self._handle_response(response)
+			if response == 0:
+				return 0
+
 	@log
 	def _handle_function(self, key_function):
 		"""
@@ -74,8 +77,14 @@ class BaseController(PycursesObject):
 				func() # Run each function
 		# Otherwise, just run the function:
 		else:
-			key_function()
+			return key_function()
 		
+	@log
+	def _handle_response(self, response):
+		"""
+		Pass
+		"""
+		pass
 
 	@log
 	def color(self, view_name, color_name):
