@@ -152,11 +152,11 @@ class BaseController(PycursesObject):
 				curses.init_pair(pair_number, *colors)
 			elif isinstance(color_value, list): # Map text and background:
 				# Begin by taking the names of the colors, and getting
-				#	their curses counterpart integers, and pack into a lis:
+				#	their curses counterpart integers, and pack into a list:
 				colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
 				# Update the reference in self.colors:
 				self.colors.get(view_name).update({color_key : pair_number})
-				# Initialize the pair within cursees:
+				# Initialize the pair within curses:
 				curses.init_pair(pair_number, *colors)
 
 	@log
