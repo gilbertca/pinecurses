@@ -12,7 +12,7 @@ def parse_json(file_name):
 		data = json.load(json_file)
 	return data
 
-def parse_json_folder(base_directory):
+def parse_json_folder(class_namespace, base_directory):
 	"""
 	Takes a directory within ./ named 'json'
 		and programmatically parses the json files within
@@ -43,14 +43,6 @@ def parse_json_folder(base_directory):
 			return_object_list.append(new_object)
 		return return_object_list
 
-	# The class_namespace links the name of the	different classes 
-	#	with class references to which the attributes in the 
-	#	json files are passed for object instantiation.
-	class_namespace = {
-		'controllers' : BaseController,
-		'views' : BaseView,
-		'items' : BaseItem,
-	}
 	# Begin iterating through file structure:
 	return_objects_dict = {}
 	for walk in os.walk(base_directory):
