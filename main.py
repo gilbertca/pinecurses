@@ -7,19 +7,20 @@ from base_item import BaseItem
 class DevelopmentProgram(PycursesProgram):
 
 	def __init__(self, json_directory, *args, **kwargs):
-		super().__init__(self, json_directory, *args, **kwargs)
+		super().__init__(self, *args, **kwargs)
 		self.class_namespace.update({
-			'base_controller' : BaseController,
-			'base_view' : BaseView,
-			'base_item' : BaseItem
+			'controller' : BaseController,
+			'view' : BaseView,
+			'item' : BaseItem
 		})
-		self.initialize()
+		self.initialize(json_directory)
 
 def main(stdscr):
 	"""
 	The main method to run and test the suite.
 	"""
 	program = DevelopmentProgram('./json')
+	print(program.object_dict)
 	return program.begin()
 
 
