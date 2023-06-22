@@ -1,3 +1,5 @@
+import logging
+from logger import log
 from utils import parse_json_folder
 
 class PycursesProgram():
@@ -6,12 +8,14 @@ class PycursesProgram():
 		self.class_namespace = {}
 		self.json_directory = json_directory
 
+	@log
 	def load_objects(self):
 		"""
 		Reads through
 		"""
 		self.object_dict = parse_json_folder(self.class_namespace, self.json_directory)
 
+	@log
 	def begin(self):
 		"""
 		The main method of a PycursesProgram, which must be called as:

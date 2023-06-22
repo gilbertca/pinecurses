@@ -1,5 +1,4 @@
 import curses
-import logging
 from pycurses_object import PycursesObject
 from logger import log
 
@@ -10,7 +9,6 @@ class BaseController(PycursesObject):
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
-		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
