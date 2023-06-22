@@ -1,8 +1,5 @@
 import json
 import os
-from base_controller import BaseController
-from base_view import BaseView
-from base_item import BaseItem
 
 def parse_json(file_name):
 	"""

@@ -1,4 +1,4 @@
-#from utils import parse_json_folder
+from utils import parse_json_folder
 
 class PycursesProgram():
 	
