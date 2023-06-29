@@ -1,11 +1,15 @@
 import curses
+import logging
+from logger import log
 
 class PycursesProgram():
 	
 	def __init__(self, json_directory, *args, **kwargs):
+		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.class_namespace = {}
 		self.json_directory = json_directory
 
+	@log
 	def load_objects(self, json_directory):
 		"""
 		Creates a PycursesParser instance and requests a dictionary
@@ -14,6 +18,7 @@ class PycursesProgram():
 		"""
 		self.object_dict = parse_json_folder(self.class_namespace, self.json_directory)
 
+	@log
 	def begin(self):
 		"""
 		The main method of a PycursesProgram, which must be called as:
@@ -24,6 +29,7 @@ class PycursesProgram():
 		"""
 		curses.wrapper(self._begin)
 
+	@log
 	def _begin(self, stdscr):
 		"""
 		_begin is the primary callback used by PycursesProgram.begin(..).
