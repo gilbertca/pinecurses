@@ -1,6 +1,7 @@
 import curses
 import logging
 from logger import log
+from parsers import JsonParser
 
 class PycursesProgram():
 	
@@ -16,7 +17,8 @@ class PycursesProgram():
 			of name:PycursesObjectInstance pairs created by the
 			PycursesParser from the provided json_directory.
 		"""
-		self.object_dict = parse_json_folder(self.class_namespace, self.json_directory)
+		parser = JsonParser(json_directory)
+		self.pycurses_objects_dict = parser.parse()
 
 	@log
 	def begin(self):
@@ -37,3 +39,4 @@ class PycursesProgram():
 			'curses.wrapper'.
 		"""
 		self.stdscr = stdscr
+		self.load_objects(self.json_directory)
