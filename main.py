@@ -1,28 +1,21 @@
 import curses
 from pycurses_program import PycursesProgram
-#from base_controller import BaseController
-#from base_view import BaseView
-#from base_item import BaseItem
 
 class DevelopmentProgram(PycursesProgram):
 
-	def __init__(self, json_directory, *args, **kwargs):
-		super().__init__(json_directory, *args, **kwargs)
-		"""
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
 		self.class_namespace.update({
-			'controller' : BaseController,
-			'view' : BaseView,
-			'item' : BaseItem
-		})"""
-		self.json_directory = json_directory
+		
+		})
 
-def main(stdscr):
+def main():
 	"""
 	The main method to run and test the suite.
 	"""
 	program = DevelopmentProgram('./json')
-	return program.begin()
+	program.begin()
 
 
 if __name__ == "__main__":
-	curses.wrapper(main)
+	main()
