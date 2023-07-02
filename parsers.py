@@ -20,6 +20,7 @@ class JsonParser(Parser):
 		parse returns a dictionary containing name:PycursesObjects.
 		JsonParser uses json.load(..) to read from .json files.
 		"""
+		pycurses_objects_dict = self.traverse()
 		return pycurses_objects_dict
 
 	def parse_json(self, file_name):
@@ -30,11 +31,15 @@ class JsonParser(Parser):
 			data = json.load(json_file)
 		return data
 
-	def traverse_directories(self):
+	def traverse(self):
 		"""
 		Uses os.walk to traverse through the root directory
-			and 
+			and returns a dictionary containing all
+			name : PycursesObjects pairs.
 		"""
+		def create_instance(ClassReference, json_attributes):
+			return ClassReference(**json_attributes)
+
 		for walk in os.walk(self.root_directory):
-		current_dir_name = walk[0] # Name of current directory
-		filenames_list = walk[2] # List of file names in the current directory
+			current_dir_name = walk[0] # Name of current directory
+			filenames_list = walk[2] # List of file names in the current directory
