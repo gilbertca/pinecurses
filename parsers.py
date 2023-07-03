@@ -39,7 +39,12 @@ class JsonParser(Parser):
 		The attributes for each created object are read from the file_list
 			in the given current_directory_name.
 		"""
-		pass
+		pycurses_objects_list = []
+		for filename in filenames_list:
+			class_attributes = parse_json(f"{self.base_directory}/{current_directory_name}/{filename}")
+			PycursesClass = ClassReference(**class_attributes)
+			pycurses_objects_list.append(PycursesClass)
+		return pycurses_objects_list
 
 	def parse_json(self, file_name):
 		"""
