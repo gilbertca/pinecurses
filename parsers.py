@@ -23,6 +23,15 @@ class JsonParser(Parser):
 		pycurses_objects_dict = self.traverse()
 		return pycurses_objects_dict
 
+	def _create_objects_from_namespace(self, ClassReference, file_list, current_directory):
+		"""
+		Helper method which returns a list of objects created from a given ClassReference.
+		The attributes for each created object are read from the file_list
+			in the given current_directory.
+		"""
+		pass
+
+
 	def parse_json(self, file_name):
 		"""
 		Simple utility to read from a JSON file returns a dict object
