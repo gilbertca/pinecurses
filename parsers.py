@@ -3,8 +3,8 @@ import os
 
 class Parser:
 	
-	def __init__(self, root_directory, *args, **kwargs):
-		self.root_directory = root_directory
+	def __init__(self, base_directory, *args, **kwargs):
+		self.base_directory = base_directory
 
 	def parse(self):
 		raise Exception("This method must be overloaded by a child class.")
@@ -30,16 +30,3 @@ class JsonParser(Parser):
 		with open(file_name) as json_file:
 			data = json.load(json_file)
 		return data
-
-	def traverse(self):
-		"""
-		Uses os.walk to traverse through the root directory
-			and returns a dictionary containing all
-			name : PycursesObjects pairs.
-		"""
-		def create_instance(ClassReference, json_attributes):
-			return ClassReference(**json_attributes)
-
-		for walk in os.walk(self.root_directory):
-			current_dir_name = walk[0] # Name of current directory
-			filenames_list = walk[2] # List of file names in the current directory
