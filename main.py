@@ -1,12 +1,18 @@
 import curses
 from pycurses_program import PycursesProgram
 
+class EmptyClass:
+	def __init__(self, *args, **kwargs):
+		pass
+
 class DevelopmentProgram(PycursesProgram):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.class_namespace.update({
-		
+			'controllers': EmptyClass,
+			'views': EmptyClass,
+			'items': EmptyClass,
 		})
 
 def main():
