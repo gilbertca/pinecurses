@@ -15,7 +15,7 @@ class Parser:
 		# NOTE: Directory name must match the name associated
 		#	with the corresponding class!
 		for current_directory_name in directory_list:
-			class_reference = class_namespace.get(current_directory_name)
+			ClassReference = class_namespace.get(current_directory_name)
 			filenames_list = os.listdir(f"{self.base_directory}/{current_directory_name}")
 			pycurses_objects_list = self._create_objects_from_namespace(
 				ClassReference, filenames_list, current_directory_name
@@ -31,7 +31,7 @@ class Parser:
 		"""
 		pycurses_objects_list = []
 		for filename in filenames_list:
-			class_attributes = parse_file(f"{self.base_directory}/{current_directory_name}/{filename}")
+			class_attributes = self.parse_file(f"{self.base_directory}/{current_directory_name}/{filename}")
 			PycursesClass = ClassReference(**class_attributes)
 			pycurses_objects_list.append(PycursesClass)
 		return pycurses_objects_list
@@ -54,7 +54,7 @@ class JsonParser(Parser):
 		"""
 		Overloaded method which returns the value from parse_json.
 		"""
-		return parse_json(file_name)
+		return self.parse_json(file_name)
 
 	def parse_json(self, file_name):
 		"""

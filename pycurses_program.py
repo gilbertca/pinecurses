@@ -18,7 +18,7 @@ class PycursesProgram():
 			PycursesParser from the provided json_directory.
 		"""
 		parser = JsonParser(json_directory)
-		self.pycurses_objects_dict = parser.parse()
+		self.pycurses_objects_dict = parser.parse(self.class_namespace)
 
 	@log
 	def begin(self):
