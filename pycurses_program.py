@@ -40,3 +40,5 @@ class PycursesProgram():
 		"""
 		self.stdscr = stdscr
 		self.load_objects(self.json_directory)
+		controller = self.pycurses_objects_dict.get('controllers')[0]
+		controller.begin(stdscr, **self.pycurses_objects_dict)
