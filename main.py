@@ -3,9 +3,6 @@ from pycurses_program import PycursesProgram
 from base_controller import BaseController
 from base_view import BaseView
 from base_item import BaseItem
-class EmptyClass:
-	def __init__(self, *args, **kwargs):
-		pass
 
 class DevelopmentProgram(PycursesProgram):
 
