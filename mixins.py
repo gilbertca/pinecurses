@@ -8,10 +8,18 @@ class ScreenPositioner:
 		"""
 		Called by a child PycursesObject to run all _calculate_* functions.
 		"""
-		pass
+		# List comprehension which provides a list of functions which contain '_calculate'
+		#	in their definition name.
+		calculate_function_names = [
+			function_name for function_name in dir(self) if '_calculate' in function_name
+		]
+		# Iterate and run all functions:
+		for function_name in calculate_function_names:
+			calculate_function = self.__getattribute__(function_name)
+			calculate_function()
 
 	@log
-	def _calculate_helper(self, attribute_dict):
+	def calculate_helper(self, attribute_dict):
 		"""
 		Method which takes an *atr_dict*, iterates, runs the function,
 			and returns the final attribute.
@@ -28,7 +36,7 @@ class ScreenPositioner:
 		default_method = attribute_dict.get('default')
 		if default_method:
 			return default_method(attribute)
-		raise AttributeError(f"_calculate_helper was unable to find a required attribute or default value. Attribute dict: - {attribute_dict} -")
+		raise AttributeError(f"calculate_helper was unable to find a required attribute or default value. Attribute dict: - {attribute_dict} -")
 
 	@log
 	def _calculate_height(self):
@@ -42,7 +50,7 @@ class ScreenPositioner:
 			'vpercent' : lambda vpercent_int : math.floor(curses.LINES * vpercent_int / 100), # Percent of window height.
 			'default' : lambda *default : curses.LINES, # Default is full width
 		}
-		calculated_value = self._calculate_helper(height_atr_namespace)
+		calculated_value = self.calculate_helper(height_atr_namespace)
 		self.height = calculated_value
 
 	@log
@@ -57,7 +65,7 @@ class ScreenPositioner:
 			'hpercent' : lambda hpercent_int : math.floor(curses.COLS * hpercent_int / 100), # Percent of window width.
 			'default' : lambda *default : curses.COLS, # Default is full width
 		}
-		calculated_value = self._calculate_helper(width_atr_namespace)
+		calculated_value = self.calculate_helper(width_atr_namespace)
 		self.width = calculated_value
 
 	@log
@@ -96,7 +104,7 @@ class ScreenPositioner:
 				'bottom' : bottom, # Window to bottom
 				'default' : center, # Window to center
 			}
-			return self._calculate_helper(valign_namespace)
+			return self.calculate_helper(valign_namespace)
 		 
 		# Callback for given topy value
 		def topy_given(self, topy):
@@ -117,7 +125,7 @@ class ScreenPositioner:
 			'default' : valign,
 		}
 		# Calculate and assign variables:
-		self.topy, self.boty = self._calculate_helper(y_align_namespace)
+		self.topy, self.boty = self.calculate_helper(y_align_namespace)
 		
 	@log
 	def _calculate_window_x_coords(self):
@@ -155,7 +163,7 @@ class ScreenPositioner:
 				'right' : right, # Window to right
 				'default' : center, # Window to center
 			}
-			return self._calculate_helper(halign_namespace)
+			return self.calculate_helper(halign_namespace)
 
 		# Callback for a given leftx value
 		def leftx_given(self, leftx):
@@ -171,7 +179,7 @@ class ScreenPositioner:
 			'default' : halign,
 		}
 		# Calculate and assign variables:
-		self.leftx, self.rightx = self._calculate_helper(x_align_namespace)
+		self.leftx, self.rightx = self.calculate_helper(x_align_namespace)
 	
 	@log
 	def _calculate_padding(self):
@@ -196,5 +204,5 @@ class ScreenPositioner:
 			'ypadding' : asym_padding,
 			'default' : lambda *default : (0, 0),
 		}
-		self.ypadding, self.xpadding = self._calculate_helper(padding_namespace)
+		self.ypadding, self.xpadding = self.calculate_helper(padding_namespace)
 
