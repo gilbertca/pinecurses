@@ -1,3 +1,10 @@
+import math
+import curses
+# NEED TO REMOVE CURSES IMPORT BECAUSE THIS MODULE SHOULD BE IGNORANT OF CURSES,
+# IT RELIES ON CURSES FOR curses.LINES AND curses.COLS, AND IT SHOULD INSTEAD RELY ON
+# parent.window.getmaxxy(..)
+from logger import log
+
 class ScreenPositioner:
 
 	def __init__(self, *args, **kwargs):

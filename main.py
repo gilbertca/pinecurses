@@ -1,5 +1,8 @@
 import curses
 from pycurses_program import PycursesProgram
+from base_controller import BaseController
+from base_view import BaseView
+from base_item import BaseItem
 
 class EmptyClass:
 	def __init__(self, *args, **kwargs):
@@ -10,9 +13,9 @@ class DevelopmentProgram(PycursesProgram):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.class_namespace.update({
-			'controllers': EmptyClass,
-			'views': EmptyClass,
-			'items': EmptyClass,
+			'controllers': BaseController,
+			'views': BaseView,
+			'items': BaseItem,
 		})
 
 def main():
