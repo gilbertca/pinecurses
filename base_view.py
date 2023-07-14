@@ -174,4 +174,4 @@ class BaseView(ScreenPositioner, PycursesObject):
 		"""
 		Refreshes self.window.
 		"""
-		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty, self.rightx))
