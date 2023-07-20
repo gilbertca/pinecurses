@@ -24,7 +24,7 @@ class BaseController(PycursesObject):
 		self.FUNCTIONS.update({'x' : lambda:0})
 
 	@log
-	def begin(self, stdscr, cursor, **object_dict):
+	def begin(self, stdscr, **object_dict):
 		"""
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
