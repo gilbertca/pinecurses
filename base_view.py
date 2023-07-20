@@ -13,17 +13,6 @@ class BaseView(ScreenPositioner, PycursesObject):
 		super().__init__(self, *args, **kwargs)
 
 	@log
-	def create_item(self, **attributes):
-		"""
-		Causes a View to create an Item instance,
-			and assign it to self's dictionary.
-		"""
-		# Instantiate instance of an Item:
-		item_instance = BaseItem(self, **attributes)
-		# Update self's dictionary as {name : instance}:
-		self.update({item_instance.attributes('name') : item_instance})
-
-	@log
 	def initialize(self, parent_controller_instance, **object_dict):
 		"""
 		Runs all calculations and sets all attributes for a View instance.
