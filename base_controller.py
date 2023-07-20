@@ -54,9 +54,8 @@ class BaseController(PycursesObject):
 		"""
 		Adds references to all View instances within self's dict object.
 		"""
-		view_list = object_dict.get('views')
-		for view_instance in view_list:
-			self.update({view_instance.attributes('name') : view_instance})
+		self.children = object_dict.get('views')
+		for view_instance in self.children:
 			view_instance.initialize(self, **object_dict)
 
 	@log

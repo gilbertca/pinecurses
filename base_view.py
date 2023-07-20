@@ -48,9 +48,8 @@ class BaseView(ScreenPositioner, PycursesObject):
 			the object_dict.
 		Also adds references to the items in self's dict.
 		"""
-		item_list = object_dict.get('items')
-		for item_instance in item_list:
-			self.update({item_instance.attributes('name') : item_instance})
+		self.children = object_dict.get('items')
+		for item_instance in self.children:
 			item_instance.initialize(self)
 
 	@log

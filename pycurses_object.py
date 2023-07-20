@@ -1,4 +1,4 @@
-class PycursesObject(dict):
+class PycursesObject:
 	"""
 	The base functionality which all Pycurses objects inherit.
 	"""
@@ -13,6 +13,7 @@ class PycursesObject(dict):
 		self.attributes = lambda name : self.ATTRIBUTES.get(name)
 		# Child/Parent objects:
 		self.parent = None
+		self.children = None
 		# Cursor object:
 		class Cursor:
 			# NOTE: This Cursor class is a temporary representation to accomodate
