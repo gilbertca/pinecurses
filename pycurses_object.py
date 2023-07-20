@@ -18,7 +18,9 @@ class PycursesObject(dict):
 			# NOTE: This Cursor class is a temporary representation to accomodate
 			# a future implementation of a Cursor object.
 			def get_keypress(self):
-				return None
+				pass
+			def get_selected_object(self):
+				pass
 		self.cursor = Cursor()
 
 	def interact(self, keypress):
