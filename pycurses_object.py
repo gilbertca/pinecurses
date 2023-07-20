@@ -47,7 +47,7 @@ class PycursesObject:
 			# Then run that function (or list of functions):
 			response = self.handle_function(function_for_keypress)
 			# If there is a response, handle and return:
-			if response: 
+			if response is not None: 
 				self.handle_response(response)
 				return response
 		# If there is no function for a keypress, then call the selected

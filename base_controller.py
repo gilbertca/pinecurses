@@ -36,8 +36,11 @@ class BaseController(PycursesObject):
 		# Once self.interact(..) returns a value, program will end.
 		# This is also the *start* of any pycurses project.
 		while True:
-			keypress = self.cursor.get_keypress()
-			self.interact(keypress)
+			# keypress = self.cursor.get_keypress()
+			keypress = self.children[0].window.getch()
+			response = self.interact(keypress)
+			if not response:
+				return 0
 
 	@log
 	def color(self, view_name, color_name):

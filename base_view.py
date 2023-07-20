@@ -81,7 +81,7 @@ class BaseView(ScreenPositioner, PycursesObject):
 				# Add the string to the window (does not refresh).
 				self.window.addstr(y+lines_written, x, display_string, curses.color_pair(color_integer))
 				# Populate the Item's dictionary with the display strings:
-				item_instance.update({lines_written : display_string})
+				item_instance.display_dictionary.update({lines_written : display_string})
 				# Increment line counter:
 				lines_written += 1
 		item_instance.height = lines_written
@@ -160,4 +160,4 @@ class BaseView(ScreenPositioner, PycursesObject):
 		"""
 		Refreshes self.window.
 		"""
-		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty, self.rightx))
+		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty-1, self.rightx-1))

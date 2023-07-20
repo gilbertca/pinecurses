@@ -11,6 +11,7 @@ class BaseItem(PycursesObject):
 		self.is_drawn = False
 		self.height = 0
 		self.width = 0
+		self.display_dictionary = {}
 
 	def get_display_string_iterable(self):
 		"""
