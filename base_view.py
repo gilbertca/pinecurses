@@ -54,8 +54,7 @@ class BaseView(ScreenPositioner, PycursesObject):
 		"""
 		Iterates through all items and calls self.draw_item(..) on each.
 		"""
-		for item_key in self: # Iterate through self's dict:
-			item_instance = self.get(item_key)
+		for item_instance in self.children: # Iterate through self's dict:
 			writable_height = self.get_writable_height()
 			writable_width = self.get_writable_width()
 			# Determine if item CAN be written to the screen:
@@ -151,8 +150,7 @@ class BaseView(ScreenPositioner, PycursesObject):
 			Item.is_drawn is True.
 		"""
 		height = 0
-		for item_key in self:
-			item_instance = self.get(item_key)
+		for item_instance in self.children:
 			if item_instance.is_drawn:
 				height += item_instance.height
 		return height

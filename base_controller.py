@@ -63,8 +63,7 @@ class BaseController(PycursesObject):
 		"""
 		Draws all views within self's dictionary.
 		"""
-		for view_key in self:
-			view_instance = self.get(view_key)
+		for view_instance in self.children:
 			view_instance.draw_self()
 
 	@log
@@ -73,8 +72,7 @@ class BaseController(PycursesObject):
 		Iterates through all Views contained within self's dict
 			and maps their colors in self.colors.
 		"""
-		for view_key in self:
-			view_instance = self.get(view_key)
+		for view_instance in self.children:
 			self.map_colors(view_instance)
 
 	@log
@@ -118,8 +116,8 @@ class BaseController(PycursesObject):
 		"""
 		count = 1
 		# Iterate and count through all views:
-		for view_key in self:
-			view_name = self.get(view_key).attributes('name')
+		for view_instance in self.children:
+			view_name = view_instance.name
 			color_dict = self.colors.get(view_name)
 			# Iterate through the View's color dictionary:
 			for color_key in color_dict:
