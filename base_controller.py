@@ -24,7 +24,7 @@ class BaseController(PycursesObject):
 		self.FUNCTIONS.update({'x' : lambda:0})
 
 	@log
-	def begin(self, stdscr, **object_dict):
+	def begin(self, stdscr, cursor, **object_dict):
 		"""
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
@@ -35,54 +35,9 @@ class BaseController(PycursesObject):
 		self.draw_all_views()
 		# Once self.interact(..) returns a value, program will end.
 		# This is also the *start* of any pycurses project.
-		return self.interact()
-
-	@log
-	def interact(self):
-		"""
-		TODO: The addition of cursor objects. Otherwise, pycurses will have to check ALL Items,
-			Views, and Controllers for functions in self.functions.
-			It must be determined how sensitive to commands we want the program to be.
-		This is the "main loop" of the program.
-		"""
 		while True:
-			# Response must be assigned to None for each 'interact'
-			response = None
-			# These following lines should be replaced with
-			# 	the actual cursor functionality, should a Cursor object be implemented.			
-			cursor = self.get('base_view').window.getch
-			key_press = cursor()
-			# Once we have a key, then retrieve a function
-			key_function = self.functions(key_press)
-			# If key_function exists (i.e. is not None)
-			if key_function:
-				# Then pass it to self._handle_functtion(..)
-				response = self._handle_function(key_function)
-			if response:
-				self._handle_response(response)
-			if response == 0:
-				return 0
-
-	@log
-	def _handle_function(self, key_function):
-		"""
-		Takes either a reference to a function and calls it,
-			or a list/tuple of functions and calls them in order.
-		"""
-		# If function is iterable:
-		if hasattr(key_function, '__iter__'):
-			for func in key_function:
-				func() # Run each function
-		# Otherwise, just run the function:
-		else:
-			return key_function()
-		
-	@log
-	def _handle_response(self, response):
-		"""
-		Pass
-		"""
-		pass
+			keypress = self.cursor.get_keypress()
+			self.interact(keypress)
 
 	@log
 	def color(self, view_name, color_name):
