@@ -13,7 +13,6 @@ class DevelopmentProgram(PycursesProgram):
 			'views': BaseView,
 			'items': BaseItem,
 		})
-
 def main():
 	"""
 	The main method to run and test the suite.

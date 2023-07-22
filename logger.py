@@ -5,7 +5,9 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 # Set the logging level
 logger.setLevel(logging.DEBUG)
-
+def log_t(message):
+    with open('LOG.pycurse', 'a') as log_file:
+        log_file.write(message + '\n')
 def log(function):
     """
     Decorator to log info about internal functions and handle errors.

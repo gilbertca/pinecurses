@@ -1,0 +1,6 @@
+{
+	"name":"base_view",
+	"text_color":["cyan","black"],
+	"background_color":["blue","red"],
+	"background_character":" "
+}
