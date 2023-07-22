@@ -1,9 +1,13 @@
 import curses
 from pycurses_object import PycursesObject
 from logger import log
+from base_view import BaseView
+from curses import KEY_MOUSE, getmouse
 
 
 class BaseController(PycursesObject):
+		# Enable mouse events
+
 	"""
 	The base controller class which  controls all other aspects of a Pycurses program.
 	"""
@@ -33,14 +37,18 @@ class BaseController(PycursesObject):
 		self.initialize(**object_dict)
 		self.map_all_colors()
 		self.draw_all_views()
+		curses.mousemask(curses.ALL_MOUSE_EVENTS)
 		# Once self.interact(..) returns a value, program will end.
 		# This is also the *start* of any pycurses project.
 		while True:
-			# keypress = self.cursor.get_keypress()
 			keypress = self.children[0].window.getch()
-			response = self.interact(keypress)
-			if not response:
-				return 0
+			if keypress == KEY_MOUSE:
+				_, x, y, _, _ = getmouse()
+				self.children[0].handle_mouse_click(x, y)
+			else:
+				response = self.interact(keypress)
+				if not response:
+					return 0
 
 	@log
 	def color(self, view_name, color_name):

@@ -62,6 +62,21 @@ class BaseView(ScreenPositioner, PycursesObject):
 				self.draw_all_lines(item_instance, writable_height, writable_width)
 				# Finish by assigning True to item_instance.is_drawn:
 				item_instance.is_drawn = True
+	@log
+	def handle_mouse_click(self, x, y):
+		"""
+		This method is called when a mouse click is detected.
+		It checks if the click coordinates correspond to the position of any item,
+		and if so, it calls the item's OnClick() method.
+		"""
+		print("Handling breh")
+		# Iterate over all items
+		for item in self.children:
+   		 # If the click occurred within the item's bounds
+			if item.x <= x < item.x + item.width and item.y <= y < item.y + item.height:
+				# Call the item's OnClick() method
+				item.OnClick()
+				break  # Exit the loop once we've found a clicked item
 
 	@log
 	def draw_all_lines(self, item_instance, writable_height, writable_width):
