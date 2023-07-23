@@ -37,14 +37,21 @@ class BaseController(PycursesObject):
         self.initialize(**object_dict)
         self.map_all_colors()
         self.draw_all_views()
+        curses.curs_set(0) 
+        self.children[0].window.keypad(1)
         curses.mousemask(curses.ALL_MOUSE_EVENTS)
         # Once self.interact(..) returns a value, program will end.
         # This is also the *start* of any pycurses project.
         while True:
             keypress = self.children[0].window.getch()
-            if keypress == KEY_MOUSE:
-                _, x, y, _, _ = getmouse()
-                self.children[0].handle_mouse_click(x, y)
+            log_t(str(keypress))
+            if keypress == curses.KEY_MOUSE:
+                _, x, y, _, _ = curses.getmouse()
+                log_t(str(x) + " hi " + str(y))
+                if(34 > x > 0):
+                    if(6 > y > 4):
+                        log_t("WOW")
+               # self.children[0].handle_mouse_click(x, y)
             else:
                 response = self.interact(keypress)
                 if not response:

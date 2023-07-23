@@ -1,5 +1,5 @@
 from pycurses_object import PycursesObject
-from logger import log
+from logger import log, log_t
 
 
 class BaseItem(PycursesObject):
@@ -13,7 +13,7 @@ class BaseItem(PycursesObject):
 		self.width = 0
 		self.display_dictionary = {}
 	def OnClick(self):
-		print('Clicked')
+		log_t('Clicked')
 	def get_display_string_iterable(self):
 		"""
 		Returns and formats self.attributes('display_string'),
