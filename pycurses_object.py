@@ -14,15 +14,7 @@ class PycursesObject:
 		# Child/Parent objects:
 		self.parent = None
 		self.children = None
-		# Cursor object:
-		class Cursor:
-			# NOTE: This Cursor class is a temporary representation to accomodate
-			# a future implementation of a Cursor object.
-			def get_keypress(self):
-				pass
-			def get_selected_object(self):
-				pass
-		self.cursor = Cursor()
+		self.window = None
 
 	def interact(self, keypress):
 		"""
@@ -54,6 +46,12 @@ class PycursesObject:
 		#	child's interact method.
 		else:
 			return self.cursor.get_selected_object().interact(keypress)
+
+	def select(self, *args, **kwargs):
+		"""
+		Must be overridden by a child class.
+		"""
+		raise Exception("This method must be overridden by a child class.")
 
 	def add_function(self, key, callback):
 		"""
@@ -90,3 +88,4 @@ class PycursesObject:
 		Pass
 		"""
 		pass
+
