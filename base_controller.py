@@ -6,8 +6,6 @@ from base_view import BaseView
 from curses import KEY_MOUSE, getmouse
 
 class BaseController(SingleObjectCursor, PycursesObject):
-    # Enable mouse events
-
     """
     The base controller class which  controls all other aspects of a Pycurses program.
     """
@@ -34,7 +32,7 @@ class BaseController(SingleObjectCursor, PycursesObject):
         The main loop of any pycurses program. Once this function returns anything,
             then the program will end.
         """
-        self.stdscr = stdscr
+        self.window = stdscr
         self.initialize(**object_dict)
         self.map_all_colors()
         self.draw_all_views()
@@ -145,3 +143,4 @@ class BaseController(SingleObjectCursor, PycursesObject):
                 if color_integer > 0:
                     count += 1
         return count
+
