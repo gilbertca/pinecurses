@@ -8,9 +8,9 @@ def main(stdscr):
     # Use extended colors if available
     for i in range(0, curses.COLORS):
         curses.init_pair(i + 1, i, -1)
-
+		
     # Print some text with different colors
-    for i in range(0, curses.COLORS):
+    for i in range(0, curses.COLORS, 9):
         stdscr.addstr(str(i), curses.color_pair(i))
 
     stdscr.refresh()
