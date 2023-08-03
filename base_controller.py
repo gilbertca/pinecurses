@@ -36,18 +36,12 @@ class BaseController(SingleObjectCursor, PycursesObject):
 		self.initialize(**object_dict)
 		self.map_all_colors()
 		self.draw_all_views()
-		curses.mousemask(curses.ALL_MOUSE_EVENTS)
 		# Once self.interact(..) returns a value, program will end.
 		# This is also the *start* of any pycurses project.
 		while True:
-			keypress = self.children[0].window.getch()
-			if keypress == KEY_MOUSE:
-				_, x, y, _, _ = getmouse()
-				self.children[0].handle_mouse_click(x, y)
-			else:
-				response = self.interact(keypress)
-				if not response:
-					return 0
+			# Get the keypress from a child window:
+			keypress = self.get_selected_object().getch()
+			self.interact(keypress)
 
 	@log
 	def color(self, view_name, color_name):
