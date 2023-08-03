@@ -1,10 +1,11 @@
 import curses
 from pycurses_object import PycursesObject
+from cursor import SingleObjectCursor
 from logger import log, log_t
 from base_view import BaseView
 from curses import KEY_MOUSE, getmouse
 
-class BaseController(PycursesObject):
+class BaseController(SingleObjectCursor, PycursesObject):
     # Enable mouse events
 
     """

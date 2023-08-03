@@ -14,6 +14,8 @@ class BaseItem(PycursesObject):
 		self.display_dictionary = {}
 	def OnClick(self):
 		log_t('Clicked')
+	def OnSelect(self):
+		log_t('Selected')
 	def get_display_string_iterable(self):
 		"""
 		Returns and formats self.attributes('display_string'),

@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-
+from unittesting import Test
 # Create a logger for this module
 logger = logging.getLogger(__name__)
 # Set the logging level
@@ -22,4 +22,4 @@ def log(function):
             logger.critical(f"Critical error in function {function.__name__} due to {e}", exc_info=True)
             raise
 
-    return log
+    return log      

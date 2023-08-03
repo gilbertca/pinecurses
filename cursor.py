@@ -1,3 +1,4 @@
+import logger
 """
 NOTE: Any object that inherits a Cursor object MUST
 inherit from a PycursesObject as their top-level parent.
@@ -26,7 +27,8 @@ class SingleObjectCursor(Cursor):
          wrap_objects = kwargs.get('wrap_objects')
          self.wrap_objects = False if wrap_objects is None else wrap_objects
          self.selected_object_index = 0
-         self.selected_object_list = self.children
+         self.selected_object_list = getattr(self, 'children')
+         logger.log_t(str(self.selected_object_list))
          self.selected_object = lambda : self.selected_object_list[self.selected_object_index]
 
     def get_selected_object(self):
