@@ -1,8 +1,4 @@
 import math
-import curses
-# NEED TO REMOVE CURSES IMPORT BECAUSE THIS MODULE SHOULD BE IGNORANT OF CURSES,
-# IT RELIES ON CURSES FOR curses.LINES AND curses.COLS, AND IT SHOULD INSTEAD RELY ON
-# parent.window.getmaxxy(..)
 from logger import log
 
 class ScreenPositioner:
@@ -38,7 +34,7 @@ class ScreenPositioner:
 		"""
 		for attribute_key in attribute_dict: # Iterate
 			attribute = self.attributes(attribute_key) # Actual attribute value
-			if attribute: # Call the given function with the attribute:
+			if attribute is not None: # Call the given function with the attribute:
 				return attribute_dict.get(attribute_key)(attribute)
 		default_method = attribute_dict.get('default')
 		if default_method:
@@ -53,9 +49,9 @@ class ScreenPositioner:
 		# Namespace for attributes related to height:
 		height_atr_namespace = {
 			'height' : lambda height_int : height_int, # Simple height
-			'vborder' : lambda vborder_int : curses.LINES - (2 * vborder), # Cells from vertical edge to content.
-			'vpercent' : lambda vpercent_int : math.floor(curses.LINES * vpercent_int / 100), # Percent of window height.
-			'default' : lambda *default : curses.LINES, # Default is full width
+			'vborder' : lambda vborder_int : self.parent.window.getmaxyx()[0] - (2 * vborder), # Cells from vertical edge to content.
+			'vpercent' : lambda vpercent_int : math.floor(self.parent.window.getmaxyx()[0] * vpercent_int / 100), # Percent of window height.
+			'default' : lambda *default : self.parent.window.getmaxyx()[0], # Default is full width
 		}
 		calculated_value = self.calculate_helper(height_atr_namespace)
 		self.height = calculated_value
@@ -68,9 +64,9 @@ class ScreenPositioner:
 		# Namespace for attributes related to width:
 		width_atr_namespace = {
 			'width' : lambda width_int : width_int, # Simple width
-			'hborder' : lambda hborder_int : curses.COLS - (2 * hborder), # Cells from horizontal edge to content.
-			'hpercent' : lambda hpercent_int : math.floor(curses.COLS * hpercent_int / 100), # Percent of window width.
-			'default' : lambda *default : curses.COLS, # Default is full width
+			'hborder' : lambda hborder_int : self.parent.window.getmaxyx()[1] - (2 * hborder), # Cells from horizontal edge to content.
+			'hpercent' : lambda hpercent_int : math.floor(self.parent.window.getmaxyx()[1] * hpercent_int / 100), # Percent of window width.
+			'default' : lambda *default : self.parent.window.getmaxyx()[1], # Default is full width
 		}
 		calculated_value = self.calculate_helper(width_atr_namespace)
 		self.width = calculated_value
@@ -92,16 +88,16 @@ class ScreenPositioner:
 				return topy, boty
 			# Callback for center:
 			def center(*args):
-				maxy = curses.LINES
+				maxy = self.parent.window.getmaxyx()[0]
 				center = math.floor(maxy/2) # Always move up 1 from center if odd!
 				topy = center - math.floor(self.height/2) # Always move up 1!
 				boty = center + math.ceil(self.height/2) # Always move up 1!
 				return topy, boty
 			# Callback for bottom:
 			def bottom(*args):
-				maxy = curses.LINES
+				maxy = self.parent.window.getmaxyx()[0]
 				topy = maxy - self.height
-				boty = maxy - 1
+				boty = maxy
 				return topy, boty
 			
 			# Vertical alignment namespace:
@@ -111,7 +107,9 @@ class ScreenPositioner:
 				'bottom' : bottom, # Window to bottom
 				'default' : center, # Window to center
 			}
-			return self.calculate_helper(valign_namespace)
+			if attribute is None: attribute = 'default'
+			valign_function = valign_namespace.get(attribute)
+			return valign_function()
 		 
 		# Callback for given topy value
 		def topy_given(self, topy):
@@ -140,7 +138,7 @@ class ScreenPositioner:
 		Method which calculates self.leftx and self.rightx
 		"""
 		# Callback for halign
-		def halign(attribute):
+		def halign(attribute=None):
 			"""
 			Runs calulations for horizontal keyword alignment
 			"""
@@ -151,16 +149,16 @@ class ScreenPositioner:
 				return leftx, rightx
 			# Callback for center:
 			def center(*args):
-				maxx = curses.COLS
+				maxx = self.parent.window.getmaxyx()[1]
 				center = math.floor(maxx/2) # Always move up 1 from center if odd!
 				leftx = center - math.floor(self.width/2) # Always move right 1!
 				rightx = center + math.ceil(self.width/2) # Always move right 1!
 				return leftx, rightx
 			# Callback for bottom:
 			def right(*args):
-				maxx = curses.COLS
+				maxx = self.parent.window.getmaxyx()[1]
 				leftx = maxx - self.width
-				boty = maxx - 1
+				boty = maxx
 				return leftx, rightx
 
 			# Horizontal alignment namespace:
@@ -170,7 +168,9 @@ class ScreenPositioner:
 				'right' : right, # Window to right
 				'default' : center, # Window to center
 			}
-			return self.calculate_helper(halign_namespace)
+			if attribute is None: attribute = 'default'
+			halign_function = halign_namespace.get(attribute)
+			return halign_function()
 
 		# Callback for a given leftx value
 		def leftx_given(self, leftx):

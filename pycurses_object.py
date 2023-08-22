@@ -8,6 +8,9 @@ class PycursesObject:
 		self.FUNCTIONS = {}
 		# Shortcut for FUNCTIONS:
 		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
+		self.RESPONSES = {}
+		# Shortcut for RESPONSES:
+		self.responses = lambda response_name : self.RESPONSES.get(response_name)
 		self.ATTRIBUTES = attributes
 		# Shortcut for ATTRIBUTES:
 		self.attributes = lambda name : self.ATTRIBUTES.get(name)
@@ -34,18 +37,18 @@ class PycursesObject:
 		"""
 		# Check if self has a function mapped to the keypress:
 		function_for_keypress = self.functions(keypress)
-		# If there is a function for a keypress:
 		if function_for_keypress:
-			# Then run that function (or list of functions):
 			response = self.handle_function(function_for_keypress)
+			response_function = self.responses(response)
 			# If there is a response, handle and return:
-			if response is not None: 
-				self.handle_response(response)
+			if response_function is not None: 
+				self.handle_function(response)
+			if response is not None:
 				return response
 		# If there is no function for a keypress, then call the selected
 		#	child's interact method.
-		else:
-			return self.cursor.get_selected_object().interact(keypress)
+		elif self.children is not None:
+			return self.get_selected_object().interact(keypress)
 
 	def select(self, *args, **kwargs):
 		"""
@@ -82,10 +85,4 @@ class PycursesObject:
 		# Otherwise, just run the function:
 		else:
 			return key_function()
-		
-	def handle_response(self, response):
-		"""
-		Pass
-		"""
-		pass
 
