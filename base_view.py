@@ -38,7 +38,9 @@ class BaseView(SingleObjectCursor, ScreenPositioner, PycursesObject):
 			the object_dict.
 		Also adds references to the items in self's dict.
 		"""
-		self.children = object_dict.get('items')
+		self.children = [
+			item_instance for item_instance in object_dict.get('items') if item_instance.attributes('parent') == self.name
+		]
 		for item_instance in self.children:
 			item_instance.initialize(self)
 
