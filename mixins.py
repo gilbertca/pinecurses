@@ -34,7 +34,7 @@ class ScreenPositioner:
 		"""
 		for attribute_key in attribute_dict: # Iterate
 			attribute = self.attributes(attribute_key) # Actual attribute value
-			if attribute: # Call the given function with the attribute:
+			if attribute is not None: # Call the given function with the attribute:
 				return attribute_dict.get(attribute_key)(attribute)
 		default_method = attribute_dict.get('default')
 		if default_method:
