@@ -107,7 +107,9 @@ class ScreenPositioner:
 				'bottom' : bottom, # Window to bottom
 				'default' : center, # Window to center
 			}
-			return self.calculate_helper(valign_namespace)
+			if attribute is None: attribute = 'default'
+			valign_function = valign_namespace.get(attribute)
+			return valign_function()
 		 
 		# Callback for given topy value
 		def topy_given(self, topy):
@@ -136,7 +138,7 @@ class ScreenPositioner:
 		Method which calculates self.leftx and self.rightx
 		"""
 		# Callback for halign
-		def halign(attribute):
+		def halign(attribute=None):
 			"""
 			Runs calulations for horizontal keyword alignment
 			"""
@@ -166,7 +168,9 @@ class ScreenPositioner:
 				'right' : right, # Window to right
 				'default' : center, # Window to center
 			}
-			return self.calculate_helper(halign_namespace)
+			if attribute is None: attribute = 'default'
+			halign_function = halign_namespace.get(attribute)
+			return halign_function()
 
 		# Callback for a given leftx value
 		def leftx_given(self, leftx):
