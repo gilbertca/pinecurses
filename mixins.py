@@ -97,7 +97,7 @@ class ScreenPositioner:
 			def bottom(*args):
 				maxy = self.parent.window.getmaxyx()[0]
 				topy = maxy - self.height
-				boty = maxy - 1
+				boty = maxy
 				return topy, boty
 			
 			# Vertical alignment namespace:
@@ -158,7 +158,7 @@ class ScreenPositioner:
 			def right(*args):
 				maxx = self.parent.window.getmaxyx()[1]
 				leftx = maxx - self.width
-				boty = maxx - 1
+				boty = maxx
 				return leftx, rightx
 
 			# Horizontal alignment namespace:
