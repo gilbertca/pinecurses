@@ -138,4 +138,3 @@ class BaseController(SingleObjectCursor, PycursesObject):
 				if color_integer > 0:
 					count += 1
 		return count
-

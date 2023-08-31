@@ -38,7 +38,22 @@ class SingleObjectCursor(Cursor):
 		"""
 		selected_child = self.get_selected_object()
 		return selected_child.select(*args, **kwargs)
-	
+		@log
+	def handle_mouse_click(self, x, y):
+		"""
+		This method is called when a mouse click is detected.
+		It checks if the click coordinates correspond to the position of any item,
+		and if so, it calls the item's OnClick() method.
+		"""
+		print("Handling breh")
+		# Iterate over all items
+		for item in self.children:
+   		 # If the click occurred within the item's bounds
+			if item.x <= x < item.x + item.width and item.y <= y < item.y + item.height:
+				# Call the item's OnClick() method
+				item.OnClick()
+				break  # Exit the loop once we've found a clicked item
+
 	def next_object(self):
 		"""
 		Increments self.selected_object_index by 1.
