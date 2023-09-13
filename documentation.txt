@@ -1,0 +1,35 @@
+Pinecurses Documentation
+
+Pinecurses - pyncurses
+
+================================================================================
+INTRODUCTION:
+================================================================================
+
+Creating pretty, easy-to-use, feature-packed interfaces can be a complex challenge.
+
+The python wrapper for the ncurses library contains all of the tools required to create wonderful tools.
+
+However, the curses library for python only wraps the ncurses library, and ncurses is arcane and archaic.
+
+Once one is familiar with the curses library, it is quite simple to create an application with curses.
+
+However, curses does not have extensibility or modularity in mind.
+
+Each application tends to be single-purpose, and using curses effectively relies more on personal convention than any agreed upon standard.
+
+================================================================================
+PURPOSE:
+================================================================================
+
+The Pinecurses library attempts to address three issues:
+
+	1. Extensibility and Modularity
+
+	2. Simplification and Removal of boilerplate.
+
+	3. 
+
+The Pinecurses library attempts to address these issues by:
+
+	
