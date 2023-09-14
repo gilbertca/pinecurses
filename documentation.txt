@@ -10,11 +10,11 @@ Creating pretty, easy-to-use, feature-packed interfaces can be a complex challen
 
 The python wrapper for the ncurses library contains all of the tools required to create wonderful tools.
 
-However, the curses library for python only wraps the ncurses library, and ncurses is arcane and archaic.
+However, the curses library for python only wraps the ncurses library, and ncurses is somewhat arcane.
 
 Once one is familiar with the curses library, it is quite simple to create an application with curses.
 
-However, curses does not have extensibility or modularity in mind.
+However, modularity must be implemented by the user; otherwise each application interfaces uniquely with curses.
 
 Each application tends to be single-purpose, and using curses effectively relies more on personal convention than any agreed upon standard.
 
@@ -22,14 +22,35 @@ Each application tends to be single-purpose, and using curses effectively relies
 PURPOSE:
 ================================================================================
 
-The Pinecurses library attempts to address three issues:
+The Pinecurses library attempts to provide these key benefits:
 
-	1. Extensibility and Modularity
+	1. Reusability
 
-	2. Simplification and Removal of boilerplate.
+	2. Simplification
 
-	3. 
+	3. Standardification
 
-The Pinecurses library attempts to address these issues by:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	
