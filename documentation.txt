@@ -1,12 +1,11 @@
 Pinecurses Documentation
 Author: Christopher Gilbert
 
-Pinecurses - pyncurses
+Pinecurses - py ncurses
 
 ================================================================================
 INTRODUCTION:
 ================================================================================
-
 Creating pretty, easy-to-use, feature-packed interfaces can be a complex challenge.
 
 The python wrapper for the ncurses library contains all of the tools required to create wonderful tools.
@@ -22,37 +21,62 @@ Each application tends to be single-purpose, and using curses effectively relies
 ================================================================================
 PURPOSE:
 ================================================================================
-
 The Pinecurses library attempts to provide these key benefits:
 
 	1. Reusability - Creating modular componenets which can be used elsewhere.
 
 	2. Simplification - Removing unnecessary boilerplate, and automating processes (such as screen positioning).
 
-	3. Standardification - Building components which *just work* with various endpoints.
-
 ================================================================================
 REUSABILITY:
 ================================================================================
-
 The Pinecurses library aims to allow the creation of reusable applications.
 
 The ideal application which uses Pinecurses is completely unaware of Pinecurses.
 
 Pinecurses is to act as the 'front end' of a program, making calls to a hypothetical 'back end' which provides the data to be displayed.
 
-So, a properly created Pinecurses program would theoretically allow for hot-swapping backends, and multiple applications can have similar displays by using a the same Pinecurses front end.
+So, a properly created Pinecurses program would theoretically allow for hot-swapping backends, and multiple applications can have similar displays by using the same Pinecurses front end.
 
-Pinecurses is for creating TUI's, and any expansion upon a Pinecurses module should focus exclusively the creation of a TUI.
+Likewise, depending on a client's needs, a single application could have multiple front ends, such as a GTK GUI and a Pinecurses TUI.
 
 ================================================================================
 SIMPLIFICATION:
 ================================================================================
+The Pinecurses library aims to simplify the creation of TUI front ends.
 
+Using the Pinecurses library encourages *bigger picture thinking*.
 
+Rather than focusing on *how* to display an element to the screen, the programmer would focus on *where* they want to display an element and *what* the element should look like, and the Pinecurses library should handle the *how*.
 
-================================================================================
-STANDARDIFICATION:
+The Pinecurses library does this by offering a myriad of keyword attributes which can be set to define how an element is displayed without the need to run these calculations ad hoc.
+
+An example set of these attributes appear something like:
+attributes = {
+	text_color = red,
+	background_color = black,
+	height = 90%,
+	width = 10,
+	alignment = left-center
+}
+These attributes would produce an element with:
+* Red text 
+* Black background
+* Relative height of 90% of available height
+* Absolute width of 10 cells
+* Content aligned to the left horizontally
+* Content aligned the the center vertically
+
+A programmer attempting to position content to this degree would likely face two scenarios:
+
+	1. Programming each of these features would be hardcoded, and changing a feature would require editing that feature's code.
+
+	2. The programmer would have to implement their own modular display manager to allow centralized editing of these features.
+
+In the second case, the programmer would effectively have to create their own version of Pinecurses.
+
+Rather than repeating ourselves over and over, we can make using curses more DRY, and encourage TUI development.
+
 ================================================================================
 
 ================================================================================
