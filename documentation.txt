@@ -1,4 +1,5 @@
 Pinecurses Documentation
+Author: Christopher Gilbert
 
 Pinecurses - pyncurses
 
@@ -24,33 +25,34 @@ PURPOSE:
 
 The Pinecurses library attempts to provide these key benefits:
 
-	1. Reusability
+	1. Reusability - Creating modular componenets which can be used elsewhere.
 
-	2. Simplification
+	2. Simplification - Removing unnecessary boilerplate, and automating processes (such as screen positioning).
 
-	3. Standardification
+	3. Standardification - Building components which *just work* with various endpoints.
 
+================================================================================
+REUSABILITY:
+================================================================================
 
+The Pinecurses library aims to allow the creation of reusable applications.
 
+The ideal application which uses Pinecurses is completely unaware of Pinecurses.
 
+Pinecurses is to act as the 'front end' of a program, making calls to a hypothetical 'back end' which provides the data to be displayed.
 
+So, a properly created Pinecurses program would theoretically allow for hot-swapping backends, and multiple applications can have similar displays by using a the same Pinecurses front end.
 
+Pinecurses is for creating TUI's, and any expansion upon a Pinecurses module should focus exclusively the creation of a TUI.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+================================================================================
+SIMPLIFICATION:
+================================================================================
 
 
 
+================================================================================
+STANDARDIFICATION:
+================================================================================
 
-	
+================================================================================
