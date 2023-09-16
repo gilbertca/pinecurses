@@ -6,7 +6,7 @@ Pinecurses - py ncurses
 ================================================================================
 INTRODUCTION:
 ================================================================================
-Creating pretty, easy-to-use, feature-packed interfaces can be a complex challenge.
+Creating pretty, easy-to-use, feature-packed interfaces can be a challenge.
 
 The python wrapper for the ncurses library contains all of the tools required to create wonderful tools.
 
@@ -36,7 +36,7 @@ The ideal application which uses Pinecurses is completely unaware of Pinecurses.
 
 Pinecurses is to act as the 'front end' of a program, making calls to a hypothetical 'back end' which provides the data to be displayed.
 
-So, a properly created Pinecurses program would theoretically allow for hot-swapping backends, and multiple applications can have similar displays by using the same Pinecurses front end.
+So, a properly created Pinecurses program would theoretically allow for hot-swapping backends, and multiple applications can have similar displays by using the same Pinecurses front end so long as their display requirements are similar.
 
 Likewise, depending on a client's needs, a single application could have multiple front ends, such as a GTK GUI and a Pinecurses TUI.
 
@@ -51,7 +51,7 @@ Rather than focusing on *how* to display an element to the screen, the programme
 
 The Pinecurses library does this by offering a myriad of keyword attributes which can be set to define how an element is displayed without the need to run these calculations ad hoc.
 
-An example set of these attributes appear something like:
+An example set of these attributes may appear something like:
 attributes = {
 	text_color = red,
 	background_color = black,
@@ -78,5 +78,66 @@ In the second case, the programmer would effectively have to create their own ve
 Rather than repeating ourselves over and over, we can make using curses more DRY, and encourage TUI development.
 
 ================================================================================
+STRUCTURE:
+================================================================================
+The structure of a Pinecurses program can be thought of as a tree. Like, the real kind... outside.
+
+There are four primary components to any Pinecurses TUI:
+
+	1. Trunks (formerly Controllers)
+
+	2. Branches (formerly Views)
+
+	3. Leaves (formerly Items)
+	
+	4. Roots
+
+Just like a real tree, a Pinecurses Program follows a similar structure:
+Leaf	Leaf	Leaf	Leaf
+  \	 /	  \	 /
+   Branch	   Branch
+	  \	 /
+	   Trunk
+	     |
+	   Roots
+
+Leaves can be thought of as the final display element. Some examples of leaves include:
+	
+	* An entry in a list or menu
+	* A text box for user input or program output, such as an area for sending or receiving a message
+	* Message text or button contained within a popup menu
+
+Branches can be thought of as a collection of display elements. Branches can have many leaves, but a single leaf can not be connected to multiple branches. Examples of Branches include:
+
+	* A list or menu containing multiple entries
+	* A collection of text boxes, such as a chat client with separate areas for sent and received messages
+	* A popup menu which may contain text or buttons
+
+Trunks can be thought of as the glue for a Pinecurses interface. A trunk can have multiple branches, but a branch can not be connected to multiple Trunks.
+
+The Trunk of a Pinecurses TUI performs several important functions, and they typically will not have any display elements associated with them.
+
+The Trunk is responsible for allowing the various branches to communicate with each other, as well as providing programwide functionality.
+For example: Pressing the Enter key may result in different effects based on what the user has selected within the interface; while pressing the Escape key may cause the application to quit regardless of the screen's state. In this example, the Trunk is responsible for detecting the Escape key, and properly handling exit conditions.
+
+Roots are what connects the Tree to everything else. A Trunk can only have one set of Roots, and Roots can only connect to one Trunk.
+
+Roots are the API for a Pinecurses TUI. If anything goes on outside of the Pinecurses loop, the interface can be informed of this activity via the Roots, and the Trunk can delegate any required updates to the Branches and Leaves.
 
 ================================================================================
+INTERFACES:
+================================================================================
+Simplicity is one of the key ideas behind a Pinecurses.
+
+In order to maintain this simplicity, Pinecurses offers relatively few (albeit detailed) interfaces.
+
+The interfaces which most programmers are as follows:
+
+	1. Keyword attributes - json, or other markup
+	2. Key mapping - key presses to function calls
+	3. 
+
+================================================================================
+SIMPLEST USE CASES:
+================================================================================
+The potentialities for any interface regardless of 
