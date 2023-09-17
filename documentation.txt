@@ -99,7 +99,9 @@ Leaf	Leaf	Leaf	Leaf
 	  \	 /
 	   Trunk
 	     |
-	   Roots
+	  (Roots)
+
+NOTE: Roots do not yet exist, and are a theoretical API which may or may not be included under this name in production Pinecurses
 
 Leaves can be thought of as the final display element. Some examples of leaves include:
 	
@@ -141,6 +143,55 @@ The interfaces which most programmers are as follows:
 	1. Keyword attributes - json, or other markup
 	2. Key mapping - key presses to function calls
 	3. 
+
+KEYWORD ATTRIBUTES:
+********************************************************************************
+The keyword attributes are primarily to set display characteristics.
+
+These may be provided programatically by passing a dictionary of attributes PinecursesObject.__init__(...). However, the recomended method is by including these attributes in a json file, or any other support markup language.
+
+The main purpose for these attributes 
+
+KEY MAPPING:
+********************************************************************************
+Another key feature of using a Pinecurses TUI is the ability to map function calls to arbitrary keys at various levels in the interface tree.
+
+Mapping a key at each level in the tree should result in that key only having an effect if a certain element is selected.
+
+	Mapping a key at the Trunk level causes that key to run the mapped function regardless of the interface's state.
+
+	Mapping a key at the Branch level causes that key to run the mapped function if the interface is pointing at that window/collection of Leaves.
+
+	Mapping a key at the Leaf level causes that key to run the mapped function if the interface is pointing at the particular Branch containing the Leaf, as well as pointing specifically at that Leaf.
+
+This can result in various side effects based on the the structure of the Pinecurses interface.
+
+Consider the following tree with an arbitrary number of Leaves:
+
+Leaf(..)Leaf
+  \   |	 /
+   Branch
+      |
+   Trunk
+
+This would result in a 'single-paned interface.' All Leaves displayed on the screen are contained within the single Branch. The interface might look something like this:
+
+----------------------------------------
+|		Title Leaf	       |
+|				       |
+|				       |
+|	      * Menu Leaf 1	       |
+|		Menu Leaf 2	       |
+|				       |
+|				       |
+|				       |
+|				       |
+|				       |
+----------------------------------------
+
+The * represents the currently selected Leaf. The * is customizable (using a keyword attribute as detailed above).
+
+Note that the Branch is considered to be selected in the same manner that 'Menu Leaf 1' is considered to be selected. Thanks to Polyinheritance, the 'selected' functionality is included in both Branches and Leaves. However, by telling the Leaf to have a 'selected character' of '*', and a Branch with a 'selected character' of ' ', this functionality is effectively hidden.
 
 ================================================================================
 SIMPLEST USE CASES:
