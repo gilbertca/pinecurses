@@ -118,7 +118,12 @@ Trunks can be thought of as the glue for a Pinecurses interface. A trunk can hav
 The Trunk of a Pinecurses TUI performs several important functions, and they typically will not have any display elements associated with them.
 
 The Trunk is responsible for allowing the various branches to communicate with each other, as well as providing programwide functionality.
+
 For example: Pressing the Enter key may result in different effects based on what the user has selected within the interface; while pressing the Escape key may cause the application to quit regardless of the screen's state. In this example, the Trunk is responsible for detecting the Escape key, and properly handling exit conditions.
+
+In theory, if a programmer were to create multiple trunks for different interfaces, they could both operate at the same time, provided another higher-level Trunk is created with the same One-to-Many relationship.
+
+[ROOTS ARE THEORETICAL AT THIS POINT IN TIME]
 
 Roots are what connects the Tree to everything else. A Trunk can only have one set of Roots, and Roots can only connect to one Trunk.
 
@@ -140,4 +145,20 @@ The interfaces which most programmers are as follows:
 ================================================================================
 SIMPLEST USE CASES:
 ================================================================================
-The potentialities for any interface regardless of 
+The potential requirements of any interface are limitless.
+
+In order to maintain the simplicity behind the Pinecurses library, Pinecurses should primarily be used for specific use cases.
+
+Although a savvy programmer may be able to modify Pinecurses to suit a particular niche, there may be other libraries better suited for those cases.
+
+With that in mind, Pinecurses and it's features will be primarily focused on a few *simple* use cases.
+
+These use cases are:
+
+	* Menus/Lists with selectable entries
+	* Prettified/Formatted text and/or outputs from commands
+	*
+
+Again, anything is possible, and Pinecurses can be extended to include features which cater to use cases not mentioned above.
+
+However, the further one strays from these use cases, the more effort and time will be put into those features.
