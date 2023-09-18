@@ -214,7 +214,27 @@ The * represents the currently selected Pinecurses object. The * is customizable
 
 Note that the Branch is considered to be selected in the same manner that 'Menu Leaf 1' is considered to be selected (note the * in the top left corner). Thanks to Polyinheritance, the 'selected' functionality is included in both Branches and Leaves. However, by assigning the Leaf to have a 'selected character' of '*', and the Branch to have a 'selected character' of ' ', this functionality can be effectively hidden.
 
+Consider the following tree, with an arbitrary number of leaves:
 
+Leaf	Leaf	Leaf	Leaf
+  \	 /	  \	 /
+   Branch	   Branch
+	  \	 /
+	   Trunk
+
+This would result in a 'multi-paned interface' that might look like this:
+----------------------------------------
+|*	Title	    |	    Title      |
+|		    |		       |
+|	 Menu	    |	    *Menu      |
+|	*Menu	    |	     Menu      |
+|		    |		       |
+|		    |		       |
+|		    |		       |
+|		    |		       |
+|		    |		       |
+|		    |		       |
+----------------------------------------
 
 ================================================================================
 SIMPLEST USE CASES:
