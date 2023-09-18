@@ -1,0 +1,5 @@
+{
+	"name" : "different_item",
+	"parent" : "second_view",
+	"display_string" : "Second string."
+}

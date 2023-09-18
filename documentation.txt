@@ -8,7 +8,7 @@ INTRODUCTION:
 ================================================================================
 Creating pretty, easy-to-use, feature-packed interfaces can be a challenge.
 
-The python wrapper for the ncurses library contains all of the tools required to create wonderful tools.
+The python wrapper for the ncurses library contains all of the tools required to create intricate interfaces.
 
 However, the curses library for python only wraps the ncurses library, and ncurses is somewhat arcane.
 
@@ -90,7 +90,7 @@ There are four primary components to any Pinecurses TUI:
 
 	3. Leaves (formerly Items)
 	
-	4. Roots
+	4. Roots (currently imaginary)
 
 Just like a real tree, a Pinecurses Program follows a similar structure:
 Leaf	Leaf	Leaf	Leaf
@@ -134,7 +134,7 @@ Roots are the API for a Pinecurses TUI. If anything goes on outside of the Pinec
 ================================================================================
 INTERFACES:
 ================================================================================
-Simplicity is one of the key ideas behind a Pinecurses.
+Simplicity is one of the key ideas behind a Pinecurses interface.
 
 In order to maintain this simplicity, Pinecurses offers relatively few (albeit detailed) interfaces.
 
@@ -148,9 +148,30 @@ KEYWORD ATTRIBUTES:
 ********************************************************************************
 The keyword attributes are primarily to set display characteristics.
 
-These may be provided programatically by passing a dictionary of attributes PinecursesObject.__init__(...). However, the recomended method is by including these attributes in a json file, or any other support markup language.
+These may be provided programatically by passing a dictionary of attributes PinecursesObject.__init__(...). However, the recomended method is by including these attributes in a json file, or any other supported markup language.
 
-The main purpose for these attributes 
+The main purpose for these attributes is to provide a template for displaying data to the screen.
+
+For example, take the following list of keyword attributes:
+button_attributes = {
+	height = 5%,
+	width = 5%,
+	text_color = red,
+}
+We can assign these attributes to a series of Leaves. Each of the leaves will take 5% of the screen's width and height, and will display their text in red.
+
+Consider these keyword attributes:
+title_attributes = {
+	height = 1,
+	width = 100%,
+	text = "Title",
+	alignment = top-center
+}
+Assigning these attributes to a Leaf would result in a bar across the top of the screen containing text "Title."
+
+From these two example sets of attributes, one can begin to see how an application can be built using Pinecurses.
+
+As a programmer adds elements to the screen, those elements can be assigned these attributes, and Pinecurses will handle displaying them properly.
 
 KEY MAPPING:
 ********************************************************************************
@@ -177,7 +198,7 @@ Leaf(..)Leaf
 This would result in a 'single-paned interface.' All Leaves displayed on the screen are contained within the single Branch. The interface might look something like this:
 
 ----------------------------------------
-|		Title Leaf	       |
+|*		Title Leaf	       |
 |				       |
 |				       |
 |	      * Menu Leaf 1	       |
@@ -189,9 +210,11 @@ This would result in a 'single-paned interface.' All Leaves displayed on the scr
 |				       |
 ----------------------------------------
 
-The * represents the currently selected Leaf. The * is customizable (using a keyword attribute as detailed above).
+The * represents the currently selected Pinecurses object. The * is customizable (using a keyword attribute as detailed above).
 
-Note that the Branch is considered to be selected in the same manner that 'Menu Leaf 1' is considered to be selected. Thanks to Polyinheritance, the 'selected' functionality is included in both Branches and Leaves. However, by telling the Leaf to have a 'selected character' of '*', and a Branch with a 'selected character' of ' ', this functionality is effectively hidden.
+Note that the Branch is considered to be selected in the same manner that 'Menu Leaf 1' is considered to be selected (note the * in the top left corner). Thanks to Polyinheritance, the 'selected' functionality is included in both Branches and Leaves. However, by assigning the Leaf to have a 'selected character' of '*', and the Branch to have a 'selected character' of ' ', this functionality can be effectively hidden.
+
+
 
 ================================================================================
 SIMPLEST USE CASES:
