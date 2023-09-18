@@ -1,28 +1,25 @@
 import curses
+from pycurses_program import PycursesProgram
 from base_controller import BaseController
 from base_view import BaseView
 from base_item import BaseItem
-from utils import parse_json
 
-CONTROLLER_FILE = "json/controllers/controller.json"
-VIEW_FILE = "json/views/view.json"
-ITEM_FILE = "json/items/item.json"
-def main(stdscr):
+class DevelopmentProgram(PycursesProgram):
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.class_namespace.update({
+			'controllers': BaseController,
+			'views': BaseView,
+			'items': BaseItem,
+		})
+def main():
 	"""
-	The main method to run and test this suite.
+	The main method to run and test the suite.
 	"""
-	# Create the Controller:
-	controller_kwargs = parse_json(CONTROLLER_FILE) # Controller attributes are usually sparse.
-	controller = BaseController(stdscr, **controller_kwargs)
-	# Load Views into the Controller:
-	view_attributes = parse_json(VIEW_FILE)
-	controller.create_view(**view_attributes)
-	# Load Items into the View:
-	item_attributes = parse_json(ITEM_FILE)
-	controller.get('base_view').create_item(**item_attributes)
-	# Begin the main loop. Any pycurses program should be relatively this simple.
-	controller.begin()
+	program = DevelopmentProgram('./json')
+	program.begin()
 
 
 if __name__ == "__main__":
-	curses.wrapper(main)
+	main()

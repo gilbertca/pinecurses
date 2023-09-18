@@ -1,4 +1,8 @@
 {
 	"name":"base_view",
-	"text_color":["red","cyan"]
+	"text_color":["black","cyan"],
+	"background_color":["red","blue"],
+	"background_character":" ",
+	"valign":"top",
+	"height":10
 }

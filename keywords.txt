@@ -3,6 +3,8 @@ text_color = list,str -> color of normal text and back
 background_color = list,str -> color of background & fill char
 background_fill = char -> Character to fill background with
 important_color = list,str -> color of hightlighted text and back
+base_controller.py
+Other:
 valign = string('center','top','bottom') -> automatically calculate top and bot y values
 vborder = int,(TODO: ratios) -> Distance between surrounding elements, (TODO: controllers) 
 height = int -> height of display on screen ! can not be used with vborder since vborder calculates height 
@@ -12,3 +14,4 @@ width = int -> width of display on screen ! can not be used with hborder since h
 padding = int  -> distance between edges of window and content defaults to 0
 hpadding = int -> padding but in x direction defaults to 0
 vpadding = int -> padding but in y direction defaults to 0
+mixins.py

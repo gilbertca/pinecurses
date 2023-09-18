@@ -1,18 +1,17 @@
 import curses
-import logging
 from pycurses_object import PycursesObject
+from cursor import SingleObjectCursor
+from logger import log, log_t
 from base_view import BaseView
-from utils import log
+from curses import KEY_MOUSE, getmouse
 
-
-class BaseController(PycursesObject):
+class BaseController(SingleObjectCursor, PycursesObject):
 	"""
 	The base controller class which  controls all other aspects of a Pycurses program.
 	"""
-	def __init__(self, stdscr, *args, **kwargs):
+
+	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
-		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
-		self.stdscr = stdscr
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
@@ -25,76 +24,67 @@ class BaseController(PycursesObject):
 		}
 		self.colors = {}
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
+		self.FUNCTIONS.update({'x' : lambda:0})
 
 	@log
-	def begin(self):
+	def begin(self, stdscr, **object_dict):
 		"""
 		The main loop of any pycurses program. Once this function returns anything,
 			then the program will end.
 		"""
-		self.initialize_all_views()
+		self.window = stdscr
+		self.initialize(**object_dict)
 		self.map_all_colors()
-		print(self.colors)
 		self.draw_all_views()
-		view_instance = self['base_view']
-		view_instance.window.getch()
-		# End program:
-		return 0
+		# Once self.interact(..) returns a value, program will end.
+		# This is also the *start* of any pycurses project.
+		while True:
+			# Get the keypress from a child window:
+			keypress = self.get_selected_window().getch()
+			if self.interact(keypress) == 0:
+				return 0
+
+	@log
+	def get_selected_window(self):
+		"""
+		Returns a window object referenced by the Cursor.
+		"""
+		return self.get_selected_object().window
 
 	@log
 	def color(self, view_name, color_name):
 		"""
 		A shortcut for accessing the nested structure of self.colors.
-			colors = {
-				{"view_name" : {"color_name" : 1 <-- returns this}},
-			}
+		self.colors = {
+			"view_name" : {"color_name" : 1 <-- returns this},
+		}
 		"""
 		return self.colors.get(view_name).get(color_name)
 
 	@log
-	def create_view(self, **attributes):
+	def initialize(self, **object_dict):
 		"""
-		Since Views are to be ignorant of curses,
-			their window object must be created by
-			their parent Controller instance.
+		Adds references to all View instances within self's dict object.
 		"""
-		# Instantiate instance of a view:
-		view_instance = BaseView(self, **attributes)
-		# Update self's dictionary as {name : instance}:
-		self.update({view_instance.attributes('name') : view_instance})
-	
-	@log
-	def initialize_all_views(self):
-		"""
-		Iterates through self's dictionary and calls 'initialize' on all views.
-		"""
-		for view_name in self:
-			self.get(view_name).initialize()
+		self.children = object_dict.get('views')
+		for view_instance in self.children:
+			view_instance.initialize(self, **object_dict)
 
 	@log
 	def draw_all_views(self):
 		"""
 		Draws all views within self's dictionary.
 		"""
-		for view_key in self:
-			view_instance = self.get(view_key)
-			self.draw_view(view_instance)
-
-	@log
-	def draw_view(self, view_instance):
-		"""
-		Draws a particular view from a View instance.
-		"""
-		view_instance.draw_self()
+		for view_instance in self.children:
+			view_instance.draw_self()
 
 	@log
 	def map_all_colors(self):
 		"""
 		Iterates through all Views contained within self's dict
-		and maps their colors in self.colors..
+			and maps their colors in self.colors.
 		"""
-		for view_key in self:
-			view_instance = self.get(view_key)
+		for view_instance in self.children:
 			self.map_colors(view_instance)
 
 	@log
@@ -113,7 +103,7 @@ class BaseController(PycursesObject):
 			# TODO: NEED 3 CASES: 0 VALUE, STRING VALUE, LIST VALUE
 			if color_value == 0: # Map default black on white case:
 				# Remember: No need to initialize pair number 0
-				#	due to curses' hardcoded values.
+				#due to curses' hardcoded values.
 				self.colors.get(view_name).update({color_key : 0})
 			elif isinstance(color_value, str): # Map text on default background:
 				# Request the Controller's default background:
@@ -124,11 +114,11 @@ class BaseController(PycursesObject):
 				curses.init_pair(pair_number, *colors)
 			elif isinstance(color_value, list): # Map text and background:
 				# Begin by taking the names of the colors, and getting
-				#	their curses counterpart integers, and pack into a lis:
+				#their curses counterpart integers, and pack into a list:
 				colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
 				# Update the reference in self.colors:
 				self.colors.get(view_name).update({color_key : pair_number})
-				# Initialize the pair within cursees:
+				# Initialize the pair within curses:
 				curses.init_pair(pair_number, *colors)
 
 	@log
@@ -138,8 +128,8 @@ class BaseController(PycursesObject):
 		"""
 		count = 1
 		# Iterate and count through all views:
-		for view_key in self:
-			view_name = self.get(view_key).attributes('name')
+		for view_instance in self.children:
+			view_name = view_instance.name
 			color_dict = self.colors.get(view_name)
 			# Iterate through the View's color dictionary:
 			for color_key in color_dict:
