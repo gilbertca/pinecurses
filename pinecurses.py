@@ -3,8 +3,11 @@ import logging
 from logger import log
 from parsers import JsonParser
 
-class PycursesProgram():
-	
+class Pinecurses():
+    """Pinecurses:
+
+    
+    """
 	def __init__(self, json_directory, *args, **kwargs):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.class_namespace = {}
