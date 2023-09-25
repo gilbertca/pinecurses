@@ -1,8 +1,8 @@
-from pycurses_object import PycursesObject
-from logger import log, log_t
+from baseobject import BaseObject
+from logger import log
 
 
-class BaseItem(PycursesObject):
+class BaseItem(BaseObject):
 	"""
 	The base Item which determines how strings / buttons / etc. should be displayed.
 	"""
@@ -12,6 +12,7 @@ class BaseItem(PycursesObject):
 		self.height = 0
 		self.width = 0
 		self.display_dictionary = {}
+
 	def get_display_string_iterable(self):
 		"""
 		Returns and formats self.attributes('display_string'),

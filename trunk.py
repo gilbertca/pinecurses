@@ -1,11 +1,8 @@
 import curses
-from pycurses_object import PycursesObject
-from cursor import SingleObjectCursor
-from logger import log, log_t
-from base_view import BaseView
-from curses import KEY_MOUSE, getmouse
+from baseobject import BaseObject
+from logger import log
 
-class BaseController(SingleObjectCursor, PycursesObject):
+class BaseController(SingleObjectCursor, BaseObject):
 	"""
 	The base controller class which  controls all other aspects of a Pycurses program.
 	"""

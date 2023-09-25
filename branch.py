@@ -1,12 +1,10 @@
 import math
-import curses
-from pycurses_object import PycursesObject
-from cursor import SingleObjectCursor
-from mixins import ScreenPositioner
+from baseobject import BaseObject
+from mixins import ScreenPositioner, SingleObjectCursor
 from logger import log
 
 
-class BaseView(SingleObjectCursor, ScreenPositioner, PycursesObject):
+class BaseView(SingleObjectCursor, ScreenPositioner, BaseObject):
 	"""
 	The base View class which controls all items of a Pycurses program.
 	"""
