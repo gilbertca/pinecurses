@@ -1,4 +1,4 @@
-class PycursesObject:
+class BaseObject:
 	"""
 	The base functionality which all Pycurses objects inherit.
 	"""
