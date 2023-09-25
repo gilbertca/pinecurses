@@ -224,7 +224,7 @@ Leaf	Leaf	Leaf	Leaf
 
 This would result in a 'multi-paned interface' that might look like this:
 ----------------------------------------
-|*	Title	    |	    Title      |
+|	Title	    |*	    Title      |
 |		    |		       |
 |	 Menu	    |	    *Menu      |
 |	*Menu	    |	     Menu      |
@@ -235,6 +235,12 @@ This would result in a 'multi-paned interface' that might look like this:
 |		    |		       |
 |		    |		       |
 ----------------------------------------
+
+Note how the '*' character appears in the top-left corner of the pane as well as next to each "Menu" entry.
+
+This way an interface can have multiple panes while interacting with each one independently of the other. For example, in the above interface, the programmer may have the up and down arrow keys control the menu selection, while the left and right arrow keys control the pane selection.
+
+In this way, the user of the interface can interact with each menu separately, unlike in a single-Branch application.
 
 ================================================================================
 SIMPLEST USE CASES:
@@ -251,8 +257,14 @@ These use cases are:
 
 	* Menus/Lists with selectable entries
 	* Prettified/Formatted text and/or outputs from commands
-	*
+	* 
 
 Again, anything is possible, and Pinecurses can be extended to include features which cater to use cases not mentioned above.
 
 However, the further one strays from these use cases, the more effort and time will be put into those features.
+
+================================================================================
+FILE STRUCTURE:
+================================================================================
+
+
