@@ -7,13 +7,18 @@ from logger import log
 from parsers import JsonParser
 
 class Pinecurses():
-    """Pinecurses:
+    """Pinecurses: 
 
-    
+    :param: json_directory
+
     """
 	def __init__(self, json_directory, *args, **kwargs):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
-		self.class_namespace = {}
+		self.class_namespace = {
+            'trunk' : Trunk,
+            'branch' : Branch,
+            'leaf' : Leaf,
+        }
 		self.json_directory = json_directory
 
 	@log
