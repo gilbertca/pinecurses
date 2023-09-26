@@ -4,9 +4,9 @@ from mixins import ScreenPositioner, SingleObjectCursor
 from logger import log
 
 
-class BaseView(SingleObjectCursor, ScreenPositioner, BaseObject):
+class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	"""
-	The base View class which controls all items of a Pycurses program.
+
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)

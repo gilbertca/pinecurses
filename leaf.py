@@ -2,9 +2,9 @@ from baseobject import BaseObject
 from logger import log
 
 
-class BaseItem(BaseObject):
+class Leaf(BaseObject):
 	"""
-	The base Item which determines how strings / buttons / etc. should be displayed.
+
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)

@@ -2,11 +2,10 @@ import curses
 from baseobject import BaseObject
 from logger import log
 
-class BaseController(SingleObjectCursor, BaseObject):
-	"""
-	The base controller class which  controls all other aspects of a Pycurses program.
+class Trunk(SingleObjectCursor, BaseObject):
 	"""
 
+	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
 		self.CURSES_COLOR_MAP = {
