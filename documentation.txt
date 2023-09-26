@@ -271,7 +271,17 @@ File
 ================================================================================
 TRUNKS:
 ================================================================================
-Trunks
+Trunks serve as bases for Pinecurses applications.
+
+There will generally only be one Trunk for a given Pinecurses interface.
+
+Switching between different Trunks is theoretically possible by modifying the Pinecurses object, although most simple use cases will not require multiple controllers.
+
+Trunks have a curses Window object similarly to Branches. However, this window object is the curses stdscr.
+
+Writing to and refreshing the Trunk's stdscr will overwrite the entire screen's contents.
+
+This can be useful for critical error reporting - i.e. when the interface must quit due to an unhandleable exception, any error information can be printed to stdscr which will result in contents of the screen being overwritten. This will clearly indicate a critical fault to any user without having to handle any other windows.
 
 ================================================================================
 BRANCHES:
