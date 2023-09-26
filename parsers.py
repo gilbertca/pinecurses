@@ -12,8 +12,7 @@ class Parser:
 		"""
 		pycurses_objects_dict = {}
 		directory_list = os.listdir(self.base_directory)
-		# NOTE: Directory name must match the name associated
-		#	with the corresponding class!
+		# NOTE: Directory name must match the name associated in Pinecurses.class_namespace
 		for current_directory_name in directory_list:
 			ClassReference = class_namespace.get(current_directory_name)
 			filenames_list = os.listdir(f"{self.base_directory}/{current_directory_name}")
