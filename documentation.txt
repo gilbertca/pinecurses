@@ -82,13 +82,15 @@ STRUCTURE:
 ================================================================================
 The structure of a Pinecurses program can be thought of as a tree. Like, the real kind... outside.
 
-There are four primary components to any Pinecurses TUI:
+There are five primary components to any Pinecurses TUI:
 
 	1. Trunks (formerly Controllers)
 
 	2. Branches (formerly Views)
 
 	3. Leaves (formerly Items)
+
+		3a. Veins (currently imaginary, only within Leaves)
 	
 	4. Roots (currently imaginary)
 
@@ -130,6 +132,10 @@ In theory, if a programmer were to create multiple trunks for different interfac
 Roots are what connects the Tree to everything else. A Trunk can only have one set of Roots, and Roots can only connect to one Trunk.
 
 Roots are the API for a Pinecurses TUI. If anything goes on outside of the Pinecurses loop, the interface can be informed of this activity via the Roots, and the Trunk can delegate any required updates to the Branches and Leaves.
+
+[VEINS ARE THEORETICAL AT THIS POINT IN TIME]
+
+In the current inception of Pinecurses, each line.
 
 ================================================================================
 INTERFACES:
@@ -281,14 +287,32 @@ Trunks have a curses Window object similarly to Branches. However, this window o
 
 Writing to and refreshing the Trunk's stdscr will overwrite the entire screen's contents.
 
-This can be useful for critical error reporting - i.e. when the interface must quit due to an unhandleable exception, any error information can be printed to stdscr which will result in contents of the screen being overwritten. This will clearly indicate a critical fault to any user without having to handle any other windows.
+This can be useful for critical error reporting - i.e. when the interface must quit due to an unhandleable exception, any error information can be printed to stdscr which will result in contents of the screen being overwritten. This will clearly indicate a critical fault to any user without handling any other windows.
 
 ================================================================================
 BRANCHES:
 ================================================================================
-Branches
+Branches can generally be thought of as the "window panes" of the application.
+
+Branches are associated with a specific section of the screen, and contain one or more Leaves.
+
+Branches typically do not have text associated with them; text should be contained within Leaves, and Leaves are to be positioned on Branches.
+
+Branches are placed on the screen as determined by the ScreenPositionerMixin class, which also determines screen positions for Leaves.
+
+Branches are selectable since they inherit from the CursorMixin class. This selectability allows for an application interface to have different windows which can be interacted with independently of the other.
 
 ================================================================================
 LEAVES:
 ================================================================================
-Leaves
+Leaves can typically be thought of as individual, (usually) interactable objects positioned within Branches and placed on the screen.
+
+Leaves are intended to be associated with text. A single leaf can have multiple lines of text.
+
+If the leaf has the attribute `interactable = True`, then that Leaf is selectable with the CursorMixin functionality. The `interactable` atribute is True by default for Leaves, and must be set to False to prevent selection with the CursorMixin functionality.
+
+ENTRIES:
+********************************************************************************
+NOTE: Entries are currently theoretical.
+
+
