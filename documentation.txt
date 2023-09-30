@@ -95,6 +95,7 @@ There are five primary components to any Pinecurses TUI:
 	4. Roots (currently imaginary)
 
 Just like a real tree, a Pinecurses Program follows a similar structure:
+
 Leaf	Leaf	Leaf	Leaf
   \	 /	  \	 /
    Branch	   Branch
@@ -135,7 +136,23 @@ Roots are the API for a Pinecurses TUI. If anything goes on outside of the Pinec
 
 [VEINS ARE THEORETICAL AT THIS POINT IN TIME]
 
-In the current inception of Pinecurses, each line.
+Leaves should have a way to display content formatted in multiple styles.
+
+The first version of Pinecurses will not be able to combine multiple styles on a single line.
+
+Imagine a window with the following in the first line:
+
+----------------------------------------
+|Left-text 		     Right-text|
+|				       |
+
+In this instance, Left-text and Right-text would be different Veins contained within a single Leaf.
+
+However, since the first version of Pinecurses will not have support for Veins, each line of text can only contain one style.
+
+This means that one cannot have text with varying alignments contained on one line, as well as different colors, highlighting, or other keyword attribute styles.
+
+Veins would be the feature which allows multiple styles in a single line, and moreover in a single Leaf. Currently, all text contained within a Leaf will share all of styles which the Leaf has.
 
 ================================================================================
 INTERFACES:
@@ -153,6 +170,8 @@ The interfaces which most programmers are as follows:
 KEYWORD ATTRIBUTES:
 ********************************************************************************
 The keyword attributes are primarily to set display characteristics.
+
+Keyword attributes assign what will be referred to as "styles" to various Pinecurses objects.
 
 These may be provided programatically by passing a dictionary of attributes PinecursesObject.__init__(...). However, the recomended method is by including these attributes in a json file, or any other supported markup language.
 
@@ -311,8 +330,8 @@ Leaves are intended to be associated with text. A single leaf can have multiple 
 
 If the leaf has the attribute `interactable = True`, then that Leaf is selectable with the CursorMixin functionality. The `interactable` atribute is True by default for Leaves, and must be set to False to prevent selection with the CursorMixin functionality.
 
-ENTRIES:
+VEINS:
 ********************************************************************************
-NOTE: Entries are currently theoretical.
+NOTE: Veins are currently theoretical.
 
 
