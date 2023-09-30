@@ -9,26 +9,27 @@ from parsers import JsonParser
 class Pinecurses():
 	"""Pinecurses: 
 
-	:param: json_directory
+	:param: directory
 
 	"""
-	def __init__(self, json_directory, *args, **kwargs):
-		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
+	def __init__(self, style_directory, ParserClass=JsonParser, *args, **kwargs):
+		logging.basicConfig(filename='pinecurses.log', filemode='w', level=logging.DEBUG)
 		self.class_namespace = {
 			'trunk' : Trunk,
 			'branch' : Branch,
 			'leaf' : Leaf,
 		}
-		self.json_directory = json_directory
+		self.style_directory = style_directory
+        self.ParserClass = ParserClass
 
 	@log
-	def load_objects(self, json_directory):
+	def load_objects(self, directory):
 		"""
 		Creates a PycursesParser instance and requests a dictionary
 			of name:PycursesObjectInstance pairs created by the
-			PycursesParser from the provided json_directory.
+			PycursesParser from the provided directory.
 		"""
-		parser = JsonParser(json_directory)
+		parser = self.ParserClass(directory)
 		self.pycurses_objects_dict = parser.parse(self.class_namespace)
 
 	@log
@@ -50,6 +51,6 @@ class Pinecurses():
 			'curses.wrapper'.
 		"""
 		self.stdscr = stdscr
-		self.load_objects(self.json_directory)
+		self.load_objects(self.directory)
 		controller = self.pycurses_objects_dict.get('controllers')[0]
 		controller.begin(stdscr, **self.pycurses_objects_dict)
