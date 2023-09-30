@@ -21,7 +21,7 @@ class BaseObject:
 
 	def interact(self, keypress):
 		"""
-		The interact function is an integral part of any pycurses application.
+		The interact function is an integral part of any Pinecurses application.
 		The interact function begins by being called at the Controller 
 			(or highest level Pycurses Object).
 		If a keypress does not have an associated function within the Controller,

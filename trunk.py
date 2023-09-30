@@ -25,7 +25,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 	@log
 	def begin(self, stdscr, **object_dict):
 		"""
-		The main loop of any pycurses program. Once this function returns anything,
+		The main loop of any pinecurses program. Once this function returns anything,
 			then the program will end.
 		"""
 		self.window = stdscr
@@ -33,7 +33,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 		self.map_all_colors()
 		self.draw_all_views()
 		# Once self.interact(..) returns a value, program will end.
-		# This is also the *start* of any pycurses project.
+		# This is also the *start* of any Pinecurses interface.
 		while True:
 			# Get the keypress from a child window:
 			keypress = self.get_selected_window().getch()

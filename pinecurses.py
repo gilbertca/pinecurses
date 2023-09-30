@@ -30,7 +30,7 @@ class Pinecurses():
 			PycursesParser from the provided directory.
 		"""
 		parser = self.ParserClass(directory)
-		self.pycurses_objects_dict = parser.parse(self.class_namespace)
+		self.pinecurses_objects_dict = parser.parse(self.class_namespace)
 
 	@log
 	def begin(self):
@@ -52,5 +52,5 @@ class Pinecurses():
 		"""
 		self.stdscr = stdscr
 		self.load_objects(self.directory)
-		controller = self.pycurses_objects_dict.get('controllers')[0]
-		controller.begin(stdscr, **self.pycurses_objects_dict)
+		controller = self.pinecurses_objects_dict.get('controllers')[0]
+		controller.begin(stdscr, **self.pinecurses_objects_dict)
