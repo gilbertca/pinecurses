@@ -20,7 +20,7 @@ class Pinecurses():
 			'leaf' : Leaf,
 		}
 		self.style_directory = style_directory
-        self.ParserClass = ParserClass
+		self.ParserClass = ParserClass
 
 	@log
 	def load_objects(self, directory):
