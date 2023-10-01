@@ -4,7 +4,7 @@ from trunk import Trunk
 from branch import Branch
 from leaf import Leaf
 from logger import log
-from parsers import JsonParser
+from parsers.json_parser import JsonParser
 
 class Pinecurses():
 	"""Pinecurses: 
