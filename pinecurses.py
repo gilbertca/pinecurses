@@ -13,7 +13,7 @@ class Pinecurses():
 
 	"""
 	def __init__(self, style_directory, ParserClass=JsonParser, *args, **kwargs):
-		logging.basicConfig(filename='pinecurses.log', filemode='w', level=logging.DEBUG)
+		logging.basicConfig(filename='runtime.log', filemode='w', level=logging.DEBUG)
 		self.class_namespace = {
 			'trunk' : Trunk,
 			'branch' : Branch,
