@@ -1,5 +1,0 @@
-{
-	"name" : "base_item",
-	"parent" : "base_view",
-	"display_string" : "Hello, world!\nIt is a pleasure to be here today."
-}

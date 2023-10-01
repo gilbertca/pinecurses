@@ -1,8 +1,0 @@
-{
-	"name":"second_view",
-	"text_color":["black","yellow"],
-	"background_color":["blue","black"],
-	"background_character":"☆",
-	"valign":"bottom",
-	"height":20
-}
