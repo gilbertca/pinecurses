@@ -22,11 +22,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		self.name = self.attributes('name')
 		self.parent = parent_controller_instance
 		self.background_character = self.attributes('background_character') if self.attributes('background_character') else ' '
-		self._calculate_height()
-		self._calculate_width()
-		self._calculate_window_y_coords()
-		self._calculate_window_x_coords()
-		self._calculate_padding()
+		self.calculate()
 		self.create_curses_pad()
 		self.initialize_all_items(**object_dict)
 
