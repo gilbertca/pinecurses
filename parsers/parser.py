@@ -43,4 +43,3 @@ class Parser:
 		"""
 		raise Exception("This method must be overloaded by a child class.")
 
-
