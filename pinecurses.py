@@ -7,9 +7,9 @@ from logger import log
 from parsers.json_parser import JsonParser
 
 class Pinecurses():
-	"""Pinecurses: 
+	"""The Pinecurses object is the highest level Pinecurses object. It is intended to wrap a *Pine tree*, pass control to the Trunk of the interface, and to interact with curses allowing for curses-agnostic *Pine tree* object classes.
 
-	:param: directory
+	:param: style_directory
 
 	"""
 	def __init__(self, style_directory, ParserClass=JsonParser, *args, **kwargs):
