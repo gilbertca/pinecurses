@@ -1,9 +1,4 @@
-"""
-NOTE: Any object that inherits a Cursor object MUST
-inherit from a PycursesObject as their top-level parent.
-I.E. PycursesObject must be the farthest right inherited object.
-"""
-
+from logger import log
 
 class Cursor:
 	
@@ -37,7 +32,8 @@ class SingleObjectCursor(Cursor):
 		"""
 		selected_child = self.get_selected_object()
 		return selected_child.select(*args, **kwargs)
-		@log
+	
+	@log
 	def handle_mouse_click(self, x, y):
 		"""
 		This method is called when a mouse click is detected.

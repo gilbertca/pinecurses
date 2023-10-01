@@ -51,6 +51,4 @@ class Pinecurses():
 			'curses.wrapper'.
 		"""
 		self.stdscr = stdscr
-		self.load_objects(self.directory)
-		controller = self.pinecurses_objects_dict.get('controllers')[0]
-		controller.begin(stdscr, **self.pinecurses_objects_dict)
+		self.load_objects(self.style_directory)
