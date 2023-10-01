@@ -9,9 +9,9 @@ class JsonParser(Parser):
 		"""
 		Overloaded method which returns the value from parse_json.
 		"""
-		return self.parse_json(file_name)
+		return self._parse_json(file_name)
 
-	def parse_json(self, file_name):
+	def _parse_json(self, file_name):
 		"""
 		Simple utility to read from a JSON file, returns a dict object.
 		"""
