@@ -42,7 +42,7 @@ class BaseObject:
 			response_function = self.responses(response)
 			# If there is a response, handle and return:
 			if response_function is not None: 
-				self.handle_function(response)
+				return self.handle_function(response)
 			if response is not None:
 				return response
 		# If there is no function for a keypress, then call the selected
