@@ -1,7 +1,7 @@
 import math
 from baseobject import BaseObject
-from mixins.cursormixin import SingleObjectCursor
-from mixins.screenpositionmixin import ScreenPositioner
+from mixins.cursormixins import SingleObjectCursor
+from mixins.screenpositionmixins import ScreenPositioner
 from logger import log
 
 

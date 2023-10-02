@@ -1,6 +1,6 @@
 import curses
 from baseobject import BaseObject
-from mixins.cursormixin import SingleObjectCursor
+from mixins.cursormixins import SingleObjectCursor
 from logger import log
 
 class Trunk(SingleObjectCursor, BaseObject):

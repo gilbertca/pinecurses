@@ -3,8 +3,7 @@ from logger import log
 
 
 class Leaf(BaseObject):
-	"""
-
+	"""A Leaf is the highest object in a *Pine tree*. A basic Leaf should be used for simple screen elements, such as title bars.
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
@@ -32,7 +31,7 @@ class Leaf(BaseObject):
 
 
 class BarLeaf(Leaf):
-	"""A BarLeaf is a Leaf which requests an integer, and displays iteself as a horizontal bar across a Branch. The height is assumed to be 1, unless explicitly set.
+	"""A BarLeaf is a Leaf which requests an integer, and displays itself as a horizontal bar across a Branch. The height is assumed to be 1, unless explicitly set.
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
