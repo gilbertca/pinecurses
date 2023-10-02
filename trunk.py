@@ -34,19 +34,11 @@ class Trunk(SingleObjectCursor, BaseObject):
 		self.map_all_colors()
 		self.draw_all_views()
 		# Once self.interact(..) returns a value, program will end.
-		# This is also the *start* of any Pinecurses interface.
 		while True:
 			# Get the keypress from a child window:
 			keypress = self.get_selected_window().getch()
 			if self.interact(keypress) == 0:
 				return 0
-
-	@log
-	def get_selected_window(self):
-		"""
-		Returns a window object referenced by the Cursor.
-		"""
-		return self.get_selected_object().window
 
 	@log
 	def color(self, view_name, color_name):
