@@ -13,33 +13,15 @@ class Leaf(BaseObject):
 		self.width = 0
 		self.display_dictionary = {}
 
-	def get_display_string_iterable(self):
+	def draw(self):
+		"""Requests the Leaf's parent window object, and draws itself to the window.
 		"""
-		Returns and formats self.attributes('display_string'),
-			i.e. the text which is displayed by any view.
-		Formatting is based on:
-			1. Writable width
-			2. Controller specific tests
-		This code currently just returns a string within the width of the View's window.
+		branch_window = self.parent.window
+
+	def _get_drawing_instructions(self):
+		"""Returns a list of instructions which are to be used by self.draw. This method must be overloaded by a child element.
 		"""
-		writable_width = self.parent.get_writable_width()
-		display_string = self.attributes('display_string')
-		display_string_iter = display_string.split('\n')
-		truncation_character = self.attributes('truncation_character')
-		return_iterable = []
-		for iter_string in display_string_iter:
-			# If whole string fits on a line:
-			if len(iter_string) <= writable_width:
-				return_iterable.append(iter_string)
-			# Otherwise, if string is longer than width,
-			#	And a truncation character is present:
-			elif truncation_character:
-				return_iterable.append((iter_string[:writable_width-1] + truncation_character))
-			# Otherwise just return the string at length.
-			else:
-				return_iterable.append(iter_string[:writable_width])
-		# And return the list of strings:
-		return return_iterable
+		pass
 
 	def initialize(self, parent_view_instance):
 		"""
@@ -47,4 +29,18 @@ class Leaf(BaseObject):
 			objects have been created.
 		"""
 		self.parent = parent_view_instance
+
+
+class BarLeaf(Leaf):
+	"""A BarLeaf is a Leaf which requests an integer, and displays iteself as a horizontal bar across a Branch. The height is assumed to be 1, unless explicitly set.
+	"""
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+
+
+class ListLeaf(Leaf):
+	"""A ListLeaf is a Leaf which requests a list of strings, and displays each string in a vertical list. The height of each item is assumed to be 1, unless explicitly set.
+	"""
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
 
