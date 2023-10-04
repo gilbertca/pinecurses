@@ -13,12 +13,11 @@ def log(function):
 	"""
 	def log(*args, **kwargs):
 		# Log the function name, arguments, and file
-		logger.debug(f"{datetime.now()} \
-				\nFunction: {function.__name__} \
-				\nArgs: {args} \
-				\nKwargs: {kwargs} \
-				\nFile: {function.__globals__.get('__file__')} \
-			   \n")
+		logger.debug(f"{datetime.now()}\
+				\nFunction: {function.__name__}\
+				\nArgs: {args}\
+				\nKwargs: {kwargs}\
+				\nFile: {function.__globals__.get('__file__')}\n")
 		try:
 			return function(*args, **kwargs)
 		except Exception as e:
