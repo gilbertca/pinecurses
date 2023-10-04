@@ -269,7 +269,15 @@ In this way, the user of the interface can interact with each menu separately, u
 
 PROGRAMATIC GENERATION:
 ********************************************************************************
+In some cases, an interface must be drawn up dynamically; that is to say that a Pinecurses interface must handle an arbitrary number of Leaves generated from *some* code.
 
+For example: An interface which DOES NOT require dynamic creation, for example, might be a utility menu. We may always know what options are in that menu, for example, and therefore do not need to generate new buttons in that menu.
+
+An interface which DOES require dynamic creation, for example, might be a file explorer of some kind. We do not necessarily know how many files may need to be displayed, and the Pinecurses library will need to determine exactly how to display those items to the screen.
+
+One way of accomplishing this is to use a *generator* object. This step, along with keymapping, would most easily be handled by linking a generator with some arbitrary code.
+
+Another way of accomplishing this is by using f-strings contained within the Leaf's style file. This f-string may be an actual python f-string, or it may be a similarly structured rendition.
 
 ================================================================================
 SIMPLEST USE CASES:
