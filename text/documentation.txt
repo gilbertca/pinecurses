@@ -163,9 +163,9 @@ In order to maintain this simplicity, Pinecurses offers relatively few (albeit d
 
 The interfaces which most programmers are as follows:
 
-	1. Keyword attributes - json, or other markup
+	1. Keyword attributes i.e. Styles - json, or other markup
 	2. Key mapping - key presses to function calls
-	3. 
+	3. Live generation - Leaves created programatically
 
 KEYWORD ATTRIBUTES:
 ********************************************************************************
@@ -267,6 +267,10 @@ This way an interface can have multiple panes while interacting with each one in
 
 In this way, the user of the interface can interact with each menu separately, unlike in a single-Branch application.
 
+PROGRAMATIC GENERATION:
+********************************************************************************
+
+
 ================================================================================
 SIMPLEST USE CASES:
 ================================================================================
@@ -334,4 +338,7 @@ VEINS:
 ********************************************************************************
 NOTE: Veins are currently theoretical.
 
+================================================================================
+DYNAMIC CREATION:
+================================================================================
 
