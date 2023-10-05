@@ -294,7 +294,7 @@ These use cases are:
 
 	* Menus/Lists with selectable entries
 	* Prettified/Formatted text and/or outputs from commands
-	* 
+	* Generated lists from API's
 
 Again, anything is possible, and Pinecurses can be extended to include features which cater to use cases not mentioned above.
 
