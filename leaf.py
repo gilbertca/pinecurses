@@ -25,13 +25,6 @@ class Leaf(BaseObject):
 		"""
 		pass
 
-	def initialize(self, parent_view_instance):
-		"""
-		Sets attributes for the ItemInstance once all
-			objects have been created.
-		"""
-		self.parent = parent_view_instance
-
 
 class BarLeaf(Leaf):
 	"""A BarLeaf is a Leaf which requests an integer, and displays itself as a horizontal bar across a Branch. The height is assumed to be 1, unless explicitly set.
