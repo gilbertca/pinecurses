@@ -5,7 +5,6 @@ from logger import log
 
 class Trunk(SingleObjectCursor, BaseObject):
 	"""
-
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
@@ -51,13 +50,10 @@ class Trunk(SingleObjectCursor, BaseObject):
 		return self.colors.get(view_name).get(color_name)
 
 	@log
-	def initialize(self, **object_dict):
+	def initialize(self):
+		"""MAY NEED TO REMOVE THIS FUNCTION AS SCHEMA CHANGES.
 		"""
-		Adds references to all View instances within self's dict object.
-		"""
-		self.children = object_dict.get('views')
-		for view_instance in self.children:
-			view_instance.initialize(self, **object_dict)
+		pass
 
 	@log
 	def draw_all_views(self):
@@ -66,15 +62,6 @@ class Trunk(SingleObjectCursor, BaseObject):
 		"""
 		for view_instance in self.children:
 			view_instance.draw_self()
-
-	@log
-	def map_all_colors(self):
-		"""
-		Iterates through all Views contained within self's dict
-			and maps their colors in self.colors.
-		"""
-		for view_instance in self.children:
-			self.map_colors(view_instance)
 
 	@log
 	def map_colors(self, view_instance):
