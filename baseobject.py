@@ -5,6 +5,8 @@ class BaseObject:
 	def __init__(self, *args, **attributes):
 		# TODO: UNPACK A DICT INTO super().__init... for creation at beginning
 		super().__init__()
+		self.CHILD_NAMESPACE = {}
+		# def self.getchild = return CHILD_NAMESPACE.get(child_class_name).get(ChildClassReference)(**parse(CHILD_NAMESPACE.get(child_class_name).get(style_directory)))
 		self.FUNCTIONS = {}
 		# Shortcut for FUNCTIONS:
 		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
