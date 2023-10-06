@@ -16,23 +16,8 @@ class Pinecurses():
 	"""
 	def __init__(self, style_directory, ParserClass=JsonParser, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=logging.DEBUG)
-		self.class_namespace = {
-			'trunk' : Trunk,
-			'branch' : Branch,
-			'leaf' : Leaf,
-		}
 		self.style_directory = style_directory
 		self.ParserClass = ParserClass
-
-	@log
-	def load_objects(self, directory):
-		"""
-		Creates a PycursesParser instance and requests a dictionary
-			of name:PycursesObjectInstance pairs created by the
-			PycursesParser from the provided directory.
-		"""
-		parser = self.ParserClass(directory)
-		self.pinecurses_objects_dict = parser.parse(self.class_namespace)
 
 	@log
 	def begin(self):
@@ -47,4 +32,3 @@ class Pinecurses():
 		:param stdscr: stdscr is the standard curses.Window object created by curses.wrapper, and is passed automatically.
 		"""
 		self.stdscr = stdscr
-		self.load_objects(self.style_directory)
