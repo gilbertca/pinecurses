@@ -12,32 +12,20 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
 
+	"""
 	@log
-	def initialize(self, parent_controller_instance, **object_dict):
-		"""
+	def initialize(self):
+		\"\"\"
 		Runs all calculations and sets all attributes for a View instance.
 		Perhaps this should be run with each resize after the parent Controller
 			modifies the View-Instance's attributes.
-		"""
+		\"\"\"
 		self.name = self.attributes('name')
 		self.parent = parent_controller_instance
 		self.background_character = self.attributes('background_character') if self.attributes('background_character') else ' '
 		self.calculate()
 		self.create_curses_pad()
-		self.initialize_all_items(**object_dict)
-
-	@log
-	def initialize_all_items(self, **object_dict):
-		"""
-		Runs Item.initialize(..) on all ItemInstances from
-			the object_dict.
-		Also adds references to the items in self's dict.
-		"""
-		self.children = [
-			item_instance for item_instance in object_dict.get('items') if item_instance.attributes('parent') == self.name
-		]
-		for item_instance in self.children:
-			item_instance.initialize(self)
+	"""
 
 	@log
 	def create_curses_pad(self):
