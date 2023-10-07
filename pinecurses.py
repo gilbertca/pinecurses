@@ -14,8 +14,9 @@ class Pinecurses():
 	:param ParserClass: Reference to a Parser class which will be constructed by Pinecurses
 	:type ParserClass: parsers.Parser
 	"""
-	def __init__(self, style_directory, ParserClass=JsonParser, *args, **kwargs):
-		logging.basicConfig(filename='runtime.log', filemode='w', level=logging.DEBUG)
+	log_level = logging.DEBUG
+	def __init__(self, style_directory, ParserClass=JsonParser, BaseClass=Trunk, *args, **kwargs):
+		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.style_directory = style_directory
 		self.ParserClass = ParserClass
 
