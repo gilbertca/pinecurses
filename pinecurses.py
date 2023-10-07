@@ -21,7 +21,7 @@ class Pinecurses():
 
 	@log
 	def begin(self):
-		"""The main method of a PycursesProgram; this method only wraps Pinecurses._begin with curses.wrapper.
+		"""The main method of a PycursesProgram; this method only wraps Pinecurses._begin with curses.wrapper. By using self.begin to wrap self._begin, the functionality of self.begin can be extended by a Pinecurses creator.
 		"""
 		curses.wrapper(self._begin)
 
