@@ -19,6 +19,7 @@ class Pinecurses():
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.style_directory = style_directory
 		self.ParserClass = ParserClass
+		self.BaseClass = BaseClass
 
 	@log
 	def begin(self):
@@ -33,3 +34,6 @@ class Pinecurses():
 		:param stdscr: stdscr is the standard curses.Window object created by curses.wrapper, and is passed automatically.
 		"""
 		self.stdscr = stdscr
+		self.parser_instance = self.ParserClass(self.style_directory)
+		base_class = self.BaseClass(self.stdscr, self.parser_instance)
+		base_class.begin()
