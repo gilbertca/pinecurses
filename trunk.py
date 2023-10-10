@@ -25,9 +25,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 
 	@log
 	def begin(self, stdscr):
-		"""
-		The main loop of any pinecurses program. Once this function returns anything,
-			then the program will end.
+		"""The main loop of any pinecurses program. Once this function returns anything, then the program will end.
 		"""
 		self.window = stdscr
 		# Once self.interact(..) returns a value, program will end.
