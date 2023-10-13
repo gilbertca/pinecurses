@@ -31,6 +31,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 		while True:
 			# Get the keypress from a child window:
 			keypress = self.window.getch()
-			if self.interact(keypress) == 0:
-				return 0
+			keypress_response = self.interact(keypress)
+			if keypress_response == 0:
+				return
 
