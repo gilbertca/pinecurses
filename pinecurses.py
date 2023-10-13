@@ -13,6 +13,8 @@ class Pinecurses():
 	:type style_directory: str
 	:param ParserClass: Reference to a Parser class which will be constructed by Pinecurses
 	:type ParserClass: parsers.Parser
+	:param refresh_time: The amount of time used with curses.halfdelay; the screen will wait for input that amount of time before refreshing.
+	:type refresh_time: int
 	"""
 	log_level = logging.DEBUG
 	def __init__(self, style_directory, ParserClass=JsonParser, BaseClass=Trunk, refresh_time=5, *args, **kwargs):
