@@ -77,15 +77,15 @@ class BaseObject:
 		self.FUNCTIONS.update(function_dict)
 
 	def handle_function(self, key_function):
+		"""BaseObject.handle_function takes a *key_function* parameter, which can either be a callable method reference, or an iterable of callable references, runs the function, and returns any values returned by the function.
 		"""
-		Takes either a reference to a function and calls it,
-			or a list/tuple of functions and calls them in order.
-		"""
+		responses_iterable = None
 		# If function is iterable:
 		if hasattr(key_function, '__iter__'):
-			for func in key_function:
-				func() # Run each function
-		# Otherwise, just run the function:
+			# Run each function, and pack their responses into a list:
+			responses_iterable = [func() for func in key_function]
+		# Else: return the return from the function:
 		else:
 			return key_function()
-
+		# Return for first if statement:
+		return responses_iterable
