@@ -2,6 +2,7 @@ class BaseObject:
 	"""
 	The base functionality which all Pycurses objects inherit.
 	"""
+	style_filename = None
 	def __init__(self, *args, **attributes):
 		# TODO: UNPACK A DICT INTO super().__init... for creation at beginning
 		super().__init__()
