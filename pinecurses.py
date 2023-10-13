@@ -36,4 +36,4 @@ class Pinecurses():
 		self.stdscr = stdscr
 		self.parser_instance = self.ParserClass(self.style_directory)
 		base_class = self.BaseClass(self.stdscr, self.parser_instance)
-		base_class.begin()
+		base_class.begin(self.stdscr)

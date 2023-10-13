@@ -20,7 +20,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 		}
 		self.colors = {}
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
-		self.FUNCTIONS.update({'x' : lambda:0})
+		self.FUNCTIONS.update({'x' : lambda:0}) # Ends program
 
 	@log
 	def begin(self, stdscr):
@@ -30,7 +30,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 		# Once self.interact(..) returns a value, program will end.
 		while True:
 			# Get the keypress from a child window:
-			keypress = self.get_selected_window().getch()
+			keypress = self.window.getch()
 			if self.interact(keypress) == 0:
 				return 0
 
