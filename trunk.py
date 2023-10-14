@@ -22,17 +22,3 @@ class Trunk(SingleObjectCursor, BaseObject):
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 		self.FUNCTIONS.update({'x' : lambda:0}) # Ends program
 
-	@log
-	def begin(self, stdscr):
-		"""The main loop of any pinecurses program. Once this function returns anything, then the program will end.
-		"""
-		self.window = stdscr
-		# Once self.interact(..) returns a value, program will end.
-		while True:
-			# Get the keypress from a child window:
-			keypress = self.window.getch()
-			keypress_response = self.interact(keypress)
-			# Check to end program:
-			if keypress_response == 0:
-				return
-
