@@ -26,3 +26,9 @@ class Trunk(SingleObjectCursor, BaseObject):
 		"""initialize creates all children and should be contained within BaseObject.
 		"""
 		pass
+	
+	def clean_up(self):
+		"""clean_up runs at the end of the program. Useful when there are tasks that need to be completed prior to ending the program, such as saving changes from the screen.
+		"""
+		pass
+
