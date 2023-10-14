@@ -42,5 +42,16 @@ class Pinecurses():
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create Pinecurses objects:
-		base_class = self.BaseClass(self.stdscr, self.parser_instance)
-		base_class.begin(self.stdscr)
+		base_class = self.BaseClass(window=self.stdscr, parser_instance=self.parser_instance)
+		base_class.initialize()
+		while True:
+			# Get the keypress from a child window:
+			keypress = base_class.window.getch()
+			keypress_response = None
+			# If keypress = -1, then no key was pressed, and the program can idle
+			if keypress != -1:
+				keypress_response = base_class.interact(keypress)
+			# Check to end program:
+			if keypress_response == 0:
+				return
+

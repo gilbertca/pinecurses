@@ -22,3 +22,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 		self.FUNCTIONS.update({'x' : lambda:0}) # Ends program
 
+	def initialize(self):
+		"""initialize creates all children and should be contained within BaseObject.
+		"""
+		pass

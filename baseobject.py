@@ -3,7 +3,7 @@ class BaseObject:
 	The base functionality which all Pycurses objects inherit.
 	"""
 	style_filename = None
-	def __init__(self, *args, **attributes):
+	def __init__(self, *args, **kwargs):
 		self.CHILD_NAMESPACE = {}
 		# def self.getchild = return CHILD_NAMESPACE.get(child_class_name).get(ChildClassReference)(**parse(CHILD_NAMESPACE.get(child_class_name).get(style_directory)))
 		self.FUNCTIONS = {}
@@ -12,13 +12,15 @@ class BaseObject:
 		self.RESPONSES = {}
 		# Shortcut for RESPONSES:
 		self.responses = lambda response_name : self.RESPONSES.get(response_name)
-		self.ATTRIBUTES = attributes
+		# TODO: UPDATE STYLE ATTRIBUTES
+		#self.ATTRIBUTES =
 		# Shortcut for ATTRIBUTES:
-		self.attributes = lambda name : self.ATTRIBUTES.get(name)
+		#self.attributes = lambda name : self.ATTRIBUTES.get(name)
 		# Child/Parent objects:
 		self.parent = None
 		self.children = None
-		self.window = None
+		self.window = kwargs.get('window')
+		self.parser_instance = kwargs.get('parser_instance')
 
 	def interact(self, keypress):
 		"""
