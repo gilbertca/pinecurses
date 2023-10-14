@@ -53,5 +53,5 @@ class Pinecurses():
 				keypress_response = base_class.interact(keypress)
 			# Check to end program:
 			if keypress_response == 0:
-				return
+				return base_class.clean_up()
 
