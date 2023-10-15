@@ -11,17 +11,17 @@ class Pinecurses():
 
 	:param style_directory: The string name of the base 'styles' directory (typically ./styles/)
 	:type style_directory: str
-	:param ParserClass: Reference to a Parser class which will be constructed by Pinecurses
-	:type ParserClass: parsers.Parser
+	:param ParserClassReference: Reference to a Parser class which will be constructed by Pinecurses
+	:type ParserClassReference: parsers.Parser
 	:param refresh_time: The amount of time used with curses.halfdelay; the screen will wait for input that amount of time before refreshing.
 	:type refresh_time: int
 	"""
 	log_level = logging.DEBUG
-	def __init__(self, style_directory, ParserClass=JsonParser, BaseClass=Trunk, refresh_time=5, *args, **kwargs):
+	def __init__(self, style_directory, ParserClassReference=JsonParser, BaseClassReference=Trunk, refresh_time=5, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.style_directory = style_directory
-		self.ParserClass = ParserClass
-		self.BaseClass = BaseClass
+		self.ParserClassReference = ParserClassReference
+		self.BaseClassReference = BaseClassReference
 		self.refresh_time = refresh_time
 
 	@log
@@ -38,19 +38,20 @@ class Pinecurses():
 		"""
 		# Set up this instances variables:
 		self.stdscr = stdscr
-		self.parser_instance = self.ParserClass(self.style_directory)
+		self.parser_instance = self.ParserClassReference(self.style_directory)
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create Pinecurses objects:
-		base_class = self.BaseClass(window=self.stdscr, parser_instance=self.parser_instance)
+		base_class = self.BaseClassReference(window=self.stdscr, parser_instance=self.parser_instance)
 		base_class.initialize()
 		while True:
+			# Draw everything which needs to be drawn:
 			# Get the keypress from a child window:
-			keypress = base_class.window.getch()
+			keypress_integer = base_class.window.getch()
 			keypress_response = None
-			# If keypress = -1, then no key was pressed, and the program can idle
-			if keypress != -1:
-				keypress_response = base_class.interact(keypress)
+			# If keypress < 0, then no key was pressed, and the program can idle
+			if keypress_integer >= 0:
+				keypress_response = base_class.interact(keypress_integer)
 			# Check to end program:
 			if keypress_response == 0:
 				return base_class.clean_up()
