@@ -1,6 +1,5 @@
 class BaseObject:
-	"""
-	The base functionality which all Pycurses objects inherit.
+	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
 	style_filename = None
 	def __init__(self, *args, **kwargs):
