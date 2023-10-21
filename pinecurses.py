@@ -14,7 +14,7 @@ class Pinecurses():
 	:type refresh_time: int
 	"""
 	log_level = logging.DEBUG
-	def __init__(self, style_directory, ParserClassReference=JsonParser, BaseClassReference=Trunk, refresh_time=5, *args, **kwargs):
+	def __init__(self, style_directory, ParserClassReference=JsonParser, BaseClassReference=None, refresh_time=5, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.style_directory = style_directory
 		self.ParserClassReference = ParserClassReference
