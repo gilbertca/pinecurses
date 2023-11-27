@@ -1,7 +1,6 @@
 import curses
 import logging
 from logger import log
-from parsers.json_parser import JsonParser
 
 class Pinecurses():
 	"""The Pinecurses object is the highest level Pinecurses object. It is intended to wrap a *Pine tree*, pass control to the Trunk of the interface, and to interact with curses allowing for curses-agnostic *Pine tree* object classes.
@@ -14,7 +13,7 @@ class Pinecurses():
 	:type refresh_time: int
 	"""
 	log_level = logging.DEBUG
-	def __init__(self, style_directory, ParserClassReference=JsonParser, BaseClassReference=None, refresh_time=5, *args, **kwargs):
+	def __init__(self, style_directory, ParserClassReference=None, BaseClassReference=None, refresh_time=5, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.style_directory = style_directory
 		self.ParserClassReference = ParserClassReference
