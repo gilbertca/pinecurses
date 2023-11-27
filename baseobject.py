@@ -19,7 +19,7 @@ class BaseObject:
 		self.parent = None
 		self.children = None
 		self.window = kwargs.get('window')
-		self.parser_instance = kwargs.get('parser_instance')
+		self.pinecurses_instance = kwargs.get('pinecurses_instance')
 
 	def interact(self, keypress):
 		"""

@@ -38,7 +38,7 @@ class Pinecurses():
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create Pinecurses objects:
-		base_class = self.BaseClassReference(window=self.stdscr, parser_instance=self.parser_instance)
+		base_class = self.BaseClassReference(window=self.stdscr, pinecurses_instance=self)
 		base_class.initialize()
 		while True:
 			# Draw everything which needs to be drawn:
