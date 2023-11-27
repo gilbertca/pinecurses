@@ -1,3 +1,5 @@
+from logger import log
+
 class BaseObject:
 	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
@@ -21,6 +23,7 @@ class BaseObject:
 		self.window = kwargs.get('window')
 		self.pinecurses_instance = kwargs.get('pinecurses_instance')
 
+	@log
 	def interact(self, keypress):
 		"""
 		The interact function is an integral part of any Pinecurses application.
