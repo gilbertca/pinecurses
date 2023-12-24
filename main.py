@@ -6,7 +6,7 @@ def main():
 	"""
 	The main method to run and test the suite.
 	"""
-	program = Pinecurses('./styles', BaseClassReference=ExampleTrunk, ParserClassReference=JsonParser)
+	program = Pinecurses(styles_directory_name='./styles', BaseClassReference=ExampleTrunk, ParserClassReference=JsonParser)
 	program.begin()
 
 

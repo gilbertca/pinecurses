@@ -6,7 +6,6 @@ class BaseObject:
 	style_filename = None
 	def __init__(self, *args, **kwargs):
 		self.CHILD_NAMESPACE = {}
-		# def self.getchild = return CHILD_NAMESPACE.get(child_class_name).get(ChildClassReference)(**parse(CHILD_NAMESPACE.get(child_class_name).get(style_directory)))
 		self.FUNCTIONS = {}
 		# Shortcut for FUNCTIONS:
 		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
@@ -22,6 +21,12 @@ class BaseObject:
 		self.children = None
 		self.window = kwargs.get('window')
 		self.pinecurses_instance = kwargs.get('pinecurses_instance')
+
+	@log
+	def draw(self, *args, **kwargs):
+		"""draw checks if anything from this object needs to be drawn, and then checks all children. Therefore, all children check if they are to be drawn to the screen.
+		"""
+		pass
 
 	@log
 	def interact(self, keypress):

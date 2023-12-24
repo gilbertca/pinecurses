@@ -349,4 +349,8 @@ NOTE: Veins are currently theoretical.
 ================================================================================
 DYNAMIC CREATION:
 ================================================================================
+Dynamic creation is performed both by BaseObjects, and Parser objects.
 
+A Parser object is to only have one function: to convert from a file format to a Python object format. 
+
+A BaseObject will initiallize another object when it is required to be drawn to the screen. The only exception to this is the 'Trunk' of the Pinecurses application, which is initialized by the Pinecurses API.
