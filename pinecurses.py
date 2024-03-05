@@ -1,22 +1,23 @@
 import curses
 import logging
 from logger import log
-
+import parsers
 class Pinecurses():
 	"""The Pinecurses object is the highest level Pinecurses object. It is intended to wrap a *Pine tree*, pass control to the Trunk of the interface, and to interact with curses allowing for curses-agnostic *Pine tree* object classes.
 
 	:param styles_directory_name: The string name of the base 'styles' directory (typically ./styles/)
 	:type styles_directory_name: str
-	:param ParserClassReference: Reference to a Parser class which will be constructed by Pinecurses
-	:type ParserClassReference: parsers.Parser
 	:param refresh_time: The amount of time used with curses.halfdelay; the screen will wait for input that amount of time before refreshing.
 	:type refresh_time: int
 	"""
 	log_level = logging.DEBUG
-	def __init__(self, styles_directory_name, ParserClassReference=None, BaseClassReference=None, refresh_time=5, *args, **kwargs):
+	def __init__(self, styles_directory_name, file_type, BaseClassReference=None, refresh_time=5, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
+		self.parser_dict = {
+			'json' : parsers.JsonParser
+		}
+		self.parser_instance = self.parser_dict.get(file_type)
 		self.styles_directory_name = styles_directory_name
-		self.ParserClassReference = ParserClassReference
 		self.BaseClassReference = BaseClassReference
 		self.refresh_time = refresh_time
 
@@ -34,7 +35,6 @@ class Pinecurses():
 		"""
 		# Set up this object's instance variables:
 		self.stdscr = stdscr
-		self.parser_instance = self.ParserClassReference(self.styles_directory_name)
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create base Pinecurses objects:
