@@ -1,6 +1,7 @@
 import curses
 import logging
 from logger import log
+from trunk import Trunk
 import parsers
 class Pinecurses():
 	"""The Pinecurses object is the highest level Pinecurses object. It is intended to wrap a *Pine tree*, pass control to the Trunk of the interface, and to interact with curses allowing for curses-agnostic *Pine tree* object classes.
@@ -11,14 +12,15 @@ class Pinecurses():
 	:type refresh_time: int
 	"""
 	log_level = logging.DEBUG
-	def __init__(self, styles_directory_name, file_type, BaseClassReference=None, refresh_time=5, *args, **kwargs):
+	def __init__(self, styles_directory_name, file_type, base_class_style_filename='base', refresh_time=5, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
-		self.parser_dict = {
+		self.class_references = {} # Dict for name:class references
+		self.parser_dict = { # Enum for parsers
 			'json' : parsers.JsonParser
 		}
 		self.parser_instance = self.parser_dict.get(file_type)
 		self.styles_directory_name = styles_directory_name
-		self.BaseClassReference = BaseClassReference
+		self.base_class_style_filename = base_class_style_filename
 		self.refresh_time = refresh_time
 
 	@log
@@ -26,6 +28,12 @@ class Pinecurses():
 		"""The main method of a PycursesProgram; this method only wraps Pinecurses._begin with curses.wrapper. By using self.begin to wrap self._begin, the functionality of self.begin can be extended by a Pinecurses creator.
 		"""
 		curses.wrapper(self._begin)
+
+	@log
+	def get_style_attributes(self, file_name):
+		"""get_style_attributes uses self.parser_instance to read a style file and returns the contents.
+		"""
+		return self.parser_instance.parse_file(file_name)
 
 	@log
 	def _begin(self, stdscr):
@@ -38,8 +46,7 @@ class Pinecurses():
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create base Pinecurses objects:
-		base_class = self.BaseClassReference(window=self.stdscr, pinecurses_instance=self)
-		base_class.initialize()
+		base_class = self.BaseClassReference(style_filename=self.base_class_style_filename, window=self.stdscr, pinecurses_instance=self)
 		while True:
 			# Draw everything which needs to be drawn:
 			base_class.draw()

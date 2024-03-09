@@ -14,14 +14,14 @@ class Cursor:
 class SingleObjectCursor(Cursor):
 	  
 	def __init__(self, *args, **kwargs):
-		 """
-		 NOTE: wrap_objects relies on an attribute in a json file.
-		 """
-		 super().__init__(*args, **kwargs)
-		 wrap_objects = kwargs.get('wrap_objects')
-		 self.wrap_objects = False if wrap_objects is None else wrap_objects
-		 self.selected_object_index = 0
-		 self.selected_object = lambda : self.children[self.selected_object_index]
+		"""
+		NOTE: wrap_objects relies on an attribute in a json file.
+		"""
+		super().__init__(*args, **kwargs)
+		wrap_objects = kwargs.get('wrap_objects')
+		self.wrap_objects = False if wrap_objects is None else wrap_objects
+		self.selected_object_index = 0
+		self.selected_object = lambda : self.children[self.selected_object_index]
 
 	def get_selected_object(self):
 		return self.selected_object()

@@ -3,24 +3,26 @@ from logger import log
 class BaseObject:
 	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
-	style_filename = None
-	def __init__(self, *args, **kwargs):
+	def __init__(self, style_filename=None, *args, **kwargs):
+		# Children and shortcut:
 		self.CHILD_NAMESPACE = {}
+		self.child = lambda child_name : self.CHILD_NAMESPACE.get(child_name)
+		# Functions and shortcut:
 		self.FUNCTIONS = {}
-		# Shortcut for FUNCTIONS:
 		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
+		# Responses and shortcut:
 		self.RESPONSES = {}
-		# Shortcut for RESPONSES:
 		self.responses = lambda response_name : self.RESPONSES.get(response_name)
-		# TODO: UPDATE STYLE ATTRIBUTES
-		#self.ATTRIBUTES =
-		# Shortcut for ATTRIBUTES:
-		#self.attributes = lambda name : self.ATTRIBUTES.get(name)
 		# Child/Parent objects:
 		self.parent = None
 		self.children = None
 		self.window = kwargs.get('window')
 		self.pinecurses_instance = kwargs.get('pinecurses_instance')
+		# Style attributes and shortcut:
+		self.style_filename = style_filename
+		self.STYLE = {}
+		self.style = lambda style_key : self.STYLE.get(style_key)
+		self.handle_styles() # This function must be defined by all BaseObject children!
 
 	@log
 	def draw(self, *args, **kwargs):
@@ -60,29 +62,6 @@ class BaseObject:
 		elif self.children is not None:
 			return self.get_selected_object().interact(keypress)
 
-	def select(self, *args, **kwargs):
-		"""
-		Must be overridden by a child class.
-		"""
-		raise Exception("This method must be overridden by a child class.")
-
-	def add_function(self, key, callback):
-		"""
-		Saves a key-value pair to self.FUNCTIONS in the form of:
-			{key:callback}
-		Where 'key_press' is a chr instance, and 'callback' references
-			the function called when the key is pressed.
-		"""
-		new_mapping = {key : callback}
-		self.FUNCTIONS.update(new_mapping)
-
-	def add_function_dict(self, function_dict):
-		"""
-		Same as self.add_function, but takes a dict object
-			as an argument.
-		"""
-		self.FUNCTIONS.update(function_dict)
-
 	def handle_function(self, key_function):
 		"""BaseObject.handle_function takes a *key_function* parameter, which can either be a callable method reference, or an iterable of callable references, runs the function, and returns any values returned by the function.
 		"""
@@ -96,3 +75,11 @@ class BaseObject:
 			return key_function()
 		# Return for first if statement:
 		return responses_iterable
+
+	def handle_styles(self, **style_namespace):
+		"""handle_styles iterates through self.STYLES and runs functions based on the attribute name.
+		"""
+		_style_namespace = {
+			"children" : self.handle_children,
+		}
+		_style_namespace.update(style_namespace)

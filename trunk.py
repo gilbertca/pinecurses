@@ -19,16 +19,12 @@ class Trunk(SingleObjectCursor, BaseObject):
 			'white' : curses.COLOR_WHITE,
 		}
 		self.colors = {}
-		self.DEFAULT_BACKGROUND_COLOR = self.CURSES_COLOR_MAP.get('black')
 		self.FUNCTIONS.update({'x' : lambda:0}) # Ends program
 
-	def initialize(self):
-		"""initialize creates all children and should be contained within BaseObject.
+	def handle_styles(self, *args):
+		"""handle_styles adds class specific functionality to BaseObject's handle_styles.
 		"""
-		pass
-	
-	def clean_up(self):
-		"""clean_up runs at the end of the program. Useful when there are tasks that need to be completed prior to ending the program, such as saving changes from the screen.
-		"""
-		pass
-
+		style_namespace = {
+			"is_drawn":0,
+		}
+		super().handle_styles(style_namespace)
