@@ -3,7 +3,7 @@ from logger import log
 class BaseObject:
 	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
-	def __init__(self, style_filename=None, *args, **kwargs):
+	def __init__(self, style_filename=None, style_attributes=None, *args, **kwargs):
 		# Children and shortcut:
 		self.CHILD_NAMESPACE = {}
 		self.child = lambda child_name : self.CHILD_NAMESPACE.get(child_name)
@@ -19,8 +19,11 @@ class BaseObject:
 		self.window = kwargs.get('window')
 		self.pinecurses_instance = kwargs.get('pinecurses_instance')
 		# Style attributes and shortcut:
-		self.style_filename = style_filename
-		self.STYLE = {}
+		if style_filename is not None:
+			self.style_filename = style_filename
+			self.STYLE = self.pinecurses_instance.get_style_attributes(self.style_filename)
+		elif style_attributes is not None:
+			self.STYLE = style_attributes
 		self.style = lambda style_key : self.STYLE.get(style_key)
 		self.handle_styles() # This function must be defined by all BaseObject children!
 
@@ -83,3 +86,21 @@ class BaseObject:
 			"children" : self.handle_children,
 		}
 		_style_namespace.update(style_namespace)
+		# Iterate through and run all functions associated from the namespace:
+		for style_key in _style_namespace:
+			style_value = self.style(style_key)
+			if style_value is not None: # If namespace key matches style value:
+				style_function = _style_namespace.get(style_key)
+				style_function(style_value)
+
+	def handle_children(self, child_style_attributes):
+		"""handle_children draws and handles any startup required by the child objects.
+		"""
+		# If no filename is provided, then there must be a attribute dict
+		style_filename = child_style_attributes.get('style_filename')
+		if style_filename is not None:
+			# Include attributes from parent file:
+			child_style_attributes.update(
+				self.pinecurses_instance.get_style_attributes(style_filename)
+			)
+		#

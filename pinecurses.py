@@ -18,7 +18,7 @@ class Pinecurses():
 		self.parser_dict = { # Enum for parsers
 			'json' : parsers.JsonParser
 		}
-		self.parser_instance = self.parser_dict.get(file_type)
+		self.parser_instance = self.parser_dict.get(file_type)()
 		self.styles_directory_name = styles_directory_name
 		self.base_class_style_filename = base_class_style_filename
 		self.refresh_time = refresh_time

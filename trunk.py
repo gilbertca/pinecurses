@@ -24,7 +24,5 @@ class Trunk(SingleObjectCursor, BaseObject):
 	def handle_styles(self, *args):
 		"""handle_styles adds class specific functionality to BaseObject's handle_styles.
 		"""
-		style_namespace = {
-			"is_drawn":0,
-		}
+		style_namespace = {}
 		super().handle_styles(style_namespace)

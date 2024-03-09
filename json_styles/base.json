@@ -1,6 +1,9 @@
 {
 	"children":[{
-		"class_reference_name":""
-		"drawn_at_start":
+		"class_reference_name":"main_window",
+		"drawn_at_start":true
+	},
+	{
+		"style_filename":"popup_window"
 	}]
 }
