@@ -14,7 +14,8 @@ class Pinecurses():
 	log_level = logging.DEBUG
 	def __init__(self, styles_directory_name, file_type, base_class_style_filename='base', refresh_time=5, *args, **kwargs):
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
-		self.class_references = {} # Dict for name:class references
+		self.CLASS_REFERENCES = {} # Dict for name:class references
+		self.class_references = lambda name : self.CLASS_REFERENCES.get(name)
 		self.parser_dict = { # Enum for parsers
 			'json' : parsers.JsonParser
 		}
@@ -46,7 +47,7 @@ class Pinecurses():
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create base Pinecurses objects:
-		base_class = self.BaseClassReference(style_filename=self.base_class_style_filename, window=self.stdscr, pinecurses_instance=self)
+		base_class = self.BaseClassReference(pinecurses_instance=self, style_filename=self.base_class_style_filename, window=self.stdscr)
 		while True:
 			# Draw everything which needs to be drawn:
 			base_class.draw()

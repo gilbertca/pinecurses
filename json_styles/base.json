@@ -4,6 +4,7 @@
 		"drawn_at_start":true
 	},
 	{
+		"class_reference_name":"popup_window",
 		"style_filename":"popup_window"
 	}]
 }

@@ -6,7 +6,7 @@ def main():
 	The main method to run and test the suite.
 	"""
 	program = Pinecurses(styles_directory_name='./styles', file_type='json')
-	program.class_references.update({
+	program.CLASS_REFERENCES.update({
 		'base' : ExampleTrunk,
 		'main_window' : ExampleBranch,
 		'popup_window' : ExamplePopupBranch,
