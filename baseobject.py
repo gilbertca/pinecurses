@@ -101,14 +101,16 @@ class BaseObject:
 	def handle_child(self, child_style):
 		"""handle_child handles a single child object using a key-value pair child_style
 		"""
-		# If there are children, then BaseObject's self.children becomes a list:
-		if self.children is None: self.children = []
+		# If there are children, then BaseObject's self.children becomes a dictionary:
+		if self.children is None: self.children = {}
 		# Variables for creating child objects:
 		child_object_instance = None
+		# Reference name used to get a class reference from a Pinecurses object
 		child_class_reference_name = child_style.get('class_reference_name')
 		child_class_reference = self.pinecurses_instance.class_references(
 			child_class_reference_name
 		)
+		# If style_filename is None, then the attributes are nested within the parent's style file.
 		style_filename = child_style.get('style_filename')
 		style_attributes = child_style if style_filename is None else None
 		# Create and add the object instance to self.children
@@ -117,4 +119,5 @@ class BaseObject:
 			style_filename=style_filename, 
 			style_attributes=style_attributes
 		)
-		self.children.append(child_object_instance)	
+		child_object_name_dict = {child_class_reference_name : child_object_instance}
+		self.children.update(child_object_name_dict)
