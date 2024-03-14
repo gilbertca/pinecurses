@@ -3,7 +3,8 @@ from logger import log
 class BaseObject:
 	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
-	def __init__(self, pinecurses_instance, style_filename=None, style_attributes=None, parent_object_instance=None, *args, **kwargs):
+	def __init__(self, pinecurses_instance, style_filename=None, style_attributes=None, 
+			  parent_object_instance=None, window=None, *args, **kwargs):
 		# Children and shortcut:
 		self.CHILD_NAMESPACE = {}
 		self.child = lambda child_name : self.CHILD_NAMESPACE.get(child_name)
@@ -16,7 +17,7 @@ class BaseObject:
 		# Child/Parent objects:
 		self.parent = parent_object_instance
 		self.children = None
-		self.window = kwargs.get('window')
+		self.window = window
 		self.pinecurses_instance = pinecurses_instance
 		# Style attributes and shortcut:
 		if style_filename is not None: # I.E. if there is a style filename

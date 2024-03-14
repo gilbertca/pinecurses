@@ -22,7 +22,15 @@ class Trunk(SingleObjectCursor, BaseObject):
 		self.FUNCTIONS.update({'x' : lambda:0}) # Ends program
 
 	@log
-	def handle_styles(self, *args):
+	def draw(self):
+		"""Trunk.draw tells all Branches to draw themselves (if they are visible!)
+		"""
+		for child_name in self.children:
+			child_instance = self.children.get(child_name)
+			child_instance.draw()
+
+	@log
+	def handle_styles(self):
 		"""handle_styles adds class specific functionality to BaseObject's handle_styles.
 		"""
 		style_namespace = {}

@@ -11,6 +11,12 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
 
+	def draw(self):
+		"""Branch.draw will ensure it's self.window object is created, and add all elements contained by leaves.
+		"""
+		if self.window is None:
+			pass
+	
 	@log
 	def create_curses_pad(self):
 		"""create_curses_pad sets `self.window` to a window object created by `curses.newpad`.
@@ -28,5 +34,5 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		"""
 		Refreshes self.window.
 		"""
-		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty-1, self.rightx-1))@log
+		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty-1, self.rightx-1))
 
