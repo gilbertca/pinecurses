@@ -8,13 +8,17 @@ class ScreenPositioner:
 		super().__init__(*args, **kwargs)
 
 	@log
-	def handle_styles(self):
+	def handle_styles(self, **_style_namespace):
 		"""ScreenPositioner.handle_styles is mostly concerned with calculating borders, x and y coordinates.
 		"""
-		style_namespace = {
-
-		}
-		super().handle_styles(style_namespace)
+		# Handle all styles (which creates all necessary object references)
+		super().handle_styles(_style_namespace)
+		# Add all 'calculate' functions to an iterable:
+		function_name_iterable = [function_name for function_name in self.__dir__() if function_name.startswith('_calculate')]
+		# Iterate and run all functions:
+		for function_name in function_name_iterable:
+			current_function = getattr(self, function_name)
+			current_function()
 
 	@log
 	def calculate_helper(self, attribute_dict):
@@ -28,7 +32,7 @@ class ScreenPositioner:
 		Default functions can take *args to prevent errors, while returning a static value.
 		"""
 		for attribute_key in attribute_dict: # Iterate
-			attribute = self.attributes(attribute_key) # Actual attribute value
+			attribute = self.style(attribute_key) # Actual attribute value
 			if attribute is not None: # Call the given function with the attribute:
 				return attribute_dict.get(attribute_key)(attribute)
 		default_method = attribute_dict.get('default')
