@@ -7,11 +7,16 @@ class Leaf(BaseObject):
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
+		# Style / content linking and shortcut:
+		self.CONTENTS = {}
+		self.contents = lambda text_key : self.CONTENTS.get(text_key)()
+		# Leaf required variables:
 		self.is_drawn = False
 		self.height = 0
 		self.width = 0
 		self.display_dictionary = {}
 
+	@log
 	def draw(self):
 		"""Requests the Leaf's parent window object, and draws itself to the window.
 		"""
@@ -20,6 +25,7 @@ class Leaf(BaseObject):
 		for instruction in drawing_instruction_list:
 			branch_window.addstr(instruction)
 
+	@log
 	def _get_drawing_instructions(self):
 		"""Returns a list of instructions which are to be used by self.draw. This method must be overloaded by a child element.
 		"""

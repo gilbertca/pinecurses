@@ -25,7 +25,7 @@ class BaseObject:
 		elif style_attributes is not None: # I.E. if there is a style dictionary
 			self.STYLE = style_attributes
 		self.style = lambda style_key : self.STYLE.get(style_key)
-		self.handle_styles() # This function must be defined by all BaseObject children!
+		self.handle_styles()
 		
 	@log
 	def interact(self, keypress):
@@ -85,7 +85,7 @@ class BaseObject:
 		# Iterate through and run all functions associated from the namespace:
 		for style_key in _style_namespace:
 			style_value = self.style(style_key)
-			if style_value is not None: # If namespace key matches style value:
+			if style_value is not None: # If namespace key matches a style value:
 				style_function = _style_namespace.get(style_key)
 				style_function(style_value)
 
