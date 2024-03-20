@@ -11,7 +11,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		super().__init__(self, *args, **kwargs)
 
 	@log
-	def handle_styles(self, **style_namespace):
+	def handle_styles(self, *args, **kwargs):
 		"""Branch.handle_styles
 		"""
 		pass
