@@ -24,9 +24,9 @@ class ScreenPositioner:
 			function_name for function_name in dir(self) if function_name.startswith('_calculate')
 		]
 		# Iterate and run all functions:
-		for function_name in calculate_function_names:
-			calculate_function = self.__getattribute__(function_name)
-			calculate_function()
+		for function_name in function_name_iterable:
+			current_function = getattr(self, function_name)
+			current_function()
 
 	@log
 	def calculate_helper(self, attribute_dict):
@@ -56,7 +56,7 @@ class ScreenPositioner:
 		# Namespace for attributes related to height:
 		height_atr_namespace = {
 			'height' : lambda height_int : height_int, # Simple height
-			'vborder' : lambda vborder_int : self.parent.window.getmaxyx()[0] - (2 * vborder), # Cells from vertical edge to content.
+			'vborder' : lambda vborder_int : self.parent.window.getmaxyx()[0] - (2 * vborder_int), # Cells from vertical edge to content.
 			'vpercent' : lambda vpercent_int : math.floor(self.parent.window.getmaxyx()[0] * vpercent_int / 100), # Percent of window height.
 			'default' : lambda *default : self.parent.window.getmaxyx()[0], # Default is full width
 		}

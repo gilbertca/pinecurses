@@ -3,7 +3,8 @@ from logger import log
 class BaseObject:
 	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
-	def __init__(self, pinecurses_instance, style_filename=None, style_attributes=None, parent_object_instance=None, *args, **kwargs):
+	def __init__(self, pinecurses_instance, style_filename=None, style_attributes=None, 
+			  parent_object_instance=None, window=None, *args, **kwargs):
 		# Children and shortcut:
 		self.CHILD_NAMESPACE = {}
 		self.child = lambda child_name : self.CHILD_NAMESPACE.get(child_name)
@@ -16,7 +17,7 @@ class BaseObject:
 		# Child/Parent objects:
 		self.parent = parent_object_instance
 		self.children = None
-		self.window = kwargs.get('window')
+		self.window = window
 		self.pinecurses_instance = pinecurses_instance
 		# Style attributes and shortcut:
 		if style_filename is not None: # I.E. if there is a style filename
@@ -75,18 +76,18 @@ class BaseObject:
 		return responses_iterable
 
 	@log
-	def handle_styles(self, **style_namespace):
+	def handle_styles(self, **_style_namespace):
 		"""handle_styles iterates through self.STYLES and runs functions based on the attribute name.
 		"""
-		_style_namespace = {
+		style_namespace = {
 			"children" : self.handle_children,
 		}
-		_style_namespace.update(style_namespace)
+		style_namespace.update(_style_namespace)
 		# Iterate through and run all functions associated from the namespace:
-		for style_key in _style_namespace:
+		for style_key in style_namespace:
 			style_value = self.style(style_key)
-			if style_value is not None: # If namespace key matches a style value:
-				style_function = _style_namespace.get(style_key)
+			if style_value is not None: # If namespace key matches style value:
+				style_function = style_namespace.get(style_key)
 				style_function(style_value)
 
 	@log
