@@ -33,6 +33,7 @@ class Pinecurses():
 	def get_style_attributes(self, file_name):
 		"""get_style_attributes uses self.parser_instance to read a style file and returns the contents.
 		"""
+		file_name = f"{self.styles_directory_name}/{file_name}"
 		return self.parser_instance.parse_file(file_name)
 
 	@log
