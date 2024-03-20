@@ -8,14 +8,20 @@ class ScreenPositioner:
 		super().__init__(*args, **kwargs)
 
 	@log
+	def handle_styles(self, **style_namespace):
+		"""ScreenPositioner.handle_styles runs all style-related calculations before passing control to the next module.
+		"""
+		self.calculate()
+		super()
+
+	@log
 	def calculate(self):
 		"""
 		Called by a child PycursesObject to run all _calculate_* functions.
 		"""
-		# List comprehension which provides a list of functions which contain '_calculate'
-		#	in their definition name.
+		# List comprehension which provides a list of functions which start with '_calculate'
 		calculate_function_names = [
-			function_name for function_name in dir(self) if '_calculate' in function_name
+			function_name for function_name in dir(self) if function_name.startswith('_calculate')
 		]
 		# Iterate and run all functions:
 		for function_name in calculate_function_names:
@@ -34,7 +40,7 @@ class ScreenPositioner:
 		Default functions can take *args to prevent errors, while returning a static value.
 		"""
 		for attribute_key in attribute_dict: # Iterate
-			attribute = self.attributes(attribute_key) # Actual attribute value
+			attribute = self.style(attribute_key) # Actual attribute value
 			if attribute is not None: # Call the given function with the attribute:
 				return attribute_dict.get(attribute_key)(attribute)
 		default_method = attribute_dict.get('default')

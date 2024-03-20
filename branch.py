@@ -1,4 +1,3 @@
-import math
 from baseobject import BaseObject
 from mixins.cursormixins import SingleObjectCursor
 from mixins.screenpositionmixins import ScreenPositioner
@@ -10,7 +9,12 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
-		self.is_drawn = False
+
+	@log
+	def handle_styles(self, **style_namespace):
+		"""Branch.handle_styles
+		"""
+		pass
 
 	@log
 	def create_curses_pad(self):

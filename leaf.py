@@ -10,7 +10,6 @@ class Leaf(BaseObject):
 		# Style / content linking and shortcut:
 		self.CONTENTS = {}
 		# Leaf required variables:
-		self.is_drawn = False
 		self.display_dictionary = {}
 
 	@log
