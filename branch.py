@@ -30,3 +30,8 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		"""
 		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty-1, self.rightx-1))@log
 
+	@log
+	def draw(self):
+		"""Branch.draw calls Leaf.draw to obtain *drawing instructions*, and then applies them to the screen.
+		"""
+		pass
