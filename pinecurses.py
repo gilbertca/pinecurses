@@ -1,8 +1,7 @@
 import curses
 import logging
 from logger import log
-from trunk import Trunk
-import parsers
+from parsers.json_parser import JsonParser
 class Pinecurses():
 	"""The Pinecurses object is the highest level Pinecurses object. It is intended to wrap a *Pine tree*, pass control to the Trunk of the interface, and to interact with curses allowing for curses-agnostic *Pine tree* object classes.
 
@@ -17,9 +16,9 @@ class Pinecurses():
 		self.CLASS_REFERENCES = {} # Dict for name:class references
 		self.class_references = lambda name : self.CLASS_REFERENCES.get(name)
 		self.parser_dict = { # Enum for parsers
-			'json' : parsers.JsonParser
+			'json' : JsonParser
 		}
-		self.parser_instance = self.parser_dict.get(file_type)()
+		self.parser_instance = self.parser_dict.get(file_type)(styles_directory_name)
 		self.styles_directory_name = styles_directory_name
 		self.base_class_style_filename = base_class_style_filename
 		self.refresh_time = refresh_time
