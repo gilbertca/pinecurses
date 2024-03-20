@@ -11,8 +11,6 @@ class Leaf(BaseObject):
 		self.CONTENTS = {}
 		# Leaf required variables:
 		self.is_drawn = False
-		self.height = 0
-		self.width = 0
 		self.display_dictionary = {}
 
 	@log
@@ -20,7 +18,7 @@ class Leaf(BaseObject):
 		"""Leaf.contents takes a key from a style dictionary, and returns a string from the function in the self.CONTENTS namespace.
 		"""
 		content_function = self.CONTENTS.get(content_key)
-		content_string = None
+		content_string = None # Returns None if there is no function matching the key
 		if content_function is not None: content_string = content_function()
 		return content_string
 

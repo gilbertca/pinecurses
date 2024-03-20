@@ -10,6 +10,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	"""
 	def __init__(self, *args, **kwargs):
 		super().__init__(self, *args, **kwargs)
+		self.is_drawn = False
 
 	@log
 	def create_curses_pad(self):
