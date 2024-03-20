@@ -47,7 +47,7 @@ class Pinecurses():
 		curses.halfdelay(self.refresh_time)
 		# Create base Pinecurses objects:
 		base_class_reference = self.class_references('base')
-		base_class = base_class_reference(style_filename=self.base_class_style_filename, window=self.stdscr)
+		base_class = base_class_reference(self, style_filename=self.base_class_style_filename, window=self.stdscr)
 		while True:
 			# Draw everything which needs to be drawn:
 			base_class.draw()
