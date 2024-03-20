@@ -7,7 +7,7 @@ class Trunk(SingleObjectCursor, BaseObject):
 	"""A Trunk is considered the Base of a Pinecurses program, and is typically created by a Pinecurses object. After creation, running `trunk_instance.begin(..)` will begin the program.
 	"""
 	def __init__(self, *args, **kwargs):
-		super().__init__(self, *args, **kwargs)
+		super().__init__(*args, **kwargs)
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
