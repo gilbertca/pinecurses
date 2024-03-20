@@ -15,12 +15,12 @@ class Pinecurses():
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.CLASS_REFERENCES = {} # Dict for name:class references
 		self.class_references = lambda name : self.CLASS_REFERENCES.get(name)
-		self.parser_dict = { # Enum for parsers
+		self.parser_reference_dict = { # Enum for parsers
 			'json' : JsonParser
 		}
-		self.parser_instance = self.parser_dict.get(file_type)(styles_directory_name)
+		self.parser_instance = self.parser_reference_dict.get(file_type)(styles_directory_name)
 		self.styles_directory_name = styles_directory_name
-		self.base_class_style_filename = base_class_style_filename
+		self.base_class_style_filename = f"{base_class_style_filename}.{file_type}"
 		self.refresh_time = refresh_time
 
 	@log
