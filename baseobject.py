@@ -75,18 +75,18 @@ class BaseObject:
 		return responses_iterable
 
 	@log
-	def handle_styles(self, **style_namespace):
+	def handle_styles(self, **_style_namespace):
 		"""handle_styles iterates through self.STYLES and runs functions based on the attribute name.
 		"""
-		_style_namespace = {
+		style_namespace = {
 			"children" : self.handle_children,
 		}
-		_style_namespace.update(style_namespace)
+		style_namespace.update(style_namespace)
 		# Iterate through and run all functions associated from the namespace:
-		for style_key in _style_namespace:
+		for style_key in style_namespace:
 			style_value = self.style(style_key)
 			if style_value is not None: # If namespace key matches a style value:
-				style_function = _style_namespace.get(style_key)
+				style_function = style_namespace.get(style_key)
 				style_function(style_value)
 
 	@log

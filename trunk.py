@@ -22,8 +22,9 @@ class Trunk(SingleObjectCursor, BaseObject):
 		self.FUNCTIONS.update({'x' : lambda:0}) # Ends program
 
 	@log
-	def handle_styles(self, *args, **kwargs):
+	def handle_styles(self, **_style_namespace):
 		"""handle_styles adds class specific functionality to BaseObject's handle_styles.
 		"""
 		style_namespace = {}
-		super().handle_styles(style_namespace)
+		style_namespace.update(_style_namespace)
+		super().handle_styles(**style_namespace)
