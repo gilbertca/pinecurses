@@ -8,7 +8,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	"""Branchs are typically the child objects of a Trunk instance. Branches are typically associated with *panes* of content, while the Leaves contained within Branches will contain any displayed content.
 	"""
 	def __init__(self, *args, **kwargs):
-		super().__init__(self, *args, **kwargs)
+		super().__init__(*args, **kwargs)
 
 	@log
 	def handle_styles(self, *args, **kwargs):
