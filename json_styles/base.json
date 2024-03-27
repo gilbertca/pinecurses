@@ -24,6 +24,6 @@
 	{
 		"codename":"other_branch",
 		"class_reference_name":"popup_window",
-		"style_filename":"popup_window"
+		"style_filename":"popup_window.json"
 	}]
 }
