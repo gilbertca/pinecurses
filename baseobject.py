@@ -107,17 +107,15 @@ class BaseObject:
 		child_object_instance = None
 		# Reference name used to get a class reference from a Pinecurses object
 		child_class_reference_name = child_style.get('class_reference_name')
-		child_class_reference = self.pinecurses_instance.class_references(
-			child_class_reference_name
-		)
+		child_class_reference = self.pinecurses_instance.class_references(child_class_reference_name)
 		# If style_filename is None, then the attributes are nested within the parent's style file.
 		style_filename = child_style.get('style_filename')
 		style_attributes = child_style if style_filename is None else None
 		# Create and add the object instance to self.children
 		child_object_instance = child_class_reference(
 			self.pinecurses_instance, 
-			style_filename=style_filename, 
-			style_attributes=style_attributes
+			style_filename, 
+			style_attributes
 		)
 		child_object_name_dict = {child_class_reference_name : child_object_instance}
 		self.children.update(child_object_name_dict)
