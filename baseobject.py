@@ -4,9 +4,6 @@ class BaseObject:
 	"""BaseObject is an *abstract* object which all Pinecurses objects are to inherit. It contains most of the logic regarding **Pinecurses tree traversal**, i.e. handling child objects and parent objects. BaseObject is to be included with several mixins to create a proper Pinecurses object.
 	"""
 	def __init__(self, pinecurses_instance, style_filename=None, style_attributes=None, parent_object_instance=None, *args, **kwargs):
-		# Children and shortcut:
-		self.CHILD_NAMESPACE = {}
-		self.child = lambda child_name : self.CHILD_NAMESPACE.get(child_name)
 		# Functions and shortcut:
 		self.FUNCTIONS = {}
 		self.functions = lambda key_press : self.FUNCTIONS.get(chr(key_press))
@@ -16,6 +13,7 @@ class BaseObject:
 		# Child/Parent objects:
 		self.parent = parent_object_instance
 		self.children = None
+		self.child = lambda child_name : self.children.get(child_name)
 		self.window = kwargs.get('window')
 		self.pinecurses_instance = pinecurses_instance
 		# Style attributes and shortcut:
@@ -114,8 +112,8 @@ class BaseObject:
 		# Create and add the object instance to self.children
 		child_object_instance = child_class_reference(
 			self.pinecurses_instance, 
-			style_filename, 
-			style_attributes
+			style_filename=style_filename, 
+			style_attributes=style_attributes
 		)
 		child_object_name_dict = {child_class_reference_name : child_object_instance}
 		self.children.update(child_object_name_dict)

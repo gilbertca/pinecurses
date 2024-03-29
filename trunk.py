@@ -28,3 +28,12 @@ class Trunk(SingleObjectCursor, BaseObject):
 		style_namespace = {}
 		style_namespace.update(_style_namespace)
 		super().handle_styles(**style_namespace)
+
+	@log
+	def draw(self):
+		"""Trunk.draw calls the 'draw' method for all children.
+		"""
+		for child_key in self.children:
+			child = self.child(child_key)
+			child.draw()
+
