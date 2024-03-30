@@ -21,10 +21,14 @@ class SingleObjectCursor(Cursor):
 		wrap_objects = kwargs.get('wrap_objects')
 		self.wrap_objects = False if wrap_objects is None else wrap_objects
 		self.selected_object_index = 0
-		self.selected_object = lambda : self.children[self.selected_object_index]
 
 	def get_selected_object(self):
-		return self.selected_object()
+		"""get_selected_object returns the object contained within self.children at index self.selected_object_index
+		"""
+		selected_key = tuple(self.children)[self.selected_object_index]
+		selected_object = self.children.get(selected_key)
+		return selected_object
+		
 
 	def select(self, *args, **kwargs):
 		"""
