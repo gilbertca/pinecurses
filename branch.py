@@ -11,12 +11,6 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		super().__init__(*args, **kwargs)
 
 	@log
-	def handle_styles(self, *args, **kwargs):
-		"""Branch.handle_styles
-		"""
-		pass
-
-	@log
 	def create_curses_pad(self):
 		"""create_curses_pad sets `self.window` to a window object created by `curses.newpad`.
 		"""
@@ -39,4 +33,8 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	def draw(self):
 		"""Branch.draw calls Leaf.draw to obtain *drawing instructions*, and then applies them to the screen.
 		"""
-		pass
+		for leaf_key in self.children:
+			leaf = self.child(child_key)
+			leaf_text = leaf.draw()
+			self.window.addstr(leaf_text)
+
