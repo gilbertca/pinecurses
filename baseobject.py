@@ -117,3 +117,13 @@ class BaseObject:
 		)
 		child_object_name_dict = {child_class_reference_name : child_object_instance}
 		self.children.update(child_object_name_dict)
+
+	@log
+	def clean_up(self):
+		"""BaseObject.clean_up is typically overridden by a child which must *do* something at program end.
+		"""
+		if self.children is not None: # If there are children:
+			for child_key in self.children: # Iterate:
+				child = self.child(child_key)
+				child.clean_up()
+
