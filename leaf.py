@@ -1,4 +1,5 @@
 from baseobject import BaseObject
+import re
 from logger import log
 
 
@@ -9,8 +10,6 @@ class Leaf(BaseObject):
 		super().__init__(self, *args, **kwargs)
 		# Style / content linking and shortcut:
 		self.CONTENTS = {}
-		# Leaf required variables:
-		self.display_dictionary = {}
 
 	@log
 	def contents(self, content_key):
@@ -25,8 +24,10 @@ class Leaf(BaseObject):
 	def draw(self):
 		"""Leaf.draw returns a list of *drawing instructions* which will be used by Branch.draw to create the application on screen.
 		"""
-		pass
-
+		content_template = self.style('content')
+		contents = []
+		content_keys = re.findall(r"{.*}", contents)
+		
 
 class BarLeaf(Leaf):
 	"""A BarLeaf is a Leaf which requests an integer, and displays itself as a horizontal bar across a Branch. The height is assumed to be 1, unless explicitly set.
