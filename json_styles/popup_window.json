@@ -1,1 +1,9 @@
-{}
+{
+	"drawn":true,
+	"children":[{
+		"codename":"leaf contained in popup window",
+		"height":1,
+		"width":10,
+		"content":"Holy smokes!"
+	}]
+}
