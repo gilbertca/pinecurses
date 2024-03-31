@@ -7,7 +7,7 @@ class Leaf(BaseObject):
 	"""A Leaf is the highest object in a *Pine tree*. A basic Leaf should be used for simple screen elements, such as title bars.
 	"""
 	def __init__(self, *args, **kwargs):
-		super().__init__(self, *args, **kwargs)
+		super().__init__(*args, **kwargs)
 		# Style / content linking and shortcut:
 		self.CONTENTS = {}
 
@@ -19,6 +19,7 @@ class Leaf(BaseObject):
 		content_string = None # Returns None if there is no function matching the key
 		if content_function is not None: content_string = content_function()
 		return content_string
+
 
 	@log
 	def draw(self):

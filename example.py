@@ -16,6 +16,12 @@ class ExampleBranch(Branch):
 	pass
 
 
+class ExampleLeaf(Leaf):
+	"""This class is to be created by a Pinecurses user in order to integrate their API with Pinecurses.
+	"""
+	pass
+
+
 class ExamplePopupBranch(Branch):
 	"""This class is to be created by a Pinecurses user in order to integrate their API with Pinecurses.
 	"""

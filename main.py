@@ -10,6 +10,9 @@ def main():
 		'base' : ExampleTrunk,
 		'main_window' : ExampleBranch,
 		'popup_window' : ExamplePopupBranch,
+		'left_content' : ExampleLeaf,
+		'right_content' : ExampleLeaf,
+		'middle_leaf' : ExampleLeaf,
 	})
 	program.begin()
 

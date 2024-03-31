@@ -2,6 +2,7 @@
 	"drawn":true,
 	"children":[{
 		"codename":"leaf contained in popup window",
+		"class_reference_name":"middle_leaf",
 		"height":1,
 		"width":10,
 		"content":"Holy smokes!"

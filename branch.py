@@ -11,6 +11,16 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		super().__init__(*args, **kwargs)
 
 	@log
+	def handle_styles(self, **_style_namespace):
+		"""Branch.handle_styles creates a window after all other style attributes are handled.
+		"""
+		style_namespace = {}
+		style_namespace.update(_style_namespace)
+		super().__init__(**style_namespace)
+		self.create_curses_window()
+
+
+	@log
 	def create_curses_pad(self):
 		"""create_curses_pad sets `self.window` to a window object created by `curses.newpad`.
 		"""
