@@ -16,7 +16,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		"""
 		style_namespace = {}
 		style_namespace.update(_style_namespace)
-		super().__init__(**style_namespace)
+		super().handle_styles(**style_namespace)
 		self.create_curses_window()
 
 

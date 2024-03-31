@@ -112,7 +112,8 @@ class BaseObject:
 		# Create and add the object instance to self.children
 		child_object_instance = child_class_reference(
 			self.pinecurses_instance, 
-			style_filename=style_filename, 
+			style_filename=style_filename,
+			parent_object_instance=self,
 			style_attributes=style_attributes
 		)
 		child_object_name_dict = {child_class_reference_name : child_object_instance}
