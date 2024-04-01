@@ -12,23 +12,30 @@ class Leaf(BaseObject):
 		self.CONTENTS = {}
 
 	@log
-	def contents(self, content_key):
-		"""Leaf.contents takes a key from a style dictionary, and returns a string from the function in the self.CONTENTS namespace.
+	def content(self, content_key):
+		"""Leaf.content takes a key from a style dictionary, and returns a string from the function in the self.CONTENTS namespace.
 		"""
 		content_function = self.CONTENTS.get(content_key)
 		content_string = None # Returns None if there is no function matching the key
 		if content_function is not None: content_string = content_function()
 		return content_string
 
-
 	@log
 	def draw(self):
 		"""Leaf.draw returns a list of *drawing instructions* which will be used by Branch.draw to create the application on screen.
 		"""
-		content_template = self.style('content')
-		contents = []
-		content_keys = re.findall(r"{.*}", contents)
-		
+		regex_string = r"{.*}" # Regex includes brackets {}
+		cut = lambda key : key[1:-1] # Shortcut to remove brackets
+		content_template = self.style('content') # Read style
+		content_keys = re.findall(regex_string, content_template) # Get keys from style
+		# Format the template:
+		for line in content_template:
+			pass # TODO: FORMAT TEMPLATE
+			"""1. Assess if content is already high enough; add empty newlines to compensate (must happen before for loop enters content_template
+			Note: Content width can be specified by creating the full page, and then cutting lines with [x:n] list conventions, and possibly height as well.
+			
+			"""
+
 
 class BarLeaf(Leaf):
 	"""A BarLeaf is a Leaf which requests an integer, and displays itself as a horizontal bar across a Branch. The height is assumed to be 1, unless explicitly set.
