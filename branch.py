@@ -30,7 +30,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	def create_curses_window(self):
 		"""create_curses_window sets `self.window` to a window object created by `curses.newwin`.
 		"""
-		self.window = curses.newwin(self.height, self.width, self.topy, self.leftx)
+		self.window = self.pinecurses_instance.newwin(self.height, self.width, self.topy, self.leftx)
 
 	@log
 	def refresh(self):

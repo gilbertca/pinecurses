@@ -30,6 +30,12 @@ class Pinecurses():
 		curses.wrapper(self._begin)
 
 	@log
+	def newwin(self, *args):
+		"""newwin calls curses.newwin and returns the created window instance. This is an interface so Pinecurses objects don't need to individually import curses
+		"""
+		return curses.newwin(*args)
+
+	@log
 	def get_style_attributes(self, file_name):
 		"""get_style_attributes uses self.parser_instance to read a style file and returns the contents.
 		"""
