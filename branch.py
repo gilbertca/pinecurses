@@ -20,12 +20,6 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		self.create_curses_window()
 
 	@log
-	def create_curses_pad(self):
-		"""create_curses_pad sets `self.window` to a window object created by `curses.newpad`.
-		"""
-		self.window = curses.newpad(self.height, self.width)
-
-	@log
 	def create_curses_window(self):
 		"""create_curses_window sets `self.window` to a window object created by `curses.newwin`.
 		"""
