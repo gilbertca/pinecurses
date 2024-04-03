@@ -30,7 +30,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		"""
 		Refreshes self.window.
 		"""
-		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty-1, self.rightx-1))@log
+		self.window.refresh(*(0, 0, self.topy, self.leftx, self.boty-1, self.rightx-1))
 
 	@log
 	def draw(self):
@@ -38,6 +38,13 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 		"""
 		for leaf_key in self.children:
 			leaf = self.child(leaf_key)
-			leaf_text = leaf.draw()
-			self.window.addstr(leaf_text)
+			leaf_text_array = leaf.draw()
+			# Leaf.draw() will return a two-dimensional iterable, the lowest element containing another iterable
+			# which is to be unpacked * into a curses.window or curses.pad object.
+			# This allows different attributes, colors, and strings to be contained on one line.
+			for line in leaf_text_array: # First dimension is for each line
+				for instructions in line:
+					self.window.addstr(*instructions)
+			self.window.noutrefresh() # curses.doupdate() located in main loop of a Pinecurses instance.
+
 
