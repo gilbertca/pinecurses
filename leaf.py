@@ -25,16 +25,33 @@ class Leaf(BaseObject):
 		"""Leaf.draw returns a list of *drawing instructions* which will be used by Branch.draw to create the application on screen.
 		"""
 		regex_string = r"{.*}" # Regex includes brackets {}
-		cut = lambda key : key[1:-1] # Shortcut to remove brackets
 		content_template = self.style('content') # Read style
-		content_keys = re.findall(regex_string, content_template) # Get keys from style
-		# Format the template:
-		for line in content_template:
-			pass # TODO: FORMAT TEMPLATE
-			"""1. Assess if content is already high enough; add empty newlines to compensate (must happen before for loop enters content_template
-			Note: Content width can be specified by creating the full page, and then cutting lines with [x:n] list conventions, and possibly height as well.
-			
-			"""
+		# Get keys from style
+		for content_key in re.findall(regex_string, content_template): # Get all keys, and format content_template
+			content = self.contents(content_key[1:-1]) # Ensure brackets are shaved
+			content_template = content_template.replace(content_key, content)
+		height, width = self.parent.window.getmaxyx() # Get bounds
+		# Namespace for special methods which calculate spacing based on halign and valign
+		alignment_cases = {
+			('center') : self._center_case,
+			('left','top') : self._beginning_case,
+			('right','bottom') : self._end_case
+		}
+		# Iterate through the keys:
+		for content_row in content_template.split('\n') # Rows are split by newlines
+			pass # TODO MOVE ALIGNMENT CASES TO SCREENPOSITIONER
+
+	@log
+	def _center_case(self):
+		pass
+
+	@log
+	def _beginning_case(self):
+		pass
+
+	@log
+	def _end_case(self):
+		pass
 
 
 class BarLeaf(Leaf):
