@@ -48,23 +48,18 @@ class Pinecurses():
 
 		:param stdscr: stdscr is the standard curses.Window object created by curses.wrapper, and is passed automatically.
 		"""
-		# Set up this object's instance variables:
-		self.stdscr = stdscr
 		# Set up curses parameters:
 		curses.halfdelay(self.refresh_time)
 		# Create base Pinecurses objects:
 		base_class_reference = self.class_references('base')
-		base_class = base_class_reference(self, style_filename=self.base_class_style_filename, window=self.stdscr)
+		base_class = base_class_reference(self, style_filename=self.base_class_style_filename, window=stdscr)
 		while True:
 			# Draw everything which needs to be drawn:
 			base_class.draw()
 			# Get the keypress from a child window:
 			keypress_integer = base_class.window.getch()
-			keypress_response = None
-			# If keypress < 0, then no key was pressed, and the program can idle
 			if keypress_integer >= 0:
 				keypress_response = base_class.interact(keypress_integer)
-			# Check to end program:
-			if keypress_response == 0:
+			else:
 				return base_class.clean_up()
 
