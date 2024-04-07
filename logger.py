@@ -21,7 +21,7 @@ def log(function):
 			return function(*args, **kwargs)
 		except Exception as e:
 			# Log the exception
-			logger.critical(f"Critical error in function {function.__name__} due to {e}", exc_info=True)
+			logger.critical(f"Critical error in function {function.__name__} due to {e}", exc_info=False)
 			raise
 
 	return log	  

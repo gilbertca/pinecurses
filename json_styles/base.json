@@ -3,7 +3,7 @@
 	"children":[{
 		"codename":"branch which takes whole screen",
 		"class_reference_name":"main_window",
-		"drawn_at_start":true,
+		"drawn":true,
 		"children":[{
 			"codename":"leaf which takes left side of screen",
 			"class_reference_name":"left_content",
@@ -24,6 +24,6 @@
 	{
 		"codename":"other_branch",
 		"class_reference_name":"popup_window",
-		"style_filename":"popup_window"
+		"style_filename":"popup_window.json"
 	}]
 }

@@ -1,3 +1,4 @@
+import json
 from parsers.parser import Parser
 
 class JsonParser(Parser):

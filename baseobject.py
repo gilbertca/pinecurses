@@ -17,7 +17,7 @@ class BaseObject:
 		# Child/Parent objects:
 		self.parent = parent_object_instance
 		self.children = None
-		self.window = window
+		self.child = lambda child_name : self.children.get(child_name)
 		self.pinecurses_instance = pinecurses_instance
 		# Style attributes and shortcut:
 		if style_filename is not None: # I.E. if there is a style filename
@@ -108,17 +108,26 @@ class BaseObject:
 		child_object_instance = None
 		# Reference name used to get a class reference from a Pinecurses object
 		child_class_reference_name = child_style.get('class_reference_name')
-		child_class_reference = self.pinecurses_instance.class_references(
-			child_class_reference_name
-		)
+		child_class_reference = self.pinecurses_instance.class_references(child_class_reference_name)
 		# If style_filename is None, then the attributes are nested within the parent's style file.
 		style_filename = child_style.get('style_filename')
 		style_attributes = child_style if style_filename is None else None
 		# Create and add the object instance to self.children
 		child_object_instance = child_class_reference(
 			self.pinecurses_instance, 
-			style_filename=style_filename, 
+			style_filename=style_filename,
+			parent_object_instance=self,
 			style_attributes=style_attributes
 		)
 		child_object_name_dict = {child_class_reference_name : child_object_instance}
 		self.children.update(child_object_name_dict)
+
+	@log
+	def clean_up(self):
+		"""BaseObject.clean_up is typically overridden by a child which must *do* something at program end.
+		"""
+		if self.children is not None: # If there are children:
+			for child_key in self.children: # Iterate:
+				child = self.child(child_key)
+				child.clean_up()
+

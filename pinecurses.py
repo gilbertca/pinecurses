@@ -15,12 +15,12 @@ class Pinecurses():
 		logging.basicConfig(filename='runtime.log', filemode='w', level=Pinecurses.log_level)
 		self.CLASS_REFERENCES = {} # Dict for name:class references
 		self.class_references = lambda name : self.CLASS_REFERENCES.get(name)
-		self.parser_dict = { # Enum for parsers
+		self.parser_reference_dict = { # Enum for parsers
 			'json' : JsonParser
 		}
-		self.parser_instance = self.parser_dict.get(file_type)(styles_directory_name)
+		self.parser_instance = self.parser_reference_dict.get(file_type)(styles_directory_name)
 		self.styles_directory_name = styles_directory_name
-		self.base_class_style_filename = base_class_style_filename
+		self.base_class_style_filename = f"{base_class_style_filename}.{file_type}"
 		self.refresh_time = refresh_time
 
 	@log
@@ -30,9 +30,16 @@ class Pinecurses():
 		curses.wrapper(self._begin)
 
 	@log
+	def newwin(self, *args):
+		"""newwin calls curses.newwin and returns the created window instance. This is an interface so Pinecurses objects don't need to individually import curses
+		"""
+		return curses.newwin(*args)
+
+	@log
 	def get_style_attributes(self, file_name):
 		"""get_style_attributes uses self.parser_instance to read a style file and returns the contents.
 		"""
+		file_name = f"{self.styles_directory_name}/{file_name}"
 		return self.parser_instance.parse_file(file_name)
 
 	@log
@@ -47,7 +54,7 @@ class Pinecurses():
 		curses.halfdelay(self.refresh_time)
 		# Create base Pinecurses objects:
 		base_class_reference = self.class_references('base')
-		base_class = base_class_reference(style_filename=self.base_class_style_filename, window=self.stdscr)
+		base_class = base_class_reference(self, style_filename=self.base_class_style_filename, window=self.stdscr)
 		while True:
 			# Draw everything which needs to be drawn:
 			base_class.draw()

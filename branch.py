@@ -8,7 +8,7 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	"""Branchs are typically the child objects of a Trunk instance. Branches are typically associated with *panes* of content, while the Leaves contained within Branches will contain any displayed content.
 	"""
 	def __init__(self, *args, **kwargs):
-		super().__init__(self, *args, **kwargs)
+		super().__init__(*args, **kwargs)
 
 	def draw(self):
 		"""Branch.draw will ensure it's self.window object is created, and add all elements contained by leaves.
@@ -17,22 +17,19 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 			pass
 	
 	@log
-	def handle_styles(self, **style_namespace):
-		"""Branch.handle_styles
+	def handle_styles(self, **_style_namespace):
+		"""Branch.handle_styles creates a window after all other style attributes are handled.
 		"""
-		pass
-
-	@log
-	def create_curses_pad(self):
-		"""create_curses_pad sets `self.window` to a window object created by `curses.newpad`.
-		"""
-		self.window = curses.newpad(self.height, self.width)
+		style_namespace = {}
+		style_namespace.update(_style_namespace)
+		super().handle_styles(**style_namespace)
+		self.create_curses_window()
 
 	@log
 	def create_curses_window(self):
 		"""create_curses_window sets `self.window` to a window object created by `curses.newwin`.
 		"""
-		self.window = curses.newwin(self.height, self.width, self.topy, self.leftx)
+		self.window = self.pinecurses_instance.newwin(self.height, self.width, self.topy, self.leftx)
 
 	@log
 	def refresh(self):
@@ -45,4 +42,15 @@ class Branch(SingleObjectCursor, ScreenPositioner, BaseObject):
 	def draw(self):
 		"""Branch.draw calls Leaf.draw to obtain *drawing instructions*, and then applies them to the screen.
 		"""
-		pass
+		for leaf_key in self.children:
+			leaf = self.child(leaf_key)
+			leaf_text_array = leaf.draw()
+			# Leaf.draw() will return a two-dimensional iterable, the lowest element containing another iterable
+			# which is to be unpacked * into a curses.window or curses.pad object.
+			# This allows different attributes, colors, and strings to be contained on one line.
+			for line in leaf_text_array: # First dimension is for each line
+				for instructions in line:
+					self.window.addstr(*instructions)
+			self.window.noutrefresh() # curses.doupdate() located in main loop of a Pinecurses instance.
+
+

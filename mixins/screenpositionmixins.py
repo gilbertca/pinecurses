@@ -8,11 +8,11 @@ class ScreenPositioner:
 		super().__init__(*args, **kwargs)
 
 	@log
-	def handle_styles(self, **style_namespace):
+	def handle_styles(self, *args, **kwargs):
 		"""ScreenPositioner.handle_styles runs all style-related calculations before passing control to the next module.
 		"""
 		self.calculate()
-		super()
+		super().handle_styles(*args, **kwargs)
 
 	@log
 	def calculate(self):
