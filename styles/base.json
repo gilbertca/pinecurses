@@ -24,6 +24,14 @@
 	{
 		"codename":"other_branch",
 		"class_reference_name":"popup_window",
-		"style_filename":"popup_window.json"
+		"drawn":true,
+		"children":[{
+		"codename":"leaf contained in popup window",
+		"class_reference_name":"middle_leaf",
+		"height":1,
+		"width":10,
+		"content":"Holy smokes!"
+	}]
+
 	}]
 }
