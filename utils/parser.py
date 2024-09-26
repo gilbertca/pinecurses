@@ -15,6 +15,8 @@ def parse_file(file_name, file_type):
 	**parse_file** will match **file_type** to a deserialization function.
 	The file will be parsed by the function and the data will be returned
 	with Python's data types.
+
+	Raises a ValueError if a function does not exist for the **file_type** key.
 	"""
 	deserializing_functions = {
 		'json': parse_json,
