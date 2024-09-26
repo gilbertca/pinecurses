@@ -1,2 +1,2 @@
-# pycurses
- A python module for interfacing with ncurses.
+# Pinecurses
+ A frontend framework for modular `curses` applications.
