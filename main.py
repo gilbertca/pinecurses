@@ -4,7 +4,7 @@ def main():
 	"""
 	The main method to run and test the suite.
 	"""
-	program = Pinecurses(styles_directory_name='./json_styles', file_type='json')
+	program = Pinecurses('./templates', 'json')
 	program.CLASS_REFERENCES.update({
 	})
 	program.begin()
