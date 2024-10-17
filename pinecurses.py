@@ -65,18 +65,18 @@ class Pinecurses:
 
 		# Create Pinecurses objects for all templates.
 		# window objects are created by their initialziers.
-		window_list = []
+		template_instance_list = []
 		for template in template_list:
 			template_class = template.get("class_name")
 			template_instance = template_class(**template)
-			pinecurses_objects.append(template_instance)
+			template_instance_list.append(template_instance)
 
 		# Stuff all of the windows into a panel.
 		# Pinecurses can switch between windows by using Panel methods.
 		# Data can be selected in a panel with Panel.set_userptr.
 		panel_list = []
-		for pc_instance in window_list:
-			new_panel = curses.panel.new_panel(pc_instance.window)
+        for template_instance in template_instance_list:
+			new_panel = curses.panel.new_panel(template_instance.window)
 			# PC instances must reference their own panel so they can adjust userptr
 			pc_instance.new_panel(new_panel)
 			panel_list.append(new_panel)
