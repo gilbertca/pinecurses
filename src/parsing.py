@@ -1,20 +1,11 @@
-from dataclasses import dataclass
-
 from bs4 import BeautifulSoup
 
-@dataclass
-class Parser:
-    filename: str
-    parser_library: str = "html.parser"
+def parse_pinecurses_config(filename):
+    with open(filename) as file:
+        soup = BeautifulSoup(file, "html.parser")
 
-    def extract_all_tags_from_file(self):
-        """Extracts **ALL** tags which are understood by Pinecurses."""
-        with open(filename, 'r') as file:
-            soup = Beautifulsoup(file, 'lxml')
+    tags = {}
+    # Extract important tags from the soup:
 
-        # Extract ALL tags we want:
-        all_tags = {}
 
-        # Finish by decomposing and returning the tags
-        soup.decompose()
-        return all_tags
+    return tags

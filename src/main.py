@@ -19,10 +19,10 @@ def main() -> int:
 
     # Create and run your app:
     app = PA(filename=TEST_FILE, function_namespace=NAMESPACE)
-    app.run()
+    return_value = app.run()
 
     # Return a friendly error code:
-    return 0
+    return return_value
 
 
 if __name__=="__main__":

@@ -1,17 +1,25 @@
 import curses
 from dataclasses import dataclass
 
-from parsing import Parser
+from parsing import parse_pinecurses_config
 
 @dataclass
 class PinecursesApp:
     filename: str
     function_namespace: dict
+    RUNNING: bool = False
 
     def run(self):
-        curses.wrapper(self._run)
+        # Parse all the tags:
+        self.tags = parse_pinecurses_config(self.filename)
+
+        # Enter the main loop:
+        return curses.wrapper(self._run)
 
     def _run(self, stdscr):
-        stdscr.addstr("Hello bitch")
-        stdscr.getch()
+        # Initial setup
+        self.RUNNING = True
 
+        # Main loop
+        while self.RUNNING:
+            pass
