@@ -22,10 +22,10 @@ class PinecursesApp:
 
     def run(self):
         # Expand the root template:
-        expanded_template = expand_pinecurses_template
+        expanded_template = expand_pinecurses_template(self.template_root_file)
 
         # Parse tags from root template:
-        self.tags = parse_pinecurses_config(expanded)
+        self.tags = parse_pinecurses_config(expanded_template)
 
         # Enter the main loop:
         return curses.wrapper(self._run)

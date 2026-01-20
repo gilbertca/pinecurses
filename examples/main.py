@@ -12,13 +12,16 @@ def main() -> int:
     def hello_world():
         """The simplest widget returns static text."""
         return "Hello, world!"
-    NAMESPACE = {"hello_word", hello_world}
+    function_namespace = {"hello_word", hello_world}
 
-    # Define where your config lives:
-    TEST_FILE = "templates/config.html"
+    # Define where your templates live:
+    template_root_dir = "templates"
+    template_root_file = "templates/config.html"
 
     # Create and run your app:
-    app = PA(filename=TEST_FILE, function_namespace=NAMESPACE)
+    app = PA(template_root_file,
+             template_root_dir,
+             function_namespace)
     return_value = app.run()
 
     # Return a friendly error code:
