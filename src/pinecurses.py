@@ -1,7 +1,7 @@
 import curses
 from dataclasses import dataclass
 
-from parsing import parse_pinecurses_config
+from src.parsing import parse_pinecurses_config
 
 @dataclass
 class PinecursesApp:

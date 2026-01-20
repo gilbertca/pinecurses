@@ -1,4 +1,4 @@
-from pinecurses import PinecursesApp as PA
+from src.pinecurses import PinecursesApp as PA
 
 
 def main() -> int:
@@ -15,7 +15,7 @@ def main() -> int:
     NAMESPACE = {"hello_word", hello_world}
 
     # Define where your config lives:
-    TEST_FILE = "config.html"
+    TEST_FILE = "templates/config.html"
 
     # Create and run your app:
     app = PA(filename=TEST_FILE, function_namespace=NAMESPACE)
