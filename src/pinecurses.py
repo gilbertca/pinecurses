@@ -10,19 +10,32 @@ A hypothetical user simply needs to:
 import curses
 from dataclasses import dataclass
 
-from src.parsing import parse_pinecurses_config
-from src.templating import expand_pinecurses_template
+from src.parsing import PinecursesParser
+from src.templating import PinecursesTemplater
 
-@dataclass
 class PinecursesApp:
-    template_root_file: str
-    template_dir: str
-    function_namespace: dict
-    RUNNING: bool = False
+    def __init__(
+        self,
+        root_template_name,
+        function_namespace,
+        template_directory="templates",
+    ):
+        self.root_template_name = root_template_name # First rendered template
+        self.function_namespace = function_namespace # For dynamic text
+        self.pinecurses_templater = ( # jinja2 templating
+            PinecursesTemplater(template_directory) 
+        )
+        self.pincurses_parser = ( # bs4 parsing
+            PinecursesParser(function_namespace)
+        )
+        self.RUNNING = False # Application status
 
     def run(self):
         # Expand the root template:
-        expanded_template = expand_pinecurses_template(self.template_root_file)
+        expanded_template = (
+            self.pinecurses_templater
+            .expand_pinecurses_template(self.template_root_file)
+        )
 
         # Parse tags from root template:
         self.tags = parse_pinecurses_config(expanded_template)
