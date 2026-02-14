@@ -13,32 +13,32 @@ from dataclasses import dataclass
 from src.parsing import PinecursesParser
 from src.templating import PinecursesTemplater
 
-class PinecursesApp:
+class PinecursesApp(
+    PinecursesParser,
+    PinecursesTemplater,
+    PinecursesKeys,
+):
     def __init__(
         self,
         root_template_name,
         function_namespace,
-        template_directory="templates",
+        template_directory = "templates",
+        template_context = {},
     ):
         self.root_template_name = root_template_name # First rendered template
         self.function_namespace = function_namespace # For dynamic text
-        self.pinecurses_templater = ( # jinja2 templating
-            PinecursesTemplater(template_directory) 
-        )
-        self.pincurses_parser = ( # bs4 parsing
-            PinecursesParser(function_namespace)
-        )
         self.RUNNING = False # Application status
+        PinecursesTemplater.__init__(template_directory, template_context)
+        PinecursesParser.__init__()
 
     def run(self):
         # Expand the root template:
         expanded_template = (
-            self.pinecurses_templater
-            .expand_pinecurses_template(self.template_root_file)
+            self.expand_pinecurses_template(self.template_root_file)
         )
 
         # Parse tags from root template:
-        self.tags = parse_pinecurses_config(expanded_template)
+        self.tags = self.parse_pinecurses_config(expanded_template)
 
         # Enter the main loop:
         return curses.wrapper(self._run)
