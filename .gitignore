@@ -153,3 +153,6 @@ cython_debug/
 #*.json
 #json/
 *.swp
+
+# Ignore templates during development
+templates/
