@@ -12,7 +12,7 @@ def main() -> int:
         """The simplest widget returns static text."""
         return "Hello, world!"
     function_namespace = {
-        "hello_word", hello_world
+        "hello_word": hello_world
     }
 
     # Define where your templates live:
@@ -21,7 +21,7 @@ def main() -> int:
 
     # Define the context for your templates:
     template_context = {
-        "hello_world_button_title": "Hello, world!"
+        "values": list(range(0, 10)),
     }
 
     # TODO: WE NEED AN INTERFACE TO MODIFY CONTEXT AND NAMESPACE DYNAMICALLY
@@ -30,8 +30,8 @@ def main() -> int:
     app = PA(
         template_root_file,
         template_root_dir,
+        function_namespace,
         template_context,
-        function_namespace
     )
     return_value = app.run()
 

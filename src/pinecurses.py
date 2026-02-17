@@ -12,6 +12,7 @@ from dataclasses import dataclass
 
 from src.parsing import PinecursesParser
 from src.templating import PinecursesTemplater
+from src.keys import PinecursesKeys
 
 class PinecursesApp(
     PinecursesParser,
@@ -20,16 +21,19 @@ class PinecursesApp(
 ):
     def __init__(
         self,
-        root_template_name,
-        function_namespace,
-        template_directory = "templates",
+        template_root_file,
+        template_root_dir,
+        function_namespace = {},
         template_context = {},
+        parser_options = {},
+        keys_namespace = {}
     ):
         self.root_template_name = root_template_name # First rendered template
         self.function_namespace = function_namespace # For dynamic text
         self.RUNNING = False # Application status
         PinecursesTemplater.__init__(template_directory, template_context)
-        PinecursesParser.__init__()
+        PinecursesParser.__init__(**parser_options)
+        PinecursesKeys.__init__(keys_namespace**)
 
     def run(self):
         # Expand the root template:
