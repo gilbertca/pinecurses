@@ -28,7 +28,7 @@ class PinecursesApp(
         parser_options = {},
         keys_namespace = {}
     ):
-        self.root_template_name = root_template_name # First rendered template
+        self.template_root_file = template_root_file # First rendered template
         self.function_namespace = function_namespace # For dynamic text
         self.RUNNING = False # Application status
         PinecursesTemplater.__init__(template_directory, template_context)
