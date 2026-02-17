@@ -17,7 +17,7 @@ from src.keys import PinecursesKeys
 class PinecursesApp(
     PinecursesParser,
     PinecursesTemplater,
-    PinecursesKeys,
+    PinecursesKeys
 ):
     def __init__(
         self,
@@ -33,7 +33,7 @@ class PinecursesApp(
         self.RUNNING = False # Application status
         PinecursesTemplater.__init__(template_directory, template_context)
         PinecursesParser.__init__(**parser_options)
-        PinecursesKeys.__init__(keys_namespace**)
+        PinecursesKeys.__init__(**keys_namespace)
 
     def run(self):
         # Expand the root template:
