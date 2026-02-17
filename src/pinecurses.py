@@ -8,6 +8,7 @@ A hypothetical user simply needs to:
     4. Call the `run` function, and let Pinecurses do the heavy-lifting
 """
 import curses
+
 from dataclasses import dataclass
 
 from src.parsing import PinecursesParser
@@ -22,7 +23,7 @@ class PinecursesApp(
     def __init__(
         self,
         template_root_file,
-        template_root_dir,
+        template_directory,
         function_namespace = {},
         template_context = {},
         parser_options = {},
@@ -31,9 +32,19 @@ class PinecursesApp(
         self.template_root_file = template_root_file # First rendered template
         self.function_namespace = function_namespace # For dynamic text
         self.RUNNING = False # Application status
-        PinecursesTemplater.__init__(template_directory, template_context)
-        PinecursesParser.__init__(**parser_options)
-        PinecursesKeys.__init__(**keys_namespace)
+        PinecursesTemplater.__init__(
+            self, 
+            template_directory, 
+            template_context
+        )
+        PinecursesParser.__init__(
+            self,
+            **parser_options
+        )
+        PinecursesKeys.__init__(
+            self,
+            **keys_namespace
+        )
 
     def run(self):
         # Expand the root template:

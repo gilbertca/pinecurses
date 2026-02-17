@@ -4,10 +4,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 class PinecursesTemplater:
     def __init__(self, template_directory, context={}):
-        self.environment = Environment(
-            loader=FileSystemLoader(template_directory),
-            autoescape=select_autoescape()
-        )
+        self.environment = Environment(loader=FileSystemLoader(template_directory), autoescape=select_autoescape())
         self.context = context
 
     def expand_pinecurses_template(

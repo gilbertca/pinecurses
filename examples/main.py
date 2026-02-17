@@ -17,7 +17,7 @@ def main() -> int:
 
     # Define where your templates live:
     template_root_dir = "templates"
-    template_root_file = "templates/config.xml"
+    template_root_file = "config.xml"
 
     # Define the context for your templates:
     template_context = {
