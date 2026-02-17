@@ -39,11 +39,11 @@ class PinecursesApp(
         )
         PinecursesParser.__init__(
             self,
-            **parser_options
+            parser_options
         )
         PinecursesKeys.__init__(
             self,
-            **keys_namespace
+            keys_namespace
         )
 
     def run(self):

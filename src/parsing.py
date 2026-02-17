@@ -4,8 +4,8 @@ into objects and data usable by **curses**
 import xml.etree.ElementTree as ET
 
 class PinecursesParser:
-    def __init__(self):
-        ...
+    def __init__(self, parser_options):
+        self.parser_options = parser_options
 
     def parse_pinecurses_config(self, expanded_template):
         """Accepts an expanded template
