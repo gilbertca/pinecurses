@@ -61,7 +61,24 @@ class PinecursesApp(
     def _run(self, stdscr):
         # Initial setup
         self.RUNNING = True
+        self.NEEDS_RENDERING = True
+
+        # Expand root template:
+        expanded_root_template = self.expand_pinecurses_template(
+            self.template_root_file
+        )
+
+        # Parse elements from root template:
+        parsed_elements = self.parse_elements_from_template(
+            expanded_root_template)
+        )
 
         # Main loop
         while self.RUNNING:
-            pass
+            # Draw elements:
+            self.render(parsed_elements)
+
+            # Get input from the user:
+            self.delegate_key_press()
+
+            # TODO: NEED TO CREATE A WINDOW MANAGER

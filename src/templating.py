@@ -4,13 +4,17 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 class PinecursesTemplater:
     def __init__(self, template_directory, context={}):
-        self.environment = Environment(loader=FileSystemLoader(template_directory), autoescape=select_autoescape())
+        self.template_directory = template_directory
         self.context = context
+        self.environment = Environment(
+            loader=FileSystemLoader(template_directory),
+            autoescape=select_autoescape()
+        )
 
     def expand_pinecurses_template(
-            self,
-            template_filename,
-        ):
+        self,
+        template_filename,
+    ):
         """Reads a Pinecurses template and expands dynamic content.
         This is the first step, parsing is the next step (see **parsing**)."""
         template = self.environment.get_template(template_filename)
